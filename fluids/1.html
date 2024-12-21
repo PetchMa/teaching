@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="shortcut icon" type="image/jpg" href="img/favicon.ico"/>
+<title>Peter Ma</title>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-157223762-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-157223762-1');
+</script>
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<link rel="stylesheet" href="../css/style.css">
+<script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<!-- <script src="https://cdn.plot.ly/plotly-1.42.5.min.js"></script> -->
+<script src='js/d3.min.js'> </script>
+<script src="https://d3js.org/d3.v4.js"></script>
+<!-- <script src="js/plotly-latest.min.js"></script> -->
+<!-- Latest compiled and minified plotly.js JavaScript -->
+<script src="https://cdn.plot.ly/plotly-latest.min.js" charset="utf-8"></script>
+
+<!-- OR use a specific plotly.js release (e.g. version 1.52.3) -->
+<script src="https://cdn.plot.ly/plotly-1.52.3.min.js" charset="utf-8"></script>
+
+<!-- OR an un-minified version is also available -->
+
+
+<script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
+
+<!-- for testing with local version of cytoscape.js -->
+<!--<script src="../cytoscape.js/build/cytoscape.js"></script>-->
+
+<script src="https://unpkg.com/webcola/WebCola/cola.min.js"></script>
+
+<body style="transform: scale(0.9); transform-origin: 50% 0%;">
+<div class="page_setup">
+<div class="container">
+    <div class="row "  style="padding-top:2%!important ; padding-left: 10%; padding-right: 5%;">
+        <span class="peterma" style="color: #b80707; font-size: 300%;">
+            Astrophysical Fluids Lecture 1 
+        </span>
+        
+        <h1>
+            What Can Be A Fluid?
+        </h1>
+        <p>
+            Not everything can be modeled like a fluid. Somethings can be approximated as a fluid. 
+            A fluid is made of <b>fluid elements</b> (a hypotehtical cube which contains stuff). This fluid element has a 
+            size \(L\). We can only model these collection of things as a fluid IF \(L\) has these properties:
+        </p>
+        <ol>
+            <li>
+                \(L\) needs to contain enough particles. If theres not enough 
+                particles inside your fluid element then you can get a good "generalisation" of the "average" behaviour of the particles.
+                Explicitly if there were a number density of \(n\) particles  (i.e number of particles per volume)
+                then we need to ensure: <i>(note volume scales as the cube so we need to take cube root)</i>
+            </li>
+            <p>
+                \[n^{-1/3} << L \]
+            </p>
+            <li>
+                \(L\) needs to be small enough such that physics can be observed. Supose there is some 
+                physical quantity \(Q(x,t)\) (this can be velocity \(v\) or pressure \(P\)etc..) that its change 
+                can be realised. This means that the ratio of the quantity to its change needs to be close the the size of the fluid cube.
+                (in other words we have to have high enough "resolution" to see the physics happening!)
+            </li>
+            <p>
+                \[L >> \frac{Q(x,t)}{|\nabla Q(x,t) |}\]
+            </p>
+            <li>
+                \(L\) needs to large enough such that particles can collide and interact within the cube. Meaning the fluid needs to be collisional.
+                The distance an average particle takes 
+                before it "collides" or interactions is called the mean free path denoted by \(\lambda\). We need to be larger than this. 
+            </li>
+            <p>
+                \[L >> \lambda\]
+            </p>
+        </ol>
+        <h1>
+            Some Math: Lagrangian \(\frac{DQ}{D t}\) vs. Eulerian Derivatives \(\frac{\partial Q}{\partial t}\)
+        </h1>
+        <p>
+            There are different kinds of derivatives, the <b>Eulerian</b> and <b>Lagrangian</b>. The Eulerian is the regular 
+            partial derivatives. The Lagrangian is a "grown up" derivative that "moves" with the fluid. Eulerian derivative 
+            is fixed and not moving, Lagrangian is like taking the derivative while following the fluid element. 
+            We can define the new Lagrangian derivative the following way, let say we want to take the Lagrangian derivative \(Q\)
+            then by definition of a derivative we have
+        </p>
+        <p>
+        \[\frac{DQ}{Dt} = \lim_{\delta \to 0} \left[\frac{Q(x+\delta x, t + \delta t) - Q(x,t)}{\delta t} \right]\]
+        </p>
+      <p>
+        We add and subtract the same term so it doesn't affect things \(+ Q(x, t+\delta t) - Q(x, t+\delta t)\)
+      </p>
+      <p>
+        \[\frac{DQ}{Dt} = \lim_{\delta \to 0} \left[\frac{Q(x+\delta x, t + \delta t)+Q(x, t+\delta t) - Q(x, t+\delta t) - Q(x,t)}{\delta t} \right]\]
+        </p>
+        <p>
+            \[\frac{DQ}{Dt} = \lim_{\delta \to 0} \left[\frac{Q(x, t+\delta t)  - Q(x,t)}{\delta t} + \frac{Q(x+\delta x, t + \delta t) - Q(x, t+\delta t)}{\delta t} \right]\]
+            \[\frac{DQ}{Dt} = \lim_{\delta \to 0} \left[\frac{Q(x, t+\delta t)  - Q(x,t)}{\delta t} \right] + \lim_{\delta \to 0} \left[\frac{Q(x+\delta x, t + \delta t)   +  - Q(x, t+\delta t)}{\delta t} \right]\]
+        </p>
+        <p>
+            The first chunk is literally just a <b>time derivative</b>.
+        </p>
+        <p>
+            \[\frac{DQ}{Dt} = \frac{\partial Q}{\partial t}+ \lim_{\delta \to 0} \left[\frac{Q(x+\delta x, t + \delta t)   +  - Q(x, t+\delta t)}{\delta t} \right]\]
+        </p>
+        <p>
+            The second term looks like a <b>spatial derivative</b> (gradient)
+        </p>
+        <p>
+            \[\boxed{\frac{DQ}{Dt} = \overbrace{\frac{\partial Q}{\partial t}}^{\text{Eulerian}}+ \underbrace{v\cdot \nabla Q}_{\text{Co-moving frame}}} \tag{Lagrangian Derivative}\]
+        </p>
+        <p>
+            We see we have two parts one where we are in the FIXED frame and another where we add an extra vector \(v\cdot \nabla Q\) to boost us into 
+            a moving frame with the fluid itself! This is the <b>Advection</b> term.
+        </p>
+
+        <h1>
+            Fluid Equations
+        </h1>
+        <p>
+            With the background material covered we can move onto the real physics, the famous fluid equations. 
+            The fluid equations are <b>conservation</b> laws. These are <b>mass</b>, 
+            <b>momentum</b> and <b>energy</b> conservation. On a high level we just want to ensure the total mass, momentum and energy 
+            of the system is unchanging as we evolve with time. Let us derive equations that govern these properties.
+        </p>
+        <h4>
+            Mass Conservation
+        </h4>
+        <p>
+            To conserve mass we mean the total mass is not changing. This means the following:
+        </p>
+        <p>
+            \[\frac{\partial M}{\partial t} = 0 \]
+        </p>
+        <p>
+            This is the equivalent to saying that the mass density \(\rho\) flowing at velocity \(v\) summed over a small surface \(dS\) is zero.
+            The integral gives the NET FLOW through surface area \(S\).
+        </p>
+        <p>
+            \[\frac{\partial M}{\partial t} = 0 = -\int \rho v \cdot dS \]
+        </p>
+        <p>
+            Now we simply apply the <b>Divergence Theorem</b> which states that we can turn a surface integral into the volume integral of the 
+            divergence of the field.
+        </p>
+        <p>\[\int \int F\cdot dS = \int\int\int \nabla \cdot F dV\]</p>
+        <p>
+            We can just turn to writing the following volume integral:
+        </p>
+        <p>
+            \[\frac{\partial M}{\partial t}  = -\int \nabla \cdot (\rho v) dV \]
+        </p>
+        <p>
+            We can then rewrite the mass as the volume integral over density! \(M = \int \rho dV\)
+        </p>
+        <p>
+        \[\frac{\partial }{\partial t} \int \rho dV= -\int \nabla \cdot (\rho v) dV \]
+        \[ \int \frac{\partial }{\partial t}\rho dV= -\int \nabla \cdot (\rho v) dV \]
+    </p>
+    <p>
+        Recognize that the thing inside the integral must be equal
+    </p>
+    <p>
+    \[\frac{\partial \rho }{\partial t} = -\nabla \cdot (\rho v) \Rightarrow \boxed{\frac{\partial \rho }{\partial t} + \nabla \cdot (\rho v) = 0} \tag{mass conservation}\]
+    </p>
+    <h4>
+        Momentum Conservation
+    </h4>
+    <p>
+        This is just the grown up way of saying Newtons \(F=ma\)... but for fluids. We have the same thing where we have 
+        some velocity \(v\). To get the acceleration we need to use the <b>Lagrangian Derivative</b>
+    </p>
+    <p>
+    \[\frac{F}{m} = a = \frac{Dv}{Dt} = \frac{\partial v}{\partial t} + (v\cdot \nabla)v\]
+</p>
+
+<p>
+    What forces do we have? We have two (for now)... <b>Pressure \(P\)</b> and force of <b>Gravity \(\Phi\)</b>. We can formalise this.
+    Starting with Pressure forces.
+</p>
+<p><b>Pressure</b></p>
+<p>
+    Recall that pressure is FORCE per Area. To get the force we need to integrate out the area! So we can write the force (that is pointing 
+    the direction \(\hat n\) to be the following):
+</p>
+<p>
+\[F\cdot \hat{n} = -\int P\hat n  \cdot dS\]
+</p>
+<p>
+    We can again apply the divergence theorem
+</p>
+<p>
+\[F\cdot \hat{n} = -\int \nabla\cdot (P\cdot \hat n)  dV\]
+</p>
+<p>
+    We notice that \(\hat{n}\) does not vary with volume integration so we can pull it out
+</p>
+<p>
+    \[F\cdot \hat{n} = -\hat n \cdot \int \nabla\cdot P   dV\]
+    </p>
+    <p>
+        \[F = - \int \nabla\cdot P  dV\]
+    </p>
+    <p>
+        We can recall that a small unit of force being the following:
+    </p>
+    <p>
+    \[\frac{F}{m} = \frac{\nabla P}{\rho}\Delta V \Rightarrow \boxed{\frac{F}{m} = \frac{-\nabla P}{\rho}}\]
+</p>
+<p>
+    <B>Gravity</B>
+</p>
+<p>
+    Remember that for regular old Newtonian gravity that the gravitation potential is \(\Phi\) then the force from the scalar 
+    potential is the following:
+</p>
+<p>
+\[\frac{F}{m} = -  \nabla \Phi \]
+</p>
+<p>
+    We can go even further, because if we are within a Newtonian gravitational potential then we can have the following:
+</p>
+<p>
+    \[\nabla \Phi = \frac{-GM}{r^2}\hat r\]
+</p>
+<p>
+    We can integrate in the surface 
+</p>
+<p>
+\[\int \nabla \Phi dS=  \int\frac{-GM}{r^2}\hat r dS\]
+</p>
+<p>
+    Hit it again the the divergence theorem
+</p>
+<p>
+\[\int \nabla \cdot \nabla \Phi dV=  \int\frac{-GM}{r^2}\hat r dS\]
+\[\int \nabla^2 \Phi dV=  \int\frac{-GM}{r^2}\hat r dS\]
+</p>
+<p>
+    Recognize that we can just integrat the right hand side:
+</p>
+<p>
+\[\int \nabla^2 \Phi dV=  -4\pi GM \]
+\[\int \nabla^2 \Phi dV=  -4\pi G\int \rho dV \]
+\[\int \nabla^2 \Phi dV=  -\int4\pi G \rho dV \]
+</p>
+<p>
+    Recognize that the integrals inside must equal
+</p>
+<p>
+\[\boxed{\nabla^2 \Phi = -4\pi G \rho } \tag{a familiar Poisson equation}\]
+This will be used later on to solve the system of PDEs.
+</p>
+<p>
+    <B>Putting Momentum Equation Together...</B>
+</p>
+<p>
+    Let us smush all the forces together.
+</p>
+<p>
+    \[\boxed{\frac{\partial v}{\partial t} + (v\cdot \nabla)v = \frac{-1}{\rho }\nabla P - \nabla \Phi}\]
+</p>
+<p>
+<b>
+    An aside... 
+</b>
+</p>
+<p>
+    Note that in some textbooks we might introduce an upgraded version of <b>\(P\) pressure </b> to the <b>stress tensor \(T_{ij}\)</b>
+    The stress tensor is defined to the stress expericnced at the multiple faces of the fluid element cube. 
+    For example the stress/pressure experienced on the \(x, y\) face of the cube will be indexed in the matrix \(T_{xy}\). Each element 
+    of the tensor is defined in the following:
+</p>
+<p>
+\[T_{ij} = \overbrace{\rho v_iv_j}^{\text{ram pressure}} + \underbrace{\delta_{ij}P}_{\text{thermal pressure}}\]
+</p>
+<p>
+    What this is saying that pressure is made of two components, the component of the fluid moving and "ramming" into you is the ram pressure (bulk motion). 
+    While the thermal pressure is due to the internal heat of particles trying to escape. This makes the formalism of the derivative
+</p>
+<p>
+\[\partial_t (\rho v_i) = -\partial_j T_{ij} - \partial_j \Phi_j\]
+</p>
+<h4>
+    Energy Conservation
+</h4>
+<p>
+    <b>Thermodynamics Review</b>
+</p>
+<p>
+    We recall that the first law of thermal dynamic states the following that the heat exchange is defined by the following:
+    where the change in heat is related to the change of internal energy \(\epsilon\) and \(PdV\) is the work done.
+</p>
+<p>
+\[dQ = TdS = d\epsilon + PdV\]
+</p>
+<p>
+    We can also compute the specific heat. Specific heat is the heat gained per change in temperature \(T\) holding \(V\) volume or 
+    \(P\) pressure constant
+</p>
+<p> 
+\[C_V = (\frac{\partial Q}{\partial T})|_{V} = (\frac{\partial \epsilon }{\partial T})|_{V}   \]
+</p>
+<p>
+    We can rewrite the first law as the following we realise that from chain rule that 
+    \(d\epsilon = (\frac{d\epsilon}{dT})|_{V} dT + (\frac{d\epsilon}{dV})|_{T} dV\)
+</p>
+<p>
+\[dQ = C_VdT + (\frac{\partial \epsilon }{\partial V} + P)dV\]
+</p>
+<p>
+    The heat change while holding pressure constant is the same as the change in internal energy.
+</p>
+<p>
+\[C_P = (\frac{\partial Q}{\partial T})|_{P}  \]
+</p>
+<p><b>Ideal Gas Law</b> from high school chemistry is the following:</p>
+<p>
+\[PV = nk_B T\]
+\[P  = \frac{nk_B T}{V}\]
+<p>
+
+<p>
+    Take its derivative and hit it with a product rule
+</p>
+<p>
+\[PdV + VdP = nk_B dT\]
+</p>
+<p>
+    We can rearrange the first law
+</p>
+<p>
+    \[dQ = C_VdT + (\frac{\partial \epsilon }{\partial V} + P)dV\]
+    We notice that in ideal gas law circumstances that \(\frac{\partial \epsilon }{\partial V} = 0\) when holding Temperature constant.
+    This is because the internal energy is primarily kinetic energy and not intermolecular and so its nonchanging
+    \[dQ = C_VdT + PdV\]
+    We then plug in the ideal gas law
+    \[dQ = C_VdT + \frac{nk_B T}{V}dV\]
+
+</p>
+<p>
+    Now we assume the system is <b>adiabatic</b> meaning it does not exchange heat with the outside enviroment. This is reasonable because 
+    in space unless its a radiative process this should be satisfied.
+</p>
+<p>
+\[0= C_VdT + \frac{nk_B T}{V}dV\]
+\[-C_VdT = \frac{nk_B T}{V}dV\]
+\[-\int C_VdT = \int\frac{nk_B T}{V}dV\]
+\[-C_VT = nk_B T \ln V+\mathcal{C}_1\]
+\[-C_VT = nk_B T \ln V+\mathcal{C}_1\]
+\[e^{-C_VT} = Ve^{nk_B T} +\mathcal{C}_1\]
+\[T\propto V^{-nk_B/C_V}\]
+<!-- \[ \mathcal{C}_1 e^{\frac{nk_B T}{-C_VT}} = V\]
+\[ \mathcal{C}_1 e^{\frac{nk_B}{-C_V}} = V\] -->
+We can compute the specific heat while holding pressure constant as \(C_P = (\frac{\partial Q}{\partial T})|_{P} = (\frac{\partial Q}{\partial T})|_{V} + (\frac{\partial V}{\partial T})|_{P} =C_V +nk_B\) Through chain rule?
+</p>
+<p>
+    Now lets ge the pressure, recall the rearranged ideal gas
+\[ P  = \frac{nk_B T}{V} \propto \frac{T}{V} \propto  V^{-nk_B/C_V} /V \propto  V^{\frac{-nk_B}{C_V} -1} \propto V^{-\frac{C_P}{C_V}}\]
+Let us call \(\boxed{\gamma = \frac{C_P}{C_V}}\) this is called the <b>adiabatic index</b> and we know that if mass is constant we can hold 
+\(\rho \approx \frac{m}{V} \propto V^{-1}\) we cab say that
+\[P \propto \rho^\gamma\]
+Let us define the constant as \(K\) which is \(K =e^{S(\gamma-1)/k_B}\) related to entropy (not obvious we just have to keep track of coefficents etc). 
+\[\boxed{P = K \rho^{\gamma}} \tag{Equation of state!}\]
+
+</p>
+<p><b>Energy Equation</b></p>
+<p>
+    We can now write down the total energy (density). The sum of kinetic energy + gravitational potential + internal energy
+    \[E_{total} = \rho(\frac{1}{2}v^2 + \Phi + \epsilon)\]
+</p>
+<p>
+    To make it energy conserving we need to check that the <b>Lagrangian</b> derivative is 0.
+</p>
+<p>
+\[\frac{D E_{total}}{Dt} = \frac{D \rho}{Dt} (\frac{1}{2}v^2 + \Phi + \epsilon) + (\frac{D}{Dt}\frac{1}{2}v^2 + \frac{D}{Dt}\Phi +\frac{D}{Dt} \epsilon) \]
+\[\frac{D E_{total}}{Dt} = \frac{D \rho}{Dt} \frac{E}{\rho} + (2v\frac{D}{Dt}v + \frac{D}{Dt}\Phi +\frac{D}{Dt} \epsilon) \]
+</p>
+<p>
+    Now let us assemble the whole avengers team of equations. We reconize that the lagrangian of the <b>mass continuity</b> can be 
+    \(\frac{D\rho}{D t} + \rho \nabla \cdot v = 0 \) we can directly rearrange to get the largangian density derivative
+</p>
+<p>
+\[\frac{D E_{total}}{Dt} = -\rho \nabla \cdot v \frac{E}{\rho} + (2v\frac{D}{Dt}v + \frac{D}{Dt}\Phi +\frac{D}{Dt} \epsilon) \]
+</p>
+<p>
+    Let us then look at the <b>gravitational</b> term \(\frac{D}{Dt}\Phi = \frac{\partial}{\partial t}\Phi + v\cdot \nabla \Phi\)
+</p>
+<p>
+\[\frac{D E_{total}}{Dt} = -\rho \nabla \cdot v \frac{E}{\rho} + (v\frac{D}{Dt}v + (\frac{\partial}{\partial t}\Phi + v\cdot \nabla \Phi) +\frac{D}{Dt} \epsilon) \]
+</p>
+<p>
+    Now let us use the  <b>momentum equation</b>
+</p>
+<p>
+\[\frac{D E_{total}}{Dt} = -\rho \nabla \cdot v \frac{E}{\rho} + (v(\frac{-\nabla P}{\rho} + \nabla \Phi) + (\frac{\partial}{\partial t}\Phi + v\cdot \nabla \Phi) +\frac{D}{Dt} \epsilon) \]
+We can cross out the \(\nabla \Phi\) terms
+\[\frac{D E_{total}}{Dt} = -\rho \nabla \cdot v \frac{E}{\rho} + (v(\frac{-\nabla P}{\rho} ) + (\frac{\partial}{\partial t}\Phi ) +\frac{D}{Dt} \epsilon) \]
+</p>
+<p>
+    Now we need to tackle the \(\frac{D}{Dt} \epsilon\) term. Lets write this guy out from second law
+    \[dQ = d\epsilon + PdV\]
+    \[Q = \epsilon + \int PdV\]
+    \[\frac{DQ}{Dt} = \frac{D\epsilon}{Dt} + \int \frac{DP}{Dt} dV\]
+    The change in heat in respect to time is the cooling.
+    \[-\dot Q_{cool} = \frac{D\epsilon}{Dt} + \int \frac{DP}{Dt} dV\]
+    \[ \frac{D\epsilon}{Dt} = \int \frac{DP}{Dt} dV -  \dot Q_{cool} \]
+    We see that the pressure from the <b>equation of state</b> is \(P = K \rho^\gamma\)
+    \[ \frac{D\epsilon}{Dt} = \int \frac{D}{Dt}K \rho^\gamma dV -  \dot Q_{cool} \]
+  
+        We know that the density is related to the volume by the inverse
+        \[ \frac{D\epsilon}{Dt} = \int \frac{D}{Dt}K V^{-\gamma} dV -  \dot Q_{cool} \]
+Move the derivative outside
+    \[ \frac{D\epsilon}{Dt} =  \frac{D}{Dt}\int K V^{-\gamma} dV - \dot Q_{cool}\]
+    \[ \frac{D\epsilon}{Dt} =  \frac{D}{Dt} \frac{1}{-\gamma +1}K V^{-\gamma+1} - \dot Q_{cool}\]
+   We apply chain rule
+   \[ \frac{D\epsilon}{Dt} = \frac{\gamma}{-\gamma +1}K V^{-\gamma}  \frac{DV}{Dt}  - \dot Q_{cool}\]
+   \[ \frac{D\epsilon}{Dt} = \frac{\gamma}{-\gamma +1}K V^{-\gamma}  \frac{DV}{Dt}  - \dot Q_{cool}\]
+
+        Reconize that \(\rho \propto V^{-\gamma}\) and we can compute the derviative again
+        \[ \frac{D\epsilon}{Dt} = \frac{\gamma}{-\gamma +1}K \rho^\gamma \frac{D\rho^{-1}}{Dt}  - \dot Q_{cool}\]
+        Chain rule the density
+        \[ \frac{D\epsilon}{Dt} = \frac{\gamma}{-\gamma +1}K \rho^\gamma (-2)\rho^{-2}\frac{D\rho}{Dt}  - \dot Q_{cool}\]
+
+        \[ -\frac{D\epsilon}{Dt} = -\frac{K \rho^\gamma}{\rho^2}\frac{D\rho}{Dt}  + \dot Q_{cool}\]
+
+    \[ \frac{D\epsilon}{Dt} = \frac{P}{\rho^2 } \frac{D \rho}{Dt} -  \dot Q_{cool}\]
+
+</p>
+<p>
+    Let us put these back into the energy equation
+    \[\frac{D E_{total}}{Dt} = -\rho \nabla \cdot v \frac{E}{\rho} + (v(\frac{-\nabla P}{\rho} ) + (\frac{\partial}{\partial t}\Phi ) +\frac{P}{\rho^2 } \frac{D \rho}{Dt} -  \dot Q_{cool}) \]
+We write out the left hand side
+\[\frac{\partial E_{total}}{\partial t} + v\cdot \nabla E_{total}= -\rho \nabla \cdot v \frac{E}{\rho} + (v(\frac{-\nabla P}{\rho} ) + (\frac{\partial}{\partial t}\Phi ) +\frac{P}{\rho^2 } \frac{D \rho}{Dt} -  \dot Q_{cool}) \]
+Rearrange 
+\[\frac{\partial E}{\partial t}+ \nabla [(E+P)v] = \rho \frac{\partial \Phi}{\partial t}- \rho\dot Q_{cool}\]
+    If we define <b>Enthalpy \(H = \epsilon + PV\)</b> and define \(h = H/V\) as enthalpy density we do some algebruh and
+    \[\boxed{(E+P)v = \rho v(\frac{1}{2}v^2+\Phi + h)}\]
+</p>
+<div class="box">
+<h1>
+    Summary
+</h1>
+<p>
+    Assuming some fluid properties we have the following fundamental equations Mass Momentum and Equation of state / Energy conservation.
+</p>
+<p>
+\[\boxed{\frac{\partial \rho }{\partial t} + \nabla \cdot (\rho v) = 0} \tag{mass conservation}\]
+\[\boxed{\frac{\partial v}{\partial t} + (v\cdot \nabla)v = \frac{-1}{\rho }\nabla P - \nabla \Phi} \tag{momentum conservation}\]
+\[\boxed{P = K \rho^{\gamma}} \tag{Equation of state}\]
+\[\boxed{\nabla^2 \Phi = -4\pi G \rho } \tag{Poisson equation}\]
+
+\[\boxed{(E+P)v = \rho v(\frac{1}{2}v^2+\Phi + h)} \tag{energy conservation}\]
+</p>
+<P>
+    Remember these by heart as they will become critically important for the remainder of the course.
+</P>
+</div>
+<!-- \[dQ = d\epsilon + PdV\]
+\[d\epsilon =  PdV - dQ \]
+<p>
+    We can integrate through this
+</p>
+\[\epsilon =  PV - Q \] -->
+
+<footer style="text-align: center;">
+    <p>
+        Made by <a href="https://twitter.com/peterma02" >
+        @peterma02 </a>- 2024 ©
+    </p>
+</footer>
+
+</body>
+
+</html>
