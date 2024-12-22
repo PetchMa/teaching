@@ -7,6 +7,18 @@
     height: 180px;
     
 }
+.iframe-container {
+  display: flex;
+  justify-content: center; /* Horizontal centering */
+  align-items: center;    /* Vertical centering */
+  height: 100vh;          /* Full viewport height */
+  border: 2px solid black; /* Optional border for visibility */
+}
+
+iframe {
+  width: 560px;  /* Set iframe width */
+  height: 315px; /* Set iframe height */
+}
 .box {
   border: 2px solid #b80707; /* Border style: solid, width: 2px, color: black */
   padding: 20px;          /* Space between the content and the border */
