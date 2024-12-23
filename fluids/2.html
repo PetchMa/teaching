@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="shortcut icon" type="image/jpg" href="../img/favicon.ico"/>
+<title>Peter Ma</title>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-157223762-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-157223762-1');
+</script>
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<link rel="stylesheet" href="../css/style.css">
+<script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<!-- <script src="https://cdn.plot.ly/plotly-1.42.5.min.js"></script> -->
+<script src='js/d3.min.js'> </script>
+<script src="https://d3js.org/d3.v4.js"></script>
+<!-- <script src="js/plotly-latest.min.js"></script> -->
+<!-- Latest compiled and minified plotly.js JavaScript -->
+<script src="https://cdn.plot.ly/plotly-latest.min.js" charset="utf-8"></script>
+
+<!-- OR use a specific plotly.js release (e.g. version 1.52.3) -->
+<script src="https://cdn.plot.ly/plotly-1.52.3.min.js" charset="utf-8"></script>
+
+<!-- OR an un-minified version is also available -->
+
+
+<script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
+
+<!-- for testing with local version of cytoscape.js -->
+<!--<script src="../cytoscape.js/build/cytoscape.js"></script>-->
+
+<script src="https://unpkg.com/webcola/WebCola/cola.min.js"></script>
+
+<body style="transform: scale(0.9); transform-origin: 50% 0%;">
+<div class="page_setup">
+<div class="container">
+    <div class="row "  style="padding-top:2%!important ; padding-left: 10%; padding-right: 5%;">
+        <span class="peterma" style="color: #b80707; font-size: 300%;">
+            Astrophysical Fluids Lecture 2
+        </span>
+        <h4>
+            Peter Ma | Dec 22nd 2024
+        </h4>
+        <p>
+            This is the second lecture on astrophysical fluids and will be applying the equations derived in the previous lecture 
+            <a href="1.html">here</a> to obtain the few analytical solutions to the fluid equations. This is assuming 
+            hydrostatic equilibrium. 
+        </p>
+        <p>
+        <a href="../index.html"><< Back</a>
+        </p>
+        <div style="align-items: center;  ">
+        <iframe width="560" height="315" 
+        src="https://www.youtube.com/embed/2wOjHkaidtQ?si=-U4VLbnU4ec_bu-R" 
+        title="Lecture" frameborder="0" 
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+    </iframe>
+</div>
+        <h1>
+            Applications
+        </h1>
+        <h4>
+            Isothermal Atmosphere.
+        </h4>
+        <p>
+            Consider the setting of trying to model the atmosphere that is isothermal and is made of ideal gas on Earth.
+            Let us try and derive the properties, namely the densities of the fluid under equilibrium.
+        </p>
+        <p>
+            <b>Hydrostatic equilibrium</b> means that the force of the pressure balances the force of the 
+            gravity pulling it inwards:
+            \[\frac{-1}{\rho}\nabla P = \nabla \Phi\]
+        </p>
+        <p>
+            We use the fact that this is an ideal gas:
+            \[P = \frac{nk_BT}{V} = \frac{\rho k_BT}{\mu m_p }\]
+        </p>
+        <p>
+            We can use this in the hydrostatic equilibrium case
+            \[\frac{-1}{\rho}\nabla P = -\frac{1}{\rho}\nabla( \frac{\rho k_BT}{\mu m_p })\]
+            We can first notice that the only coordinate that varies is the height in the \(z\) 
+            direction 
+            \[\frac{-1}{\rho}\nabla P = -\frac{1}{\rho}  \frac{\rho k_BT}{\mu m_p }\frac{d}{dz}(\rho)\]
+         
+            We can then notice that we can undo the chain rule! Since \(\frac{d}{dz}\ln \rho = \frac{1}{\rho} \frac{d}{dz}\rho\)
+            \[\frac{-1}{\rho}\nabla P = - \frac{ k_BT}{\mu m_p }\frac{d}{dz}(\ln \rho)\]
+            This needs to equal the right hand side
+            \[- \frac{ k_BT}{\mu m_p }\frac{d}{dz}(\ln \rho) =  \nabla \Phi\]
+            \[- \frac{ k_BT}{\mu m_p }\frac{d}{dz}(\ln \rho) =  \frac{d}{dz}\Phi\]
+            \[- \frac{ k_BT}{\mu m_p }\frac{d}{dz}(\ln \rho) =  g\]
+                Integrate
+      
+            \[- \frac{ k_BT}{\mu m_p }(\ln \rho) =  gz + C\]
+            \[\boxed{\rho = \rho_0 e^{- \frac{g \mu m_p z }{ k_BT}}}\]
+        </p>
+        <p>
+            This is how the density of air changes in an hydrostatic atmosphere.
+        </p>
+        <h4>
+            Spherical Star
+        </h4>
+        <p>
+            In the setting of a spherical star we have spherically symmetrical. So let us apply our 
+            knowledge of continuity, momentum and equations of state. Let us first recall the mass gradient:
+            \[\frac{dM}{dr} = \frac{d}{dr} \int \rho dV\]
+            \[\frac{dM}{dr} = \int \frac{d}{dr} \rho dV\]
+            \[\frac{dM}{dr} = \int  4\pi \frac{d\rho}{dr} r^2 dr\]
+            \[\frac{dM}{dr} = \int  4\pi r^2 d\rho\]
+            \[\frac{dM}{dr} =  4\pi r^2\rho \]
+
+            Then we can look at hydrostatic equilibrium 
+            \[\frac{-1}{\rho}\nabla P = \nabla \Phi\]
+            We can then use the fact that this is a spherical symmetrical problem 
+            and knock out the other derivatives
+            \[\frac{-1}{\rho r}\frac{d}{d r}(P) =  \frac{1}{r}\frac{d  }{d r} \Phi\]
+            \[\frac{-1}{\rho }\frac{d }{d r}(P) =  \frac{d  }{dr} \Phi\]
+            We can notice something that rearranging the derivatives
+            \[\rho  =  -\frac{d P}{d \Phi} \]
+            This means that the pressure is only dependent on density (<b>Barytrope</b>)
+            Let us give the equation of state a <b>polytropic index</b>
+            \[P = K \rho^{1+ \frac{1}{n}}\]
+            Let us use this fact to get some understanding of \(\rho\) by subbing in the pressure
+            \[\frac{-1}{\rho r}\frac{d}{d r}( K \rho^{1+ \frac{1}{n}}) =  
+            \frac{-1}{\rho r} (1+\frac{1}{n})K \rho^{1/n} \frac{d\rho}{dr}\]
+            \[\Rightarrow 
+           -(1+\frac{1}{n})K \rho^{1/n-1} \frac{d\rho}{dr} = \frac{d  }{dr} \Phi\]
+           We can integrate this!
+           \[\rho = [\frac{\Phi_0-\Phi}{(n+1)K}]^n\]
+           Note we have boundary case when the density needs to fall off to 0 (edges) and at the center it needs to equal a constant
+           \[\rho = \rho_c[\frac{\Phi_0-\Phi}{\Phi_0 - \Phi_c}]^n\]
+            Let us define a variable \(\theta = \frac{\Phi_0-\Phi}{\Phi_0 - \Phi_c}\)
+            \[\boxed{\rho = \rho_c\theta^n}\]
+            \[\boxed{P = K\rho_c^{1+1/n}\theta^{n+1}}\]
+            <B>Return to the Hydrostatic equilibrium equation...</B>
+\[\]
+\[\frac{-1}{\rho }\frac{d }{d r}(P) =  \frac{d  }{dr} \Phi\]
+
+            Now we can take the derivative on both sides again!
+            \[ \frac{d}{dr}[\frac{-1}{\rho }\frac{d}{d r}(P)] = \frac{d}{dr}\frac{d  }{d r} \Phi\]
+            \[ \frac{d}{dr}[\frac{-1}{\rho }\frac{d}{d r}(P)] = \frac{d}{dr}\frac{Gm}{r^2}\]
+            Then we apply product rule
+            \[ \frac{d}{dr}[\frac{-1}{\rho }\frac{d}{d r}(P)] = \frac{-Gm}{r^3} - \frac{G}{r^2} \frac{dm}{dr}\]
+            We can then apply the gradient of the mass from before
+            \[ \frac{d}{dr}[\frac{-1}{\rho }\frac{d}{d r}(P)] = \frac{-Gm}{r^3} - \frac{G}{r^2} 4\pi \rho r^2\]
+            We reconize from the hydrostatic equilibrium we have the following
+            \[ \frac{d}{dr}[\frac{-1}{\rho }\frac{d}{d r}(P)] = -\frac{2}{r \rho}\frac{dP}{dr} -G 4\pi \rho\]
+            \[ \frac{d}{dr}[\frac{-1}{\rho }\frac{d}{d r}(P)] + \frac{2}{r \rho}\frac{dP}{dr}=  -G 4\pi \rho\]
+            We will now reverse the product rule by multiplying both sides by \(r^2\)
+            \[ r^2\frac{d}{dr}[\frac{-1}{\rho }\frac{d}{d r}(P)] + \frac{2r}{ \rho}\frac{dP}{dr}=  -G 4\pi r^2 \rho\]
+            Now we can undo the product rule
+            \[ \frac{d}{dr}[\frac{r^2}{\rho} \frac{dP}{dr}]=  -G 4\pi r^2 \rho\]
+            We will now try to replace these terms with information we already know namely the pressure and the 
+            density
+            \[ \frac{d}{dr}[\frac{r^2}{\rho_c \theta^n} \frac{d (K\rho_c^{1+1/n}\theta^{n+1})}{dr}]=  -G 4\pi r^2 \rho_c \theta^n\]
+            \[ \frac{d}{dr}[\frac{r^2 K\rho_c^{1+1/n}}{\rho_c \theta^n} \frac{d (\theta^{n+1})}{dr}]=  -G 4\pi r^2 \rho_c \theta^n\]
+            \[ \frac{d}{dr}[\frac{r^2 K\rho_c^{1+1/n}}{\rho_c \theta^n}\theta^{n} \frac{d \theta}{dr}]=  -G 4\pi r^2 \rho_c \theta^n\]
+            \[ \frac{d}{dr}[r^2 K\rho_c^{1/n}\theta^{n} \frac{d \theta}{dr}]=  -G 4\pi r^2 \rho_c \theta^n\]
+            <b>New constant...</b>
+            \[\]
+            We will now define a new constante 
+            \(\alpha^2 = \frac{(n+1)K\rho_c^{1/n-1}}{4\pi G}\) and define \(r = a \cdot \xi\)
+            \[ \frac{d}{dr}[\frac{(n+1)K\rho_c^{1/n-1}}{4\pi G} \xi^2 K\rho_c^{1/n}\theta^{n} \frac{d \theta}{dr}]=  -G 4\pi \frac{(n+1)K\rho_c^{1/n-1}}{4\pi G} \cdot \xi^2 \rho_c \theta^n\]
+            \[ \frac{d}{dr}[\frac{(n+1)K\rho_c^{1/n}}{4\pi G} \xi^2 K\theta^{n} \frac{d \theta}{dr}]=  -(n+1)K\rho_c^{1/n} \cdot \xi^2  \theta^n\]
+            \[ \frac{d}{dr}[\frac{1}{4\pi G} \xi^2 K\theta^{n} \frac{d \theta}{dr}]=  - \xi^2  \theta^n\]
+            Recall we can also replace the \(dr =\alpha d\xi \)
+            \[\frac{1}{\alpha}  \frac{d}{d\xi}[\frac{1}{4\pi G} \xi^2 K\theta^{n} \frac{1}{\alpha}  \frac{d \theta}{d\xi}]=  - \xi^2  \theta^n\]
+            \[  \frac{d}{d\xi}[\frac{1}{4\pi G} \xi^2 K\theta^{n} \frac{1}{\alpha^2}  \frac{d \theta}{d\xi}]=  - \xi^2  \theta^n\]
+            \[  \frac{d}{d\xi}[\xi^2 K\theta^{n}  \frac{1}{(n+1)K\rho_c^{1/n-1}}  \frac{d \theta}{d\xi}]=  - \xi^2  \theta^n\]
+            \[  \frac{d}{d\xi}[\xi^2 \theta^{n}  \frac{1}{(n+1)\rho_c^{1/n-1}}  \frac{d \theta}{d\xi}]=  - \xi^2  \theta^n\]
+            \[  \frac{d}{d\xi}[\xi^2 \frac{d \theta}{d\xi}]=  - \xi^2  \theta^n\]
+            \[ \boxed{\frac{1}{\xi^2}\frac{d}{d\xi}[\xi^2 \frac{d \theta}{d\xi}]=  - \theta^n}\]
+            This is the famous Lane-Emden equation! We can see when the index \(n=2\) this can actually be solved. and like wise this admits analytical solutions.
+            <b>
+                Boundary Conditions
+            </b>
+            We notice that this needs to satisfy a few boundary conditions.  \[\]
+            At the center we must have
+            \[\theta(\xi =0) = 1\] 
+            \[\frac{d\theta}{d\xi}= 0\] 
+            On the surface we must have 
+            \[\theta(\xi_{max}) = 0\]
+            <b>
+                Mass-Radius relationship
+            </b>
+            We notice that from the definiton of the radius we have a dependence on density!
+            \[r \propto \rho_c^{1/2(1/n-1)}\]
+            We can extend this to the Mass
+            \[M = \int \rho dV\]
+            \[M = \int_0^R 4\pi r^2\rho dr\]
+            We can add in the density
+            \[M = 4\pi \rho_c \left[ \frac{4\pi G}{(n+1)K} \rho_c^{1-1/n}\right]^{-3/2}\int_0^{\xi_{max}} \theta^n \xi^2d\xi\]
+            The integral is some unitless quantity so we dont care about it
+            \[\boxed{M \propto R^{(n-3)/(n-1)}}\]
+
+
+            <!-- We can apply product rule and compute the left hand side
+            \[ (\frac{d}{dr}\frac{-1}{\rho })\frac{d P}{d r} -\frac{1}{\rho } \frac{d^2P}{d r^2} = \frac{-Gm}{r^3} +G 4\pi \rho\]
+            \[ (\frac{1}{\rho^2 } \frac{d\rho}{dr})\frac{d P}{d r} -\frac{1}{\rho } \frac{d^2P}{d r^2} = \frac{-Gm}{r^3} +G 4\pi \rho\]
+            We reconize from the equations above that \(\frac{1}{\rho } \frac{d^2P}{d r^2} = \frac{d}{dr} \nabla \Phi \)
+            \[ (\frac{1}{\rho^2 } \frac{d\rho}{dr})\frac{d P}{d r}  = G 4\pi \rho\]
+            Multiply by \(r^2\) 
+            \[ (\frac{1}{\rho^2 } \frac{d\rho}{dr})\frac{d P}{d r}  = G 4\pi r^2 \rho\] -->
+
+
+        </p>
+        <h1>
+            Bernoulli's Principle.
+        </h1>
+        <p>
+            This last section is an investigation on Bernoulli's principle! Firstly recall the momentum 
+            equations:
+
+            \[\frac{\partial v}{\partial t} + (v\cdot \nabla v) + \frac{1}{\rho}\nabla P + \nabla \Phi = 0\]
+            We reconize that we can write the following vector identity
+            \[(v\cdot \nabla v) = \nabla(\frac{1}{2}v^2) - v\times \nabla \times v\]
+            Let us then denote a "vorticity" \(\omega = \nabla \times v\)
+            We can also assume that we have <b>steady flow \(\Rightarrow \frac{d}{dt} = 0\)</b>
+            \[\nabla(\frac{1}{2}v^2) - v\times \omega + \frac{1}{\rho}\nabla P + \nabla \Phi = 0\]
+            \[\nabla(\frac{1}{2}v^2 + \frac{1}{\rho}P + \Phi)- v\times \omega = 0\]
+            We see that if we flow <B>ALONG THE STREAM</B> we project into the flow direction
+            \[v \cdot \nabla(\frac{1}{2}v^2 + \frac{1}{\rho}P + \Phi)-  v\cdot v\times \omega = 0\]
+            \[v \cdot \nabla(\frac{1}{2}v^2 + \frac{1}{\rho}P + \Phi) = 0\]
+            We notice that the center term is conserved
+            \[\mathcal{B} = \frac{1}{2}v^2 + \frac{1}{\rho}P + \Phi\]
+            We notice that the pressure term can be written as interms of internal energy assuming we are along the flow line
+            since entropy does not change here we can use enthalpy 
+            \(dh = TdS + \frac{dP}{\rho}\)
+            \[\mathcal{B} = \frac{1}{2}v^2 + h + \Phi\]
+            Does not change.
+            In general then we see that if we are in the direction of the flow then (fluid does not rotate)
+            \[\boxed{\nabla \mathcal{B} = 0}\]
+
+        </p>
+        
+
+<!-- <div class="box">
+<h1>
+    Summary
+</h1>
+<p>
+    Assuming some fluid properties we have the following fundamental equations Mass Momentum and Equation of state / Energy conservation.
+</p>
+<p>
+\[\boxed{\frac{\partial \rho }{\partial t} + \nabla \cdot (\rho v) = 0} \tag{mass conservation}\]
+\[\boxed{\frac{\partial v}{\partial t} + (v\cdot \nabla)v = \frac{-1}{\rho }\nabla P - \nabla \Phi} \tag{momentum conservation}\]
+\[\boxed{P = K \rho^{\gamma}} \tag{Equation of state}\]
+\[\boxed{\nabla^2 \Phi = -4\pi G \rho } \tag{Poisson equation}\]
+
+\[\boxed{(E+P)v = \rho v(\frac{1}{2}v^2+\Phi + h)} \tag{energy conservation}\]
+</p>
+<P>
+    Remember these by heart as they will become critically important for the remainder of the course.
+</P>
+</div> -->
+<!-- \[dQ = d\epsilon + PdV\]
+\[d\epsilon =  PdV - dQ \]
+<p>
+    We can integrate through this
+</p>
+\[\epsilon =  PV - Q \] -->
+
+<footer style="text-align: center;">
+    <p>
+        Made by <a href="https://twitter.com/peterma02" >
+        @peterma02 </a>- 2024 ©
+    </p>
+</footer>
+
+</body>
+
+</html>
