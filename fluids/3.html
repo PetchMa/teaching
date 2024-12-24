@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="shortcut icon" type="image/jpg" href="../img/favicon.ico"/>
+<title>Peter Ma</title>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-157223762-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-157223762-1');
+</script>
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<link rel="stylesheet" href="../css/style.css">
+<script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<!-- <script src="https://cdn.plot.ly/plotly-1.42.5.min.js"></script> -->
+<script src='js/d3.min.js'> </script>
+<script src="https://d3js.org/d3.v4.js"></script>
+<!-- <script src="js/plotly-latest.min.js"></script> -->
+<!-- Latest compiled and minified plotly.js JavaScript -->
+<script src="https://cdn.plot.ly/plotly-latest.min.js" charset="utf-8"></script>
+
+<!-- OR use a specific plotly.js release (e.g. version 1.52.3) -->
+<script src="https://cdn.plot.ly/plotly-1.52.3.min.js" charset="utf-8"></script>
+
+<!-- OR an un-minified version is also available -->
+
+
+<script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
+
+<!-- for testing with local version of cytoscape.js -->
+<!--<script src="../cytoscape.js/build/cytoscape.js"></script>-->
+
+<script src="https://unpkg.com/webcola/WebCola/cola.min.js"></script>
+
+<body style="transform: scale(0.9); transform-origin: 50% 0%;">
+<div class="page_setup">
+<div class="container">
+    <div class="row "  style="padding-top:2%!important ; padding-left: 10%; padding-right: 5%;">
+        <span class="peterma" style="color: #b80707; font-size: 300%;">
+            Astrophysical Fluids Lecture 3
+        </span>
+        <h4>
+            Peter Ma | Dec 23rd 2024
+        </h4>
+        <p>
+            In this lecture we derive properties of waves with and without gravity playing a role. 
+            In previous lecture 
+            <a href="2.html">here</a> we looked at static settings. But today we will like at gravity waves 
+            that move. This will look at using spectral methods and linear perturbation theory to obtain dispersion relations.
+        </p>
+        <p>
+        <a href="../index.html"><< Back</a>
+        </p>
+        <div style="align-items: center;  ">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/ELAWp4XlihM?si=MV8jK1dqSL2rOwFj" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</div>
+        <h4>
+            Fourier Transforms
+        </h4>
+        <p>
+            When approaching hard PDEs we tend to want to apply the fourier transform to convert a differential 
+            equation into an algebraic one which we have tools to solve. To see how this does so consider the foureir transform: 
+            \[F[f(t)] = \int f(t) e^{-iwt}dt\]
+        </p>
+
+        <p>
+            Now let us consider the derivative:
+            \[F[\frac{\partial f(t)}{\partial t}] = \int\frac{\partial f(t)}{\partial t}e^{-iwt}dt\]
+            Apply integration by parts \(dv = \frac{\partial f(t)}{\partial t} dt\) and \(u = e^{-iwt}\)
+            we can write \(v = f(t)\)and  \(du = -iw e^{-iwt}dt\)
+            \[F[\frac{\partial f(t)}{\partial t}] =f(t)e^{-iwt}|_{-\infty}^\infty - \int -iwf(t) e^{-iwt}dt \]
+            We say that the function vanishes \(f \to 0\) at large ends
+            \[F[\frac{\partial f(t)}{\partial t}] = iw\int f(t) e^{-iwt}dt \]
+            \[F[\frac{\partial f(t)}{\partial t}] = iwF[f(t)] \]
+            This can be repeated for spatial index as well but with a component of \(k\) and a change of sign.
+        </p>
+
+        <h1>
+            Waves
+        </h1>
+        <h4>
+           Sound Waves
+        </h4>
+        <p>
+            Consider a static medium with no gravity. We can consider perturbed quantities with zeroth and first order 
+            terms:
+            \[\rho = \rho_0 + \rho_1 \quad P = P_0 + P_1\]
+            \[\Phi = \Phi_0+ \Phi_1 \quad v = v_0 + v_1\]
+
+            Remember for our case there is no gravity and so we can obtain our fluid equations. Firstly 
+            for mass conservation
+            \[\frac{\partial \rho}{\partial t} + \nabla (\rho v) = 0\]
+            \[\frac{\partial (\rho_0 + \rho_1) }{\partial t} + \nabla ((\rho_0 + \rho_1)(v_0 + v_1)) = 0\]
+            We reconize that initially the fluid is not moving and so \(v_0 = 0\)
+            \[\frac{\partial (\rho_0 + \rho_1) }{\partial t} + \nabla ((\rho_0 + \rho_1)( v_1)) = 0\]
+            \[[\frac{\partial \rho_0  }{\partial t} + \nabla (\rho_0  v_1)] + [\frac{\partial \rho_1  }{\partial t} + \nabla (\rho_1  v_1)]= 0\]
+            By linear perturbation theory we need to group terms of similar order with each other and make them individually satisfy the PDE. This is 
+            to match scales.
+            \[\frac{\partial \rho_0  }{\partial t} + \nabla (\rho_0  v_1) =0  \]
+            \[\frac{\partial \rho_1  }{\partial t} + \nabla (\rho_1  v_1)= 0\]
+            But we realise that \(\rho_0\) is just a constant and so the zeroth order is trivially satisfied. We also realise that 
+            there are 2 higher order terms multiplied and so those also cancel to zero as they vanish.
+            \[\nabla (\rho_0  v_1) =0  \]
+            \[\frac{\partial \rho_1  }{\partial t} = 0\]
+            Combined to our first order term is
+            \[\boxed{\frac{\partial \rho_1  }{\partial t} + \nabla (\rho_0  v_1)= 0}\]
+            Let us continue but with momentum equation:
+            \[\frac{\partial v}{\partial t} + (v \cdot \nabla v) = \frac{-1}{\rho}\nabla P - \nabla \Phi\]
+            Remember that there is no gravity in this problem. 
+            \[\frac{\partial v_1}{\partial t} + (v_1 \cdot \nabla v_1) = \frac{-1}{\rho}\nabla (P_0+P_1)\]
+            Cross out the higher order term.
+            \[\frac{\partial v_1}{\partial t}  = \frac{-1}{\rho}\nabla (P_0+P_1)\]
+            We need to match the correct orders
+            \[\frac{\partial v_1}{\partial t}  = \frac{-1}{\rho}\nabla P_1\]
+            Now we can compute the time derivative on both sides of the continuity equation
+            \[\frac{\partial }{\partial t}\frac{\partial \rho_1  }{\partial t} + \frac{\partial }{\partial t}\nabla (\rho_0  v_1)= 0\]
+            \[\frac{\partial }{\partial t}\frac{\partial \rho_1  }{\partial t} + \nabla (\rho_0  \frac{\partial }{\partial t}v_1)= 0\]
+            Replace with momentum equation
+            \[\frac{\partial }{\partial t}\frac{\partial \rho_1  }{\partial t} + \nabla (\rho_0 \frac{-1}{\rho}\nabla P_1 )= 0\]
+            \[\frac{\partial^2 \rho_1  }{\partial t^2} =  -\nabla^2 P_1\]
+            Recall that this is in a setting where this is an ideal gas and so \(P = P(\rho)\)
+            \[\frac{\partial^2 \rho_1  }{\partial t^2} = -\frac{\partial P}{\partial \rho} \nabla^2 \rho\]
+            We define the sound speed to be 
+            \(v_s = \sqrt{\frac{\partial P}{\partial \rho}}\)
+            \[\frac{\partial^2 \rho_1  }{\partial t^2} = -v_s^2\nabla^2 \rho_1\]
+            We can now hit both sides with the fourier transform to obtain 
+            \[\boxed{w^2 = -v_s^2 k^2}\]
+            We notice that the phase speed 
+            \[v_p = \frac{w}{k} = v_s i\]
+            \[v_g = \frac{dw}{dk} = -v_s^2\]
+            And so they are non despersive.
+            Lastly let us try to get velocity
+            \[\frac{\partial v_1}{\partial t}  = \frac{-1}{\rho}\nabla P_1\]
+            We can approach this by  rewriting in terms of density 
+            \[\frac{\partial v_1}{\partial t}  = \frac{-v_s}{\rho}\nabla \rho_1\]
+            We try the fourier transform to obtain
+            \[iwv_1 = \frac{-v_s\rho_1}{\rho_0}ik\]
+            \[\boxed{wv_1 = \frac{-v_s\rho_1}{\rho_0}k}\]
+            We see that none of these depend on \(k\) values explicitly and thus all in phase.
+            \[\]
+            <b>Comment:</b>  Dispersion relations are very important in understanding the physics and nature 
+            of these complex systems. They help unravel any stabilities or instabilities at long time 
+            horizons and how properties that depend on time scales \(w\) relate to length scales \(k\).
+
+        </p>
+        <h4>
+            Gravity waves, surface water waves
+        </h4>
+        <p>
+            Now let us explore the case where there IS gravity. Let us assume that we are at hydrostatic equilibrium.
+        
+            \[\frac{-1}{\rho_0}\nabla P_0 = \nabla \Phi\]
+            \[\frac{-1}{\rho_0}\nabla P_0 = gz\]
+            We integrate since pressure is only depth (\(z\)) dependent we can just obtain: where \(P_s\) is the surface.
+            \[ P_0 = P_s - \rho gz\]
+
+
+            We can then continue with our first order equations 
+            \[\nabla v_1 = 0 \tag{1st order mass eq.}\]
+            \[\frac{\partial v_1}{\partial t} = - \frac{-1}{\rho_0}\nabla P_1 \tag{1st order mom. eq}\]
+            We apply the same trick and take the derivative on both sides of the mass equation:
+            \[\nabla \frac{\partial}{\partial t}v_1 = 0 \]
+            \[\nabla \frac{\partial v_1}{\partial t} = - \frac{-1}{\rho_0}\nabla^2 P_1 \]
+            This time we have the following:
+            \[- \frac{-1}{\rho_0}\nabla^2 P_1  = 0\]
+            \[\nabla^2 P_1  = 0\]
+            We can then look at this and guess that this has some wave property:
+
+            \[P_1 \propto e^{i(kx - wt))} f(z)\]
+            We can try and solve for \(f(z)\)
+            \[i^2k^2 e^{i(kx - wt))} f(z) + e^{i(kx - wt))} \frac{d^2}{dz^2}f(z) = 0\]
+            \[i^2k^2 f(z) +\frac{d^2}{dz^2}f(z) = 0\]
+            We can then rearrange the 
+            \[\boxed{\frac{d^2}{dz^2}f(z) = -k^2 f(z) \tag{harmonic ocillator}}\]
+            This is can be solved with:
+            \[f(z) \propto e^{\pm kz}\]
+            We can be given boundary conditions, such as at the bottom of the wave \(-H\) the pressure change 
+            must drop to zero.
+            \[\frac{\partial P_1}{\partial z}|_H = 0 \Rightarrow \frac{\partial f}{\partial z}|_H = 0\]
+            Since we know that the only way to satisfy this is if we have the sum of the solutions:
+            \[f(z) = A (e^{k(z+H)} - e^{-k(z+H)}) = A \cosh[k(z+H)]\]
+            This means pressure is of the following form: 
+            \[P_1 = A e^{i(kx - wt))} \cosh[k(z+H)]\]
+            We can then plug this back into momentum equation
+            \[\frac{\partial v_1}{\partial t} = - \frac{-1}{\rho_0}\nabla P_1\]
+            \[\frac{\partial v_{1x}}{\partial t} = - \frac{-1}{\rho_0}  \frac{\partial }{\partial x}A e^{i(kx - wt))} \cosh[k(z+H)]\]
+            integrating out we get 
+            \[\boxed{\partial v_{1x} = - \frac{k}{w\rho_0}A e^{i(kx - wt))} \cosh[k(z+H)]}\]
+            We can repeat and plug in to the z values
+            \[\frac{\partial v_{1z}}{\partial t} = - \frac{-1}{\rho_0}  \frac{\partial }{\partial z}A e^{i(kx - wt))} \cosh[k(z+H)]\]
+            \[\boxed{\frac{\partial v_{1z}}{\partial t} = - \frac{-k}{iw\rho_0}  A e^{i(kx - wt))} \sinh[k(z+H)]}\]
+            If we only focused on the vertical displacement velocity 
+            \[v_z(z= 0) =- \frac{-k}{iw\rho_0} A e^{i(kx - wt))} \sinh[kH] \]
+            \[\xi = \int v_z(z=0) dt = \frac{k}{w^2\rho_0}Ae^{i(kx-wt)}\sinh(kH)\]
+
+            Finally to get the dispersion relation we notice we can get the LAGRANGIAN perturbation of the pressure and 
+            satisfy the boundary condition that 
+            \[P_{1,L} = P_1 + \xi \cdot \nabla P_0 =0\]
+            Plugging things in we get 
+            \[A e^{i(kx - wt))} \cosh[k(z+H)] + \frac{k}{w^2\rho_0}Ae^{i(kx-wt)}\sinh(kH) \nabla P_0 =0\]
+            Use the momentum zeroth order equation
+            \[A e^{i(kx - wt))} \cosh[k(z+H)] + \frac{k}{w^2\rho_0}Ae^{i(kx-wt)}\sinh(kH) \rho g  =0\]
+            Simplifying gives us
+            \[\boxed{w^2  = kg \tanh(kH)}\]
+            We see that this does depend on k and thus is dispersive and it has two limits 
+            one where it is \(w = \sqrt{kg}\) for shallow water and one where it is \(w = k\sqrt{gH}\) for deep water
+
+        </p>
+        
+
+
+<footer style="text-align: center;">
+    <p>
+        Made by <a href="https://twitter.com/peterma02" >
+        @peterma02 </a>- 2024 ©
+    </p>
+</footer>
+
+</body>
+
+</html>
