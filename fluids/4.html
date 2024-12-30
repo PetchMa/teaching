@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="shortcut icon" type="image/jpg" href="../img/favicon.ico"/>
+<title>Peter Ma</title>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-157223762-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-157223762-1');
+</script>
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<link rel="stylesheet" href="../css/style.css">
+<script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<!-- <script src="https://cdn.plot.ly/plotly-1.42.5.min.js"></script> -->
+<script src='js/d3.min.js'> </script>
+<script src="https://d3js.org/d3.v4.js"></script>
+<!-- <script src="js/plotly-latest.min.js"></script> -->
+<!-- Latest compiled and minified plotly.js JavaScript -->
+<script src="https://cdn.plot.ly/plotly-latest.min.js" charset="utf-8"></script>
+
+<!-- OR use a specific plotly.js release (e.g. version 1.52.3) -->
+<script src="https://cdn.plot.ly/plotly-1.52.3.min.js" charset="utf-8"></script>
+
+<!-- OR an un-minified version is also available -->
+
+
+<script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
+
+<!-- for testing with local version of cytoscape.js -->
+<!--<script src="../cytoscape.js/build/cytoscape.js"></script>-->
+
+<script src="https://unpkg.com/webcola/WebCola/cola.min.js"></script>
+
+<body style="transform: scale(0.9); transform-origin: 50% 0%;">
+<div class="page_setup">
+<div class="container">
+    <div class="row "  style="padding-top:2%!important ; padding-left: 10%; padding-right: 5%;">
+        <span class="peterma" style="color: #b80707; font-size: 300%;">
+            Astrophysical Fluids Lecture 4
+        </span>
+        <h4>
+            Peter Ma | Dec 29th 2024
+        </h4>
+        <p>
+            In this lecture we cover the very basics of supersonic shock fronts and the physics behind them and look at applying these relations 
+            to an example of a supernova explosion.
+        </p>
+        <p>
+        <a href="../index.html"><< Back</a>
+        </p>
+        <div style="align-items: center;  ">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/ic_ZcyPBsVU?si=Hhyzr5zWANTJgDzn" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+        <h1>
+            Shocks
+        </h1>
+        <p>
+           Shocks occur when there is an object traveling faster than the fluid velocity. 
+           The fluid velocity as we recall described from before is the change in the pressure (pressure wave) in 
+           response to the changes in density. This we define as: 
+           \[v_s^2 = \frac{\partial P}{\partial \rho}\]
+           Since there is not enough time for the fluid to "react" to the shock as its traveling at supersonic speeds this 
+           introduces a jump condition and a boundary introduces two areas called a <b>pre-shock</b> (\(\rho_1, P_1,v_1,T_1 \cdots\)) 
+           and <b>post-shock</b> (\(\rho_2, P_2,v_2,T_2 \cdots\)). The <b>goal:</b> is to be able to relate pre and post shock 
+           quantities with one another. Often times in real life problems one might only have access to one or the other measurements 
+           and thus can reveal additional insight about the physics that occur. To do this we introduce a simplification call the 
+           Rankine-Hugoniot Relations
+        </p>
+        <h4>
+            Rankine-Hugoniot Relations (Adibatic shock condition)
+        </h4>
+        <p>
+            There are a number of assumptions. Firstly we assume the system is in <b>steady state</b> as most shocks tends 
+            to be meaning there is no accumulation of mass, momentum or energy in any particular area. We also assume it is adiabatic 
+            and thus has the Adibatic equation of state. This gives the first relation of mass
+            \[\]
+            <b>Mass Relation</b>
+            \[\frac{\partial \rho}{\partial t} + \nabla \rho v = 0\]
+            Steady state so no time derivative
+            \[ \nabla \rho v = 0\]
+            Assume this is 1-D problem...
+            \[ \frac{\partial }{\partial x}\rho v = 0\]
+            Notice there is no spatial change and thus across the shock front we have:
+            \[\boxed{\rho_1 v_1 = \rho_2 v_2}\]
+            <b>Momentum Relation</b>
+            \[\frac{\partial v}{\partial t} + v \cdot \nabla v = \frac{-1}{\rho} \nabla P - \nabla \Phi\]
+            Assume it steady state and that there is no gravtiy and it is 1-D
+            \[v_x \cdot \frac{\partial }{\partial x}v_x = \frac{-1}{\rho} \frac{\partial }{\partial x} P \]
+            \[\rho v_x\frac{\partial }{\partial x}v_x =-\frac{\partial }{\partial x} P \]
+            Recall that \(\frac{\partial }{\partial x}\rho v = 0\) so we can add "0" into the equation which is \(v_x\frac{\partial }{\partial x}\rho v_x \)
+            \[v_x\frac{\partial }{\partial x}\rho v_x + \rho v_x\frac{\partial }{\partial x}v_x =-\frac{\partial }{\partial x} P \]
+            Reverse the product rule to get:
+            \[\frac{\partial }{\partial x}\rho v_x^2 =-\frac{\partial }{\partial x} P \]
+            \[\frac{\partial }{\partial x}[\rho v_x^2 + P] = 0 \]
+            This means that 
+            \[\boxed{\rho_1 v_1^2 + P_1 = \rho_2 v_2^2 + P_2}\]
+            <b>
+                Energy relation
+            </b>
+            Recall that this is adiabatic and this \(P = k\rho^\gamma\). We also recall that internal energy is the following from 
+            first law
+            \[dQ = d\epsilon + P dV\]
+            Assume it is adiabatic 
+            \[0 = d\epsilon + P dV\]
+            \[d\epsilon  = -P dV\]
+            Integrate
+            \[\epsilon  = - \int P dV\]
+            \[\epsilon  = - \int k\rho^\gamma dV\]
+            We recall that this was proportional to \(V^{-\gamma}\) call that constant \(A\)
+            \[\epsilon  = - \int kA(V)^{-\gamma} dV\]
+            \[\epsilon  = -\frac{1}{-\gamma +1} k A(V)^{-\gamma+1} \]
+            \[\epsilon  = \frac{1}{\gamma - 1} k A(V)^{-\gamma}V \]
+            Rewrite things interms of pressure and density
+            \[\epsilon  = \frac{1}{\gamma - 1} \frac{P}{\rho}\]
+            Now recall the energy conservation
+            \[\frac{d}{dx}\left(\rho(\frac{1}{2}v^2 + \epsilon) +P \right)v = - \rho \dot Q_{cool}\]
+            Recall its adiabatic 
+            \[\frac{d}{dx}\left(\rho\frac{1}{2}v^2 + \rho\epsilon +\frac{P}{\rho} \right)v = 0\]
+            \[\frac{d}{dx}\left(\rho\frac{1}{2}v^2 +  \frac{\rho}{\gamma -1} \frac{P}{\rho}+\frac{P}{\rho} \right)v = 0\]
+            Collect the terms
+            \[\frac{d}{dx}\left(\rho\frac{1}{2}v^2 +  \frac{\gamma}{\gamma -1} \frac{P}{\rho}\right)v = 0\]
+            This means that 
+            \[\rho_1 v_1\left(\frac{1}{2}v_1^2 +  \frac{\gamma}{\gamma -1} \frac{P_1}{\rho_1}\right) = \rho_2 v_2\left(\frac{1}{2}v_2^2 +  \frac{\gamma}{\gamma -1} \frac{P_2}{\rho_2}\right)\]
+            Based on mass equations we can simplify both sides 
+            \[\left(\frac{1}{2}v_1^2 +  \frac{\gamma}{\gamma -1} \frac{P_1}{\rho_1}\right) = \left(\frac{1}{2}v_2^2 +  \frac{\gamma}{\gamma -1} \frac{P_2}{\rho_2}\right)\]
+            We then recall that the definition of speed of sound is 
+            \[v_s^2 = \frac{\partial P}{\partial \rho} = k\frac{\partial \rho^\gamma}{\partial \rho} = \frac{\gamma P}{\rho}\]
+            So we can replace again
+            \[\boxed{\left(\frac{1}{2}v_1^2 +  \frac{1}{\gamma -1}v_{1s}^2\right) = \left(\frac{1}{2}v_2^2 +  \frac{1}{\gamma -1} v_{1s}^2\right)}\]
+           Now our goal is to isolate and combine these equations such that we can relate each of these functions.
+           <b>Step 1: define conserved quantity</b>
+           \[\boxed{j \equiv \rho_1 v_1 = \rho_2 v_2}\]
+           <b>Step 2: momentum equation</b>
+           \[\rho_1 v_1^2 + P_1 = \rho_2 v_2^2 + P_2\]
+           \[\rho_1 v_1^2 - \rho_2 v_2^2  =  + P_2- P_1\]
+            Recall \(\rho_1 v_1 = \rho_2 v_2 \Rightarrow  v_1 = \frac{\rho_2 v_2}{\rho_1}\)
+            \[\rho_1 (\frac{\rho_2 v_2}{\rho_1})^2 - \rho_2 v_2^2  =   P_2- P_1\]
+            \[\frac{\rho_2^2 v_2^2}{\rho_1}- \rho_2 v_2^2  =   P_2- P_1\]
+            \[\rho_2^2 v_2^2 (\frac{1 }{\rho_1} - \frac{1}{\rho_2})   =   P_2- P_1\]
+            \[\rho_2^2 v_2^2   =   \frac{P_2- P_1}{\frac{1 }{\rho_1} - \frac{1}{\rho_2} }\]
+            Recall that this is just the square
+            \[\boxed{j^2  =   \frac{P_2- P_1}{\frac{1 }{\rho_1} - \frac{1}{\rho_2} }}\]
+            <b>
+                Step 3: Energy equations
+            </b>
+            \[\boxed{\frac{\rho_2}{\rho_1} = \frac{(\gamma -1)P_1 + (\gamma +1)P_2}{(\gamma +1)P_1 + (\gamma -1)P_2} = \frac{v_1}{v_1}}\]
+            <b>
+                This allows us to obtain the following equations that tell us about the relation within and outside the shock front (with a lot of algebra..)
+            </b>
+            \[\boxed{\frac{\rho_2}{\rho_1} =\frac{v_1}{v_2} = \frac{\gamma +1}{\gamma -1 + \frac{2}{M^2_1}}} \]
+            \[\boxed{\frac{P_2}{P_1} = \frac{2\gamma M_1^2 - (\gamma -1)}{\gamma +1 }} \]
+            \[\boxed{M_2^2 = \frac{(\gamma -1)M_1^2+2}{2\gamma M_1^2- (\gamma -1) }} \]
+        </p>
+        <p>
+            <b>
+                Strong Shock Limit \(M_1 >> 1\)
+            </b>
+            For the first equation \(\frac{2}{M^2_1} \to 0\)
+            \[\boxed{\frac{\rho_2}{\rho_1} =\frac{v_1}{v_2} = \frac{\gamma +1}{\gamma -1}} \]
+            We see the first term dominates 
+            \[\boxed{\frac{P_2}{P_1} = \frac{2\gamma M_1^2 }{\gamma +1 }} \]
+            We see the domiate terms are the power
+            \[M_2^2 = \frac{(\gamma -1)M_1^2}{2\gamma M_1^2 } \]
+            \[\boxed{M_2^2 = \frac{\gamma -1}{2\gamma  }} \]
+            We also reconize that the temperature doesnt change throughout the front and thus can get the temperature as well 
+            \[\boxed{T_2 = \frac{2(\gamma -1)}{(\gamma +1)^2}\frac{\mu m_p}{k_B}v_1^2}\]
+            This is from idea gas law.
+        </p>
+        <h4>
+            Sedov-Taylor similarity solution
+        </h4>
+        <p>
+            These expressions are quite simple. Consider a blast wave traveling out in a sphere outwards radially. 
+            We want to know how does the shock front of the blast travel as related with energy etc. A blast wave is when 
+            all the material is concentrated in a thing shell which is the following:
+            \[\frac{4}{3} \pi R^3 \rho_1 = \frac{4}{3} \pi  \rho_2((R+D)^3 -R^3 ) \]
+            If it is small thin shell then
+            \[\frac{4}{3} \pi R^3 \rho_1 = \frac{4}{3} \pi   \rho_2 R^3(\frac{(R+D)^3}{R^3} - 1) \]
+            \[\frac{4}{3} \pi R^3 \rho_1 = \frac{4}{3} \pi   \rho_2 R^3((1+\frac{D}{R})^3 - 1) \]
+            \[\frac{4}{3} \pi R^3 \rho_1 \approx \frac{4}{3} \pi   \rho_2 R^3((1+\frac{3D}{R}) - 1) \]
+            \[\frac{4}{3} \pi R^3 \rho_1 \approx 4 \pi   \rho_2 R^2 D \]
+            Rearrange for the thickness
+            \[D \approx \frac{R}{3} \frac{\rho_1}{\rho_2} = \frac{\gamma -1}{3(\gamma +1)}R\]
+        </p>
+        <p>
+            We see that the shell is thin. We can calculate some of its properties: 
+            \[\]
+            <b>Kinetic Energy</b>
+            \[\frac{1}{2} m v_1^2 =\frac{1}{2}\frac{4}{3} \pi R^3 \rho_1 \cdot \dot R^2 \propto \rho_1R^5 t^{-2}\]
+            <b>
+                Internal Energy
+            </b>
+            \[PV  =\frac{1}{\gamma-1 }\frac{2}{\gamma +1}\rho_1v_1^2 \cdot 4\pi R^2 D\propto \rho_1R^5t^{-2}\]
+            <b>
+                Total Energy
+            </b>
+            \[E \propto \rho_1 R^5 t^{-2}\]
+        </p>
+        <p>
+            Solving we have the following:
+            \[\boxed{R(t) = A (\frac{E}{\rho})^{1/5}t^{2/5}}\]
+        </p>
+        
+        <p>
+            <b>
+                This only works when the following is satisfied:
+            </b>
+            <ol>
+                <li>
+                    When energy loss is unimportant still and the shocks slow to \(M_1 > 1\)
+                </li>
+                <li>
+                    When the time is the swept-up mass is larger than the mass of the ejecta but still on the same order.
+                </li>
+            </ol>
+            Overall: describe the flow when the shock wave has moved through a distance that is extremely large when compared to the size of the explosive
+        </p>
+        <h4>
+            Supernovae Explosions
+        </h4>
+        <p>
+            We can then apply our problem to the death of stars in a supernova explosion. Let us try to solve for the radius of 
+            the explosion. 
+            \[\]
+            <b>Energy:</b> can be derived from observation 
+            \[E = 10^{51}ergs \]
+            <b>Mass: </b> can also be derived from observations such as binaries. In this case lets say its a massive star 
+            \[M = 10M_\odot\]
+            <b>Solve for velocity</b>
+            \[E = \frac{1}{2}Mv^2 \Rightarrow v = \sqrt{2E/M} = 5000km/s \approx 0.02c\]
+            Let us say that the density of the shock is the same as the interstellar medium which we make out to be
+            \[\rho = 10^{-24}g/cm^{3}\]
+            This gives us the radius of expansion to be 
+            \[R(t) =0.3 pc (\frac{E}{10^{51}ergs})^{1/5} (\frac{\rho}{10^{-24}g/cm^{3}})^{-1/5} (\frac{t}{3\times 10^{7}s})^{2/5}\]
+
+        </p>
+        <h4>
+            Self-similar solutions...
+        </h4>
+        <p>
+            The interesting element about the Sedov-Taylor Expressions is the existence of self similar solutions. These solutions 
+            are places where there is no characteristic length scale meaning the solutions are <b>scale invariant</b>. For our equations 
+            you can choose to define a unitless quantity \(\xi\) where we have 
+            \[\xi = \frac{r}{R(t)}\]
+            We can get the following unitless velocity , density,and pressure with unitless dependence:
+            \[V(\xi) = \frac{5tv}{2r}, \quad G(\xi) = \frac{\rho}{\rho_0}, \quad Z(\xi) = \frac{25 t^2 c^2}{4r^2}\]
+            By substituting these self-similar variables into the governing equations will lead to three ordinary differential equations which are really hard to solve so 
+            I will just not do them....
+        </p>
+<footer style="text-align: center;">
+    <p>
+        Made by <a href="https://twitter.com/peterma02" >
+        @peterma02 </a>- 2024 ©
+    </p>
+</footer>
+
+</body>
+
+</html>
