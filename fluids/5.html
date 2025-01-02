@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="shortcut icon" type="image/jpg" href="../img/favicon.ico"/>
+<title>Peter Ma</title>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-157223762-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-157223762-1');
+</script>
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<link rel="stylesheet" href="../css/style.css">
+<script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<!-- <script src="https://cdn.plot.ly/plotly-1.42.5.min.js"></script> -->
+<script src='js/d3.min.js'> </script>
+<script src="https://d3js.org/d3.v4.js"></script>
+<!-- <script src="js/plotly-latest.min.js"></script> -->
+<!-- Latest compiled and minified plotly.js JavaScript -->
+<script src="https://cdn.plot.ly/plotly-latest.min.js" charset="utf-8"></script>
+
+<!-- OR use a specific plotly.js release (e.g. version 1.52.3) -->
+<script src="https://cdn.plot.ly/plotly-1.52.3.min.js" charset="utf-8"></script>
+
+<!-- OR an un-minified version is also available -->
+
+
+<script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
+
+<!-- for testing with local version of cytoscape.js -->
+<!--<script src="../cytoscape.js/build/cytoscape.js"></script>-->
+
+<script src="https://unpkg.com/webcola/WebCola/cola.min.js"></script>
+
+<body style="transform: scale(0.9); transform-origin: 50% 0%;">
+<div class="page_setup">
+<div class="container">
+    <div class="row "  style="padding-top:2%!important ; padding-left: 10%; padding-right: 5%;">
+        <span class="peterma" style="color: #b80707; font-size: 300%;">
+            Astrophysical Fluids Lecture 5
+        </span>
+        <h4>
+            Peter Ma | Jan 1st 2025
+        </h4>
+        <p>
+            In this lecture we cover instabilities that arise in various astrophysical settings. This includes the 
+            collapsing stars (Jean's instabilities), Stellar Jets (Rayleigh Taylor and Kelvin Helmholtz instabilities) 
+            as well as stabilities of rotation disks like galaxies.
+            Instabilities are a critical component in understanding dynamical systems and how they behave over long time 
+            horizons.
+        </p>
+        <p>
+        <a href="../index.html"><< Back</a>
+        </p>
+        <div style="align-items: center;  ">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/l8F8J_EuphM?si=u9C5IbfqhuGN89ze" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>        </div>
+        <h1>
+            Instabilties
+        </h1>
+        <p>
+           The key to understanding the physics of instabilities is to look at the <b>dispersion relation</b> of a model system. 
+           Dispersion relation relates how length-like scales to time-like scales which reveal places of stabilities. The usual framework 
+           is take a complex set of linearly perturbed PDE's and to combine them into one equation and then transforming it into Fourier 
+           space to look at how spatial wavelengths relate to time scales. A complex time scale indicates solutions are real and thus have 
+           exponential trends which lead to instabilities while real time scales result in ocillator solutions which are stable. Let us 
+           put this into practice...
+        </p>
+        <h4>
+            Jeans' Instabilities (Collapsing Gas/Stars)
+        </h4>
+        <p>
+            Jean's instabilities arise from the UNBALANCED force between pressure and self gravtiy. Consider the following perturbed 
+            quantities to which we can then plug into our fluid equations: 
+            \[\rho = \rho_0 + \rho_1, \quad v = v_1 \quad P = P_0 + P_1 \quad \Phi = \Phi_0 + \Phi_1\]
+            <b>Mass conservation</b>
+            \[\frac{\partial }{\partial t}[\rho_1+\rho_0] + \nabla [(\rho_1+\rho_0)v_1] = 0\]
+            Zeroth order is constant and multiplication of first order term is zero
+            \[\boxed{\frac{\partial }{\partial t}\rho_1 + \nabla \rho_0 v_1 = 0}\]
+            <b>
+                Momentum conservation 
+            </b>
+            \[\frac{\partial v_1}{\partial t} + v_1 \cdot \nabla v_1 = - \frac{1}{\rho_0+\rho_1}\nabla (P_1+P_0) - \nabla (\Phi_0+\Phi_1)\]
+            Kill off the constant term and the higher order multiplication 
+            \[\boxed{\frac{\partial v_1}{\partial t}  = - \frac{1}{\rho_0}\nabla P_1 - \nabla \Phi_1}\]
+            <b>
+                Poission equation
+            </b>
+            \[\boxed{\nabla^2 \Phi_1 = 4\pi G\rho_1}\]
+            We can merge the mass and momentum equations take the gradient of momentum eq and take the time derivative of the mass
+            \[\frac{\partial}{\partial t} \frac{\partial }{\partial t}\rho_1 = -  \rho_0\frac{\partial}{\partial t}\nabla  v_1 \]
+            \[\frac{\partial }{\partial t}  \nabla v_1 = - \frac{1}{\rho_0}\nabla^2 P_1 - \nabla^2 \Phi_1\]
+            The two gives:
+            \[\frac{\partial^2 \rho_1}{\partial t^2} = - \nabla^2 P_1 - \rho_0\nabla^2 \Phi_1\]
+            Recall that the speed of the fluid is  \(v_s^2 = \frac{\partial P_1}{\partial \rho_1} \Rightarrow v_s^2 \nabla^2 \rho_1 = \nabla^2 P_1\)
+            \[\boxed{\frac{\partial^2 \rho_1}{\partial t^2} =  v_s^2\nabla^2 \rho_1 + 4\pi G \rho_1\rho_0}\]
+            We also added the poission equation in. This gives us a <b>driven wave equation!</b>
+            We can apply the fourier transform and obtain the dispersion relation
+            \[i^2w^2 \hat\rho_1= v_s^2 i^2 k^2 \hat\rho_1 + 4\pi G \rho_0\hat\rho_1 \]
+            \[-w^2 = -v_s^2k^2 + 4\pi G \rho_0 \]
+            \[\boxed{w^2 = v_s^2k^2 - 4\pi G \rho_0 }\]
+            We see there are two settings 
+            \[\]
+            <b>Instability:</b> occurs when \(w\) is <b>complex</b> because this would mean the exponential term of \(\rho\) will have a real value 
+            power which determines growth over time. Thus a critical value is 
+            \[w^2 = 0 \Rightarrow k_{J} = \sqrt{\frac{4\pi G \rho_0}{v_s^2}} \]
+            and so when \(k> k_{J} \Rightarrow w^2 < 0\) thus unstable.
+            \[\]
+            <b>Stability</b> occurs when there is real value of \(w\)
+            \[k< \sqrt{\frac{4\pi G \rho_0}{v_s^2}} \]
+            Here \(k\) is the wavenumber which converted to physical units is \(\lambda_J = \frac{1}{k_J}\) is the 
+            Jean's length. This admits an oscillatory behaviour which makes it stable.
+            \[\]
+            <b>
+                Physical Intuition:
+            </b>
+             We can also derive this without solving the full fluid equations: Consider the force density of gravity:
+             \[\frac{F_g}{V} \approx \frac{GM}{R^2} \rho \approx \frac{G}{R} \rho^2\]
+             Now consider the force density due to pressure 
+             \[\frac{F_p}{V} \approx \nabla P \approx v_s^2 \nabla \rho \approx v_s^2 \frac{\rho}{R}\]
+            We compare the size of each and reconize that gravity is dominate when \(R > \sqrt{\frac{v_s^2}{G\rho }}\) which is close!
+            \[\]
+            We can also look at the free fall timescales 
+            \[t_f \approx \sqrt{2R/a} = \sqrt{R^3/GM} \approx 1/\sqrt{G\rho}\]
+            While the time for the sound is to travel is 
+            \[t_s = R/v_s\]
+            And thus gravity wins when the time of free fall is larger than the time of sound travel. 
+            This makes sense because 
+        </p>
+        \[\]
+        \[\]
+        <h4>
+            Rotational Instabilities
+        </h4>
+        <p>
+            Rotating discs are everywhereeeeeeeee in the universe. And thus its important to understand the physics behind 
+            rotating discs of gas. Let us consider a thin razor blade of a disc only in 2d plane: We define density as 
+            \(\Sigma\)
+
+            \[\Sigma = \Sigma_0+\Sigma_1 \quad v = v_1 \quad P = P_0 + P_1 \quad \Phi = \Phi_0 + \Phi_1\]
+
+            We can then plug into our equations yet again! (We follow the same way of cutting off terms as we just did)
+            <b>Mass conservation</b>
+       
+            \[\boxed{\frac{\partial }{\partial t}\Sigma_1 + \nabla \Sigma_0 v_1 = 0}\]
+            <b>
+                Momentum conservation 
+            </b> but we include the <b>Corriollis force!</b>
+            \[\frac{\partial v_1}{\partial t}  = - \frac{1}{\Sigma_0}\nabla P_1 - \nabla \Phi_1 - 2\Omega \times v_1 +\Omega^2 (x\hat x + y \hat y)\]
+            We can kill of the last term because we are 
+            \[\boxed{\frac{\partial v_1}{\partial t}  = - \frac{1}{\Sigma_0}\nabla P_1 - \nabla \Phi_1 - 2\Omega \times v_1 }\]
+            <b>
+                Poission equation
+            </b> we make it a razor blade by multiplying it be \(\delta\) function.
+            \[\boxed{\nabla^2 \Phi_1 = 4\pi G\Sigma_1\delta(z)}\]
+            We can then consider taking the fourier transform in one of the cartessian coordinate directions, let us choose \(x\)
+            This means that for each solution either \(\Sigma_1, v_1, \rho_1, P_1 \) will have the following form:
+            \[X_1 = \hat X_1 e^{i(kx-wt)}\]
+            All except for gravity which has the following form 
+            \[\Phi_1 = \Phi_1(k) f(z)  e^{i(kx-wt)}\] 
+            We can hit it with the Laplace equation and get that
+            \[\frac{\partial^2 }{\partial z^2}\Phi_1 = \Phi_1(k) \frac{\partial^2 }{\partial z^2}f  e^{i(kx-wt)} + \Phi_1(k)f \frac{\partial^2 }{\partial z^2}  e^{i(kx-wt)} = 0\]
+            \[\frac{\partial^2 }{\partial z^2}\Phi_1 = \frac{\partial^2 }{\partial z^2}f  -k^2f     = 0\]
+            Which has a known solution of the following form: 
+            \[f \propto e^{\pm k |z|}\]
+            But since we want gravity to die as we go to far distances we only keep the negative term and keep the constatn 
+            inside the \(\Phi(k)\) term.
+            \[\Phi_1 = \Phi_1(k)e^{i(kx-wt)} e^{-k|z|}\] 
+            Now we need to satisfy the boundary condition when we get close to the plate the difference in the fields must be \(2E\)
+            like the parrallel plates in Electromagnetism
+            \[4\pi G \Sigma_1(k)e^{i(kx-wt)} = \frac{\partial \Phi_1}{\partial z}|_{0+} - \frac{\partial \Phi_1}{\partial z}|_{0-}\] 
+            \[4\pi G \Sigma_1(k)e^{i(kx-wt)} = -2k\Phi_1(k) e^{i(kx-wt)}\]
+            \[\Phi_1(k) = -2\pi G/k \Sigma_1(k)\] 
+            <b>Fourier Space</b>
+            \[-iw \Sigma_1+ ik\Sigma_0 v_1x = 0 \tag{mass conser.}\]
+            \[-iw v_{1x}+ \frac{ikv_s^2}{\Sigma_0} \Sigma_1 - 2\pi iG \Sigma_1 - 2\Omega v_{1y} = 0 \tag{Momentum}\]
+            \[-iw v_{1y}+2\Omega v_{1x} = 0\]
+            Do some algebruhhhhhh to get the dispersion relation which is a quadratic form.
+            \[\boxed{w^2  = v_s^2-2\pi G\Sigma_0k + 4\Omega^2}\]
+            
+            <b>
+                Physics:
+            </b>
+            There are a number of interesting settings:
+            <ol>
+                <li>
+                    No Gravity: We see that dispersion relation always omits stable solutions at all wavelengths
+                </li>
+                <li>
+                    Gravity + Pressure, we see it goes back to the Jeans instability setting  (short wavelengths)
+                </li>
+                <li>
+                    Gravity + Rotation, Disk is unstable for long wavelengths
+                </li> 
+                <li>
+                    Only Gravtiy: disc is unstable for long wavelengths 
+                </li>
+                <li>
+                    Everything: Pressure stablises short while rotation stablises long wavelengths. The stability criterion is  
+                    \[\boxed{\frac{v_s\Omega}{G \Sigma_0} > \pi/2}\]
+                    This comes from the fact that we can complete the square in our quadratic expression. 
+                </li>
+                <li>
+                    Differential rotating disc we can replace \(\Omega(R)\) with epicyclic frequency \(\kappa \) where its defined as 
+                    \[\kappa^2 = R \frac{\partial \Omega}{\partial R}\Omega^2 + 4 \Omega^2\]
+                    We chose this \(\kappa\) to basically subtract off the differential term in the expansion of \(\Omega(R)\) . This gives a new 
+                    criterion of  
+                    \[\boxed{Q = \frac{v_s\kappa}{\pi G \Sigma_0}> 1}\]
+                </li>
+            </ol>
+
+        </p>
+        \[\]
+        \[\]
+        <h4>
+            Rayleigh-Taylor Instabilities (Stellar Jets, Supernova etc)
+        </h4>
+        <p>
+            Studying how fluids of different densities interact with one another is the focus of Rayleigh-Taylor and 
+            Kelvin Helmholtz instabilities. Let us define a top fluid with \(+\) and the bottom fluid as \(-\). 
+            We also assume the fluid is <b>incompressible and steady</b>. Together 
+            we have our usual suspects (this time we assume its in hydrostatic equilibrium):
+            \[\rho_+ = \rho_{1+}+\rho_{0+} \quad P_+ = P_{1+}+ P_{0+} \quad v_+ = v_{1+}+ v_{0+} \]
+            \[\rho_- = \rho_{1-}+\rho_{0-} \quad P_- = P_{1-}+ P_{0-} \quad v_- = v_{1-}+ v_{0-} \]
+            To balance gravity we have
+            \[P_{0+} = \rho_{0+} g z + C_+ \]
+            \[P_{0-} = \rho_{0-} g z + C_+ \]
+            Consider the equation for the first perturbed quantity 
+            \[\]
+            <b>Mass Equation:</b> it is steady and so the time derivative vanishes and we can divide by sides by \(\rho_{0\pm}\)
+            \[\nabla v_1 = 0\]
+            <b>
+                Momentum equation:
+            </b> we have no higher order terms and thus 
+            \[\frac{\partial v_1}{\partial t}  = \frac{1}{\rho_0}\nabla P_1\]
+            \[\nabla\frac{\partial v_1}{\partial t}  = \nabla\frac{1}{\rho_0}\nabla P_1\]
+            use mass equation
+            \[\frac{\partial \nabla v_1}{\partial t}  = \frac{1}{\rho_0}\nabla^2 P_1\]
+            \[ \nabla^2 P_1 = 0\]
+            Solving for the Laplace equation for pressure gives possible solutions:
+            \[P_1 = Ae^{i(kx-wt)}(Be^{-k|z|}+ Ce^{k|z|})\]
+            Then simply taking the derivative and then time integrating 
+            \[v_1 = \frac{ki}{w\rho_0}Ae^{i(kx-wt)}(Be^{-k|z|}+ Ce^{k|z|})\]
+            We can then assume that the pressure term dies at large distances away from the surface. So for the top and bottom 
+            we have
+            \[P_{+1} = Ae^{i(kx-wt)}(Be^{-k|z|})\]
+            \[v_{+1} = \frac{kiP_{+1}}{w\rho_{0+}}\]
+            \[P_{-1} = Ae^{i(kx-wt)}(Be^{k|z|})\]
+            \[v_{-1} = \frac{kiP_{-1}}{w\rho_{0}}\]
+            The vertical displacement is defined by 
+            \[\frac{d\xi}{dz} = v_{1z}\]
+            Integrate
+            \[\xi = \frac{i}{w}v_{1z}\]
+            Here we have a surface tension force (which needs to balance the upward push from the bottom) This is the lagrangian 
+            form!
+            \[F(\xi) = P_{+1,L} -T \frac{\partial^2\xi}{\partial z^2} = P_{-1,L}\]
+            The left hand lagrangian is :
+            \[P_{+1,L} = P_{+1}+ \xi \cdot \nabla P_{+0}\]
+            \[P_{+1,L} = Ae^{i(kx-wt)}(Be^{-k|z|})+\frac{i}{w}v_{1+z} \cdot \nabla \rho_{0+} g z + C_+\]
+            \[P_{+1,L} = \frac{-iw}{k}\rho_{0+}v_{1+z}+\frac{i}{w}v_{1+z} \cdot \rho_{0+} g \]
+            \[P_{+1,L} = \frac{-iw}{k}\rho_{0+}v_{1+z}(1+\frac{gk}{w^2}) \]
+            Ok now we do the right hand side...(repeat...)
+            \[P_{-1,L} = \frac{iv_{1-z} \rho_{-0}w}{k}(1- \frac{gk}{w^2})\]
+            We can then hit the PDE from before with FT and get our dispersion relation 
+            \[-i \rho_{+0}\frac{w}{k}(1 + \frac{gk}{w^2}) + T \frac{ik^2}{w} =i\rho_{-0}\frac{w}{k}(1-\frac{gk}{w^2})\]
+            \[\boxed{(\rho_{+0} +\rho_{-0}) w^2 = (\rho_{-0} -\rho_{+0})gk +Tk^3}\]
+            <b>
+                Some situations:
+            </b>
+            <ol>
+                <li>
+                    Fluid on top is less dense, then Fluid always stable (duh)
+                </li>
+                <li>
+                    Fluid on top is very not dense \(\Rightarrow\) deep water waves capillary 
+                </li>
+                <li>
+                    Denser fluid ontop- Instability occurs
+                    \[k^2 < k_{crit}^2 = \frac{g(\rho_{+0} - \rho_{-0})}{T}\]
+                </li>
+                <li>
+                    No surface tension, 
+                    \[w^2 = \frac{(\rho_{+0} - \rho_{-0})}{(\rho_{+0} + \rho_{-0})} gk\]
+                    <b>
+                        Rayleigh Taylor Dispersion
+                    </b> and if fluid on top is denser than its always unstable everywhere
+                </li>
+                <li>
+                    The equivalence for accelerating lighter material through denser material also produces an effective \(g\) which 
+                    can create instabilities! (Crab Nebula)
+                </li>
+            </ol>
+        </p>
+        <h4>
+            Kelvin-Helmholtz Instabilities
+        </h4>
+        <p>
+            This is when the fluid has relative velocity with each other at the boundary which addes a phase to the dispersion relation 
+            \[\boxed{(\rho_{+0}(w-kv_{+1})^2 +\rho_{-0}(w-kv_{-1})^2)  = (\rho_{-0} -\rho_{+0})gk +Tk^3}\]
+            With some algebruhhhhhh we get another relation 
+            \[k > \frac{(\rho_{-0}^2 -\rho_{+0}^2 )g}{\rho_{-0}\rho_{+0}(v_{+0} - v_{-0})^2}=k_{crit}\]
+            <b>More physics</b>
+            <ol>
+                <li>
+                    With surface tension present shortest wavelength modes are stable
+                </li>
+                <li>
+                    No gravity all modes are UNSTABLE!(like stellar jets!)
+                </li>
+                <li>
+                    when density at the bottom is large the only unstable modes are short modes, and if they are probable on similar orders 
+                    but the bottom is still larger then Rayleigh taylor is stable but Kelvin Helmholtz unstable example being 
+                    billow clouds!
+                </li>
+            </ol>
+        </p>
+<footer style="text-align: center;">
+    <p>
+        Made by <a href="https://twitter.com/peterma02" >
+        @peterma02 </a>- 2024 ©
+    </p>
+</footer>
+
+</body>
+
+</html>
