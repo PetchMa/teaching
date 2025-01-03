@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="shortcut icon" type="image/jpg" href="../img/favicon.ico"/>
+<title>Peter Ma</title>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-157223762-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-157223762-1');
+</script>
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<link rel="stylesheet" href="../css/style.css">
+<script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<!-- <script src="https://cdn.plot.ly/plotly-1.42.5.min.js"></script> -->
+<script src='js/d3.min.js'> </script>
+<script src="https://d3js.org/d3.v4.js"></script>
+<!-- <script src="js/plotly-latest.min.js"></script> -->
+<!-- Latest compiled and minified plotly.js JavaScript -->
+<script src="https://cdn.plot.ly/plotly-latest.min.js" charset="utf-8"></script>
+
+<!-- OR use a specific plotly.js release (e.g. version 1.52.3) -->
+<script src="https://cdn.plot.ly/plotly-1.52.3.min.js" charset="utf-8"></script>
+
+<!-- OR an un-minified version is also available -->
+
+
+<script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
+
+<!-- for testing with local version of cytoscape.js -->
+<!--<script src="../cytoscape.js/build/cytoscape.js"></script>-->
+
+<script src="https://unpkg.com/webcola/WebCola/cola.min.js"></script>
+
+<body style="transform: scale(0.9); transform-origin: 50% 0%;">
+<div class="page_setup">
+<div class="container">
+    <div class="row "  style="padding-top:2%!important ; padding-left: 10%; padding-right: 5%;">
+        <span class="peterma" style="color: #b80707; font-size: 300%;">
+            Astrophysical Fluids Lecture 6
+        </span>
+        <h4>
+            Peter Ma | Jan 2nd 2025
+        </h4>
+        <p>
+            In this lecture we will finally arrive at the full Navier Stokes Equation (or at least all the major players) by introducing 
+            viscosity. 
+        </p>
+        <p>
+        <a href="../index.html"><< Back</a>
+        </p>
+        <div style="align-items: center;  ">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/2I4apyHiibI?si=EKGBMLQcdDZ1twkY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>   
+        </div>
+        <h1>
+            Viscosity
+        </h1>
+        <p>
+           To understand what viscosity is it is effectively momentum diffusion. It takes time for the interaction with the surface to transfer 
+           upwards through the fluid. This takes time and at different length scales. Consider the fluid moving with velocity \(v_y\) in the \(y\)
+           direction. This is parallel to the surface. The height is in the \(x\) direction. The slab can be defined between \(x, x+\Delta x\) thickness with 
+           a \(yz\) planar area of \(A\). We define the mean free path as \(l\) which is the average distance a particle travels before hitting 
+           another particle.
+        </p>
+        <p>
+            With these variables in place we can define the momentum transfer 
+            \[p_y = m (v_y(x+l/2) - v_y(x-l/2))\]
+            This is the momentum coming from above and from below. Here \(m\) is the mass of each particle
+            \[p_y = m (v_y(x+l/2) - v_y(x-l/2))\]
+            \[p_y = m \frac{\partial v_y}{\partial x}l\]
+            Now we need to consider the speed at which the momentum is being transfered. We know that each particle has an average 
+            \(v_{therm}\) thermal velocity which is approximately \(v = \sqrt{k_BT/m}\) and since the number of particles crossing the slab is 
+            \(nAv_{therm}\) we can define the 
+            \[\dot p_y(x) = m \frac{\partial v_y}{\partial x}l (nAv_{therm})\]
+            We can define the net force then as 
+            \[F_y = \dot p_y(x+\Delta x) - \dot p_y(x) \approx \frac{\partial \dot p_y}{\partial x} \Delta x\]
+            We compute this derivative
+            \[F_y \approx \frac{\partial }{\partial x} (m \frac{\partial v_y}{\partial x}l (nAv_{therm}))\Delta x\]
+            \[F_y \approx  A\Delta x\frac{\partial }{\partial x}(m \frac{\partial v_y}{\partial x}l (nv_{therm}))\]
+            We can define a few new terms
+            \[\nu = l v_{therm} \tag{kinematic visc}\]
+            \[\eta = \rho \nu \tag{dynamic visc}\]
+            \[\sigma_{yx} = \eta \frac{\partial v_y}{\partial x}\tag{visc. shear}\]
+            This gives us the force per unit volume as
+            \[\frac{F_y}{A \Delta x} = \frac{\partial \sigma_{yx}}{\partial x}\]
+            This is specific to our problem setup so its time to make this more generic
+        </p>
+       <h4>
+        Viscous Shear Tensor
+       </h4>
+       <p>
+        Let us assume that the viscuous tensor is spanned by a linear combination of various velocity gradients. Which are the individual 
+        cross gradients (the first two) and the individual gradient. We want to find what these linear combinations are:
+        \[\sigma_{ij} = \eta(\partial_j v_i + \alpha \partial_i v_j + \beta \delta_{ij}\partial_k v_k)\]
+        Note we used the Einstein summation notation for the last index. 
+        \[\]
+        To find what these are we need to look at limiting cases.
+        \[\]
+        <ol>
+            <li>
+                Uniformally rotating rigid body. We see that \(\sigma_{xy} = 0\). Yet we know it has some rotation \(\Omega\) frequency. 
+                \(v = R\Omega = (-y\hat x + x \hat y )\Omega\) Then coming the viscuous term: 
+                \[ \sigma_{xy} = \eta(\partial_y v_x + \alpha \partial_x v_y + \beta \delta_{yx}\partial_k v_k) \]
+                \[ \sigma_{xy} = \eta(\partial_y v_x + \alpha \partial_x v_y) \]
+                \[ \sigma_{xy} = \eta(1 - \alpha ) = 0 \]
+                \[\alpha = 1\]
+            </li>
+            <li>
+                Consider Uniform expansion outwards \(v = x\hat x + y \hat y\) then we can look at the diagonal term 
+                \[\sigma_{xx} = \eta(\partial_x v_x +  \partial_x v_x + \beta \delta_{xx}\partial_k v_k) \]
+                \[\sigma_{xx} = \eta(1 +  1 + \beta \delta_{yx}(1+1+1) = 0 \]
+                \[\sigma_{xx} = \eta(2+ 3\beta ) = 0 \]
+                \[\beta = -2/3\]
+            </li>
+        </ol>
+        
+       </p>
+       <p>
+        We have thus arrived at the viscous tensor
+        \[\boxed{\sigma_{ij} = \eta(\partial_j v_i + \partial_i v_j - \frac{2}{3} \delta_{ij}\partial_k v_k)}\]
+
+       </p>
+       <h4>
+        Navier Stokes Equation
+       </h4>
+       <p>
+        Let us arrive at the full Navier Stokes equation in all of its glory! We can now define the stress tensor as the following, recall from before 
+        \[T_{ij} = (\rho v_iv_j + \delta_{ij}P - \sigma_{ij})\]
+        The first componet is the <b>ram pressure</b> and the second component is the <b>thermal pressure</b> the last component is the 
+        viscous stress. To rewrite this in a more familiar notation we can say:
+        \[\sigma_{ij} = \eta (\frac{\partial v_i}{\partial v_j} +\frac{\partial v_j}{\partial v_i}   - \frac{2}{3}\delta_{ij}\nabla v  )\]
+        Since if we wish to add this into the momentum equation we need to take the gradient of this 
+        \[\partial_j \sigma_{ij} = \eta ( \nabla\frac{\partial v_i}{\partial v_j} +\frac{\partial v_j}{\partial v_i}   - \frac{2}{3}\delta_{ij}\nabla v   )\]
+        \[\partial_j \sigma_{ij} = \nu(\nabla^2 v+ \frac{1}{3}\nabla (\nabla \cdot v))\]
+        We now add this to the momentum equation 
+        \[\boxed{\frac{\partial v}{\partial t} + v \nabla \cdot v  = \frac{-1}{\rho}\nabla P - \nabla \Phi + \nu(\nabla^2 v+ \frac{1}{3}\nabla (\nabla \cdot v))}\]
+        <b>
+            Physics
+        </b>
+        <ol>
+            <li>
+                In most settings the fluid is incompressible at which \(\nabla (\nabla \cdot v)) = 0\) and we just have 
+                \[\boxed{\frac{\partial v}{\partial t} + v \nabla \cdot v  = \frac{-1}{\rho}\nabla P - \nabla \Phi + \nu\nabla^2 v}\]
+
+            </li>
+            <li>
+                In the setting when we have NOTHING else and the advection term is small, no gravity or pressure we recover the 1-d diffusion equation
+                \[\boxed{\frac{\partial v}{\partial t}  = \nu\nabla^2 v}\]
+                with solution 
+                \[v = \frac{1}{\sqrt{t \nu}}e^{-\frac{x^2}{4\nu t}}\]
+            </li>
+            <li>
+                Sometimes there is bulk viscosity which occurs when a fluid experiences a change in volume, like compression or expansion, 
+                causing internal friction due to the fluid's molecules trying to re-establish equilibrium during that volume change.
+                \[\sigma_{ij} = \sigma_{ij} + \gamma \delta_{ij}\partial_kv_k\]
+            </li>
+        
+        </ol>
+       </p>
+       <p>
+        <b>Reynolds Number</b>: is SUPER important in understanding when the viscous term is important. At low Reynolds number 
+        \(\mathcal{R} < 1\) viscous term dominates over the advection term and likewise when its greater the advection term dominates 
+        \[\mathcal{R} = \frac{vl}{\nu} \approx \frac{v \nabla\cdot v}{\nu \nabla^2 v}\]
+       </p>
+       <p>
+        When Reynolds number is higher > 3000 then we have turbulence. 
+       </p>
+       <h4>
+        Accreation Disks
+       </h4>
+       <p>
+        Accreation disks are everywhereeeeeeeee in Astrophysics. They drive the formation of planets to edges of black holes. 
+        These disks form when gas have angular momentum. Consider a disk moving around in \(\Omega\) angular frequency and that the disk is 
+        razor thin with density \(\Sigma\). We can write down our fluid equations: 
+        \[\]
+        <b>Mass conservation</b>
+        \[\frac{\partial \Sigma}{\partial t} + \nabla \cdot (\Sigma v) = 0\]
+        Recall that \(v = Rv_r\)
+        \[\boxed{\frac{\partial \Sigma}{\partial t} + \nabla \cdot (\Sigma Rv_R) = 0}\]
+        Let us then define accreation with \(\dot M(R) = -2\pi R \Sigma v_R\). We know that \(2\pi R\) is the thin ring and thus the matter 
+        along the ring is being sucked inwards at \(v_R\) speed and \(\Sigma\) gives the amount of mass thats sucked in.
+        \[\]
+        <b>Momentum Equation \(\phi\) direction</b> 
+        \[\]
+        The angular momentum of ring per unit area is \(\Sigma R^2 \Omega\) because the \(I\) per unit area is \(\Sigma R^2\) 
+        for the ring and the \(L = I\Omega\).
+        \[\]
+        We can also define the angular momentum loss from this unit area due to advection with radial flow which is just taking 
+        the spherical divergence 
+        \( \frac{1}{R}\frac{\partial }{\partial R}(R L) =  \frac{1}{R}\frac{\partial }{\partial R}(\Sigma R^3 \Omega)\)
+        \[\]
+        Lastly we define Torque per unit volume 
+        which is \( T = \frac{\partial L}{\partial t} =  \frac{\partial }{\partial t}\Sigma R^2 \Omega\) 
+        Thus viscous torque is \[T = 2\pi \Sigma R^3 \frac{\partial \Omega}{\partial R}\]
+        We can now write the momentum equation 
+        \[\boxed{\frac{\partial }{\partial t}\Sigma R^2 +  \frac{1}{R}\frac{\partial }{\partial R}(\Sigma R^3 \Omega) = \frac{1}{2\pi R} \frac{\partial T}{\partial R}}\]
+        <b>Combine Momentum Eq. and Mass Eq.</b>
+        \[\]
+        With significant amount of algebraic pain that I do not wish to endure because I want to still see my family during the holidays, shows that 
+        \[\frac{\partial \Sigma}{\partial t} = -\frac{1}{2\pi R} \frac{\partial}{\partial R}\left[ \frac{1}{\partial_R (R^2\Omega) \frac{\partial T}{\partial R}}\right]\]
+        Let us assume that we are looking at a Keplerian disk. This means that \(\Omega = \sqrt{\frac{GM}{R^3}} \propto R^{-3/2}\). 
+        \[\frac{\partial }{\partial R} R^2\Omega = \frac{1}{2}R \Omega\]
+        \[T = 2\pi \Sigma R^3 \frac{\partial \Omega}{\partial R} = -3\pi \Sigma R \Omega\]
+        \[\frac{1}{\partial_R (R^2\Omega) }\frac{\partial T}{\partial R} = -6\pi R^{1/2}\frac{\partial}{\partial R}(\nu \Sigma R^{1/2}) \]
+        We can obtain the time evolution equation for the density:
+        \[\boxed{\frac{\partial \Sigma}{\partial t} = \frac{3}{R} \frac{\partial}{\partial R}\left[R^{1/2} \frac{\partial}{\partial R}(\nu \Sigma R^{1/2})\right]}\]
+        Note that we define the accreation disk with some distribution INITIALLY
+        \[\Sigma = \frac{\delta }{2\pi R_0}\delta (R-R_0)\]
+        One can then solve the unfriendly PDE with the age old technique called "just knowing it" or my favourite "using wolfram alpha".
+        \[\Sigma = \boxed{\frac{m}{\pi R_0^2}\frac{1}{\tau x^{1/4}} e^{-\frac{1+x^2}{\tau}} \mathbb{I}_{1/4}(2x/\tau)}\]
+        Here the \(\mathbb{I}\)  is a <b>modified bessel function</b>. And we define dimensionless length and time 
+        \(x = \frac{R}{R_0},\quad \tau = \frac{12 \nu t}{R_0}\). I know what you are thinking, this is incredibly trivial and obvious. 
+        \[\]
+        We can also then get the radial velocity: 
+        \[v_R = -\frac{3}{R_0} \frac{\partial}{\partial x} \left[ \frac{1}{4} \ln x - \frac{1+x^2}{\tau} + \ln \mathbb{I}_{1/4}(2x/\tau)\right]\]
+        <b>Physics</b>
+        <ol>
+            <li>
+                We notice that \(2x>> \tau\) that \(v_R \approx \frac{3\nu}{R_0}(\frac{1}{4x} +\frac{2x}{\tau} - \frac{2}{\tau}) >0\) 
+                which means that the radial distance is growing! its moving outwards
+            </li>
+            <li>
+                We notice that \(2x<< \tau\) that \(v_R \approx \frac{3\nu}{R_0}(\frac{1}{4x} +\frac{2x}{\tau} ) < 0\) 
+                which means that the radial distance is shrinking! its moving inwards
+            </li>
+            <li>
+                <b>Is the molecular viscosity what brings the mass inwards?</b> let us find out. 
+                The inner disk has a velocity approximate \(v_R \approx \frac{-3\nu }{2R}\) and the Time scale for the inflow is thus 
+                \(t = \frac{R}{|v_R|} \approx \frac{R^2}{\nu}\approx \frac{R}{v_\phi}\frac{Rv_\phi}{\nu }\approx t_{orb}\mathcal{R}\)
+                Let us calculate the Reynolds number for this:
+                \[\mathcal{R} = \frac{vl}{\nu}\]
+                \[\nu = v_{therm} l  \approx v_{therm} \frac{1}{\sigma n}\]
+                the distance from a star is
+                \[R = 10^{11}cm \]
+                \[v_{therm} = \sqrt{k_BT/m} \approx 10km/s\]
+                \[l \approx 1/\sigma n \approx 10cm\]
+                \[v_\phi = 300km/s\]
+                We can calculate the viscous term 
+                \[\nu \approx 10^7 cm^2/s\]
+                giving us
+                \[\mathcal{R} \approx 10^{12}\]
+                Which is insane lol, this is huge and does not match with the time scales of accreation disks life span (would be approx hubble time).
+
+
+            </li>
+            <li>
+                If it is not molecular viscosity that brings things together then what is it? It is likely turbulen visocity. 
+                The visocity term for turbulence is \(\nu \approx v_{turb}l_{turb}\) and both the length scale is limited by thickness of the 
+                disk and the speed is limited by the sound speed of the disk. And so we see even at upper bounds this gives a Reynolds number of \(\mathcal{R} \approx 10^{4} << 10^{12}\)
+                so it is likely turbulen visocity that results in the accreation of mass.
+            </li>
+        </ol>
+    </p>
+<footer style="text-align: center;">
+    <p>
+        Made by <a href="https://twitter.com/peterma02" >
+        @peterma02 </a>- 2024 ©
+    </p>
+</footer>
+
+</body>
+
+</html>
