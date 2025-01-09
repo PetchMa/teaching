@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="shortcut icon" type="image/jpg" href="../img/favicon.ico"/>
+<title>Peter Ma</title>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-157223762-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-157223762-1');
+</script>
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<link rel="stylesheet" href="../css/style.css">
+<script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<!-- <script src="https://cdn.plot.ly/plotly-1.42.5.min.js"></script> -->
+<script src='js/d3.min.js'> </script>
+<script src="https://d3js.org/d3.v4.js"></script>
+<!-- <script src="js/plotly-latest.min.js"></script> -->
+<!-- Latest compiled and minified plotly.js JavaScript -->
+<script src="https://cdn.plot.ly/plotly-latest.min.js" charset="utf-8"></script>
+
+<!-- OR use a specific plotly.js release (e.g. version 1.52.3) -->
+<script src="https://cdn.plot.ly/plotly-1.52.3.min.js" charset="utf-8"></script>
+
+<!-- OR an un-minified version is also available -->
+
+
+<script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
+
+<!-- for testing with local version of cytoscape.js -->
+<!--<script src="../cytoscape.js/build/cytoscape.js"></script>-->
+
+<script src="https://unpkg.com/webcola/WebCola/cola.min.js"></script>
+
+<body style="transform: scale(0.9); transform-origin: 50% 0%;">
+<div class="page_setup">
+<div class="container">
+    <div class="row "  style="padding-top:2%!important ; padding-left: 10%; padding-right: 5%;">
+        <span class="peterma" style="color: #b80707; font-size: 300%;">
+            Astrophysical Fluids Lecture 8
+        </span>
+        <h4>
+            Peter Ma | Jan 6th 2025
+        </h4>
+        <p>
+            In this lecture we turn on Electromagnetism and combine it with the full Navier Stokes equations. Nearly all fluids in astrophysics 
+            have magnetic properties and the role of EM is crucial in understanding the physics of many of our problem domains. To add in EM we incorporate 
+            Maxwell's equations into the fluid equations. 
+        </p>
+        <p>
+        <a href="../index.html"><< Back</a>
+        </p>
+        <div style="align-items: center;  ">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/RLPckVKTM4g?si=XKiUFjNHAsYdU9ck" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+        <h1>
+            Magnetohydrodynamics (MHD)
+        </h1>
+       <p>
+        MHD is the study of the dynamics of electrically conducting fluids, this includes things like plasmas,
+        liquid metals, and electrolytes, in the presence of magnetic and electric fields. To begin, we start off with Maxwell's equations.
+       </p>
+        <h4>
+            Maxwell's Equations
+        </h4>
+        <p>
+            For this section we will be using <b>CGS</b> units. This means Maxwells equation will look a little different 
+            than the SI unit counter part (dropping the various \(4\pi \epsilon_0\) and what not). As such the electric and 
+            magnetic fields all have the same units. 
+            \[\nabla \cdot E = 4\pi \rho_e \tag{Gauss}\]
+            \[\nabla \times E = -\frac{1}{c}\frac{\partial B}{\partial t} \tag{Faraday}\]
+            \[\nabla \cdot B = 0 \tag{no mag monopoles!}\]
+            \[\nabla \times B = 4\pi J + \overbrace{\frac{1}{c}\frac{\partial E}{\partial t}}^{\text{displacement current added by Maxwell}} \tag{Ampere}\]
+            We can also obtain the conservation laws. Consider hitting Gauss's law with the time derivative:
+            \[\frac{\partial }{\partial t}\nabla \cdot E = 4\pi \frac{\partial }{\partial t}\rho_e \]
+            \[\nabla \cdot \frac{\partial E}{\partial t} = 4\pi \frac{\partial }{\partial t}\rho_e \]
+            Then we rearrange  Ampere's law
+            \[c\nabla \times B- c4\pi J  = \frac{\partial E}{\partial t}\]
+            Replace
+            \[\nabla \cdot [c\nabla \times B- c4\pi J ] = 4\pi \frac{\partial }{\partial t}\rho_e \]
+            \[\nabla \cdot \nabla \times B- c4\pi\nabla \cdot  J ] = 4\pi \frac{\partial }{\partial t}\rho_e \]
+            The left most term is zero divergence of a curl is zero
+            \[\boxed{ \frac{\partial }{\partial t}\rho_e- \nabla \cdot  J  =0}  \]
+            We further see that if there is no current then we note the 
+            \[\nabla \times \nabla \times B = -\nabla^2 B +\nabla(\nabla\cdot B)\]
+            Since there is no monopoles last term drops
+            \[\nabla \times \nabla \times B = -\nabla^2 B \]
+            But we also reconize that 
+            \[\nabla \times \nabla \times B = \frac{1}{c}\frac{\partial}{\partial t}\nabla \times E = -frac{1}{c^2}\frac{\partial^2 B}{\partial t^2} \]
+            Combine the two we get
+            \[\boxed{\nabla^2  B = \frac{1}{c^2}\frac{\partial^2 B}{\partial t^2}} \tag{wave eq.}\]
+
+
+            <!-- \[\nabla \times B = \frac{1}{c}\frac{\partial E}{\partial t}\]
+            And we know that -->
+        </p>
+        <h4>
+            Induction Equation
+        </h4>
+        <p>
+            In high school we learned about Ohms law, Voltage and Current. Current density is \(J = \frac{I}{A}\).
+            We also see that \(E \approx \frac{V}{L}\) since \(E = \nabla V\) and \(V = \frac{L}{A\sigma}\) where \(\sigma\)
+            is the conductivity. Reistance is thus inverse of conductivity. 
+            We can then relate the two (current density and electric field) in the <b>FLUID</b> frame
+            \[J' = \sigma E'\]
+            We can transform into the <B>LAB</B> frame 
+            \[J = \sigma (E + \frac{v}{c}\times B)\]
+            We can then see for a perfectly conducting fluid then \(\sigma \to \infty\) but \(E + \frac{v}{c}\times B \to 0\) 
+            to keep the current density finite. Which means that \(E \perp B\)! Okay but let us rearrange the equation
+            \[E =\frac{J}{\sigma} -\frac{v}{\sigma c}\times B)\]
+            We can replace \(J \) with \(\nabla \times B\) term.
+            \[E = \frac{c}{4\pi \sigma}\nabla \times B-\frac{v}{\sigma c}\times B\]
+            We can then plug this back into Faraday's equation 
+            \[\nabla \times E = -\frac{1}{c}\frac{\partial B}{\partial t}\]
+            \[\nabla \times (\frac{c}{4\pi \sigma}\nabla \times B-\frac{v}{\sigma c}\times B) = -\frac{1}{c}\frac{\partial B}{\partial t}\]
+            \[(\frac{c}{4\pi \sigma}\nabla^2 B-\frac{1}{\sigma c}\nabla \times v \times B) = -\frac{1}{c}\frac{\partial B}{\partial t}\]
+            If we define \(\eta = \frac{c^2}{4\pi \sigma}\)
+            \[\frac{\partial B}{\partial t} = \eta \nabla^2 B - \nabla \times (v\times B)\]
+            We notice these two terms and we can define a <b>magnetic Reynolds number</b>!
+            \[\mathcal{R_{mag}} = \frac{\nabla \times (v\times B)}{\eta \nabla^2 B } \approx \frac{vL}{\eta}\]
+            When it is small then magnetic diffusion dominates. When the number is large then we are in the perfect conductor limit!
+            Since \(\sigma \to \infty\) as \(\eta \sim \sigma^{-1}\). 
+        </p>
+        <h4>
+            MHD Equation 
+        </h4>
+        <p>
+            Let us finally arrive at the full incorporated MHD equation into Navier Stokes. We need to get is the magnetic force density.
+            Lorentz force gives us the following:
+            \[F = q(E + \frac{v}{c}\times B)\]
+            Density of the force is thus 
+            \[F = \rho_eE + \frac{\rho_ev}{c}\times B)\]
+            \[F = \rho_eE + \frac{J}{c}\times B)\]
+            We assume that the first time is super small and that the dominate force is the magnetic.
+            \[F =\frac{J}{c}\times B)\]
+            We know that through Amperes 
+            law we get
+            \[J = \frac{c}{4\pi }\nabla \times B \]
+            We plug this back into the force equation
+            \[F =\frac{1}{4\pi }\nabla \times B \times B\]
+            Hit this with vector calc identity 
+            \[F =\frac{1}{4\pi } (-\nabla^2 B + (B\cdot \nabla)B)\]
+            Okie we can now add this to the Navier Stokes 
+            \[\boxed{\frac{\partial v}{\partial t} + v \cdot \nabla v = 
+            -\frac{1}{\rho}\nabla(P+ \frac{B^2}{8\pi})-\nabla \Phi + \frac{1}{4\pi \rho}(B \cdot \nabla)B + \nu (\nabla^2 v + \frac{1}{3}\nabla(\nabla \cdot v))}\]
+            Note we split up the terms! We collected the gradient with the pressure term. And so we can reconize the \(B^2/8\pi\) as a 
+            <b>magnetic pressure</b> term. The other term is the magnetic tension, which is a restoring force of a bent field into straight lines.
+            This gives us the chance to define a new <b>\(\beta\)-Plasma</b> parameter 
+            \[\boxed{\beta = \frac{P}{B^2/8\pi}}\]
+            Which determines regimes of strong or weak B field dominace. 
+        </p>
+        <h4>
+            MHD Waves!
+        </h4>
+        <p>
+            Let us solve some wavessss. Let us consider perturbations without thermal pressure and gravity 
+            \[\rho = \rho_0 + \rho_1 \quad B = B_0 +B_1 \quad v = v_1\]
+            We can then compute the first order terms 
+            \[\frac{\partial \rho_1}{\partial t} + \rho_0 \nabla v_1 = 0\]
+            \[\frac{\partial v_1}{\partial t} = - \frac{v_s^2}{\rho_0}\nabla \rho_1 + \frac{1}{4\pi \rho_0}(\nabla \times B_1) \times B_0\]
+            We also have 
+            \[\frac{\partial B}{\partial t} = \nabla \times (v_1 \times B_0)\]
+
+            We now apply the usual trick, we hit the conitunity equation with a gradient and then hit the momentum  
+            equation with the time derivative
+            \[\frac{\partial \nabla\rho_1}{\partial t^2} + \rho_0 \nabla^2 v_1 = 0\]
+            \[ \frac{\partial^2 v_1}{\partial t^2} = - \frac{v_s^2}{\rho_0} \frac{\partial}{\partial t}\nabla \rho_1 
+            + \frac{1}{4\pi \rho_0} \frac{\partial}{\partial t}(\nabla \times B_1) \times B_0\]
+            We sub in the continuity equation into this guy 
+            \[ \frac{\partial^2 v_1}{\partial t^2} = v_s^2 \nabla^2 v_1 
+            + \frac{1}{4\pi \rho_0} \frac{\partial}{\partial t}(\nabla \times B_1) \times B_0\]
+            We shove in Faraday.
+            \[ \frac{\partial^2 v_1}{\partial t^2} = v_s^2 \nabla^2 v_1 
+            + \frac{1}{4\pi \rho_0} (\nabla \times \frac{\partial}{\partial t}B_1) \times B_0\]
+            \[ \frac{\partial^2 v_1}{\partial t^2} = v_s^2 \nabla^2 v_1 
+            + \frac{1}{4\pi \rho_0} (\nabla \times (\nabla \times (v_1 \times B_0))) \times B_0\]
+            This looks atrocious so we define Alfven velocity to make it look less icky
+            \[\boxed{v_{A} = \frac{1}{\sqrt{4\pi \rho_e}}B_0}\]
+            We can rewrite as the following:
+            \[ \boxed{\frac{\partial^2 v_1}{\partial t^2} - v_s^2 \nabla^2 v_1 
+            + v_A\times (\nabla \times (\nabla \times (v_1 \times v_A))) =0}\]
+            Ok now that it is interms of just \(v_1\) we can hit this with a FT to get the dispersion relation
+            \[\boxed{-w^2v_1 +(v_s^2+v_A^2)k(k\cdot v_1)+[(v_a\cdot k)v_1-(v_1\cdot k)v_A-(v_A\cdot v_1)k](k\cdot v_A)=0}\]
+            This loooks dis-cos-tan so we look at special cases when things are parallel or perpendicular. 
+            <ol>
+                <li>
+                    \(k\perp v_A\) then a bunch of terms goes to zero, namely the big mess with the right most term. 
+                    \[w^2 v_s^2 = (v_s^2+v_A^2)k^2\hat{k}(v_1 \cdot k)\]
+                    We see then that \(v_1 || k\) because this equation effectively reads \(\alpha v = \beta k\) 
+                    and thus they must point in same direction. At last 
+                    we have that \[w^2= (v_s^2+v_A^2)k^2\]. This is looking at longitudinal sonic waves with some phase velocity 
+                    \(v_\phi = \sqrt{v_A^2 +v_s^2}\). This gives us us the solution to the \(B_1\) field in the fourier space 
+                    \[-i w B_1 = ik \times (v_1 \times B_1) =-i (k\cdot v_1)B_0\]
+                    Which implies that 
+                    \[B_1 = kv_1/w B_0\]
+                    The waves cause compression/rarefactions along B⃗ without bending it. This is seen by the fact that the \(B\) fields 
+                    remain aligned and only component that changes is the strength of the B field.
+                </li>
+                <li>
+                    Consider the case when everything is aligned \(k|| v_1 || B_0\). If the velocity of Alfven is aligned as well then 
+                    \[w^2 =v_s^2 k^2 \]
+                    We get regular sound waves! and \(B_1 =0\) because from faraday, the time derivative of \(B_1\) is dependent on the 
+                    cross of velocity and the \(B_0\) field and if they all aligned then the cross product is 0. We can also consider the situation 
+                    If the velocity \(v_1 \perp b_0\) then we see that 
+                    \[B_1 = v_1 B_0 k/ w\]
+                    This is then a pure magneto wave called and Alfven wave. Alfven waves travel along 
+                    B field, induce transverse \(v_1\), \(B_1\)
+                     perturbations\(\perp k\),and cause field lines to oscillate laterally.
+                </li>
+            </ol>
+        </p>
+        <h4>
+            Magneto-Rotational Instability
+        </h4>
+        <p>
+            Consider we rotate all of this. In a cylinder because why not? In the corotation frame our velocities look like this 
+            \[v_R = v_R, \quad v_\phi = v_\phi -R \Omega \quad v_z = v_z\]
+            Consider the field is vertical \(B_0 = B_0\hat z\). We can get the perturbations \[B = B_0\hat z + B_1\]
+            We can get the dispersion relation when \(v_1 \perp k\) and \(k || B_0\) and 
+            \[\boxed{w^4 - w^2[\kappa +2 (kv_A)^2] + (kv_A)^2 [(kv_A^2) + \frac{\partial \Omega^2}{\partial \ln R}] = 0}\]
+
+            <b>Physics</b>
+            <ol>
+                <li>
+                    If there is no rotation, we recover Alfven waves! \[[w^2-(kv_A)^2]^2 = 0\]
+                </li>
+                <li>
+                    When we rotate the disk becomes unstable at 
+                    \[w^2 < 0 \Rightarrow kv_A^2 < \frac{-d\Omega}{d\ln R}\]
+                    and if this is keplerian then \(\frac{-d\Omega}{d\ln R} = 3 \Omega^2\)
+                    and so for large modes it becomes unstable!
+                </li>
+                <li>
+                    The instability grows the most when \(w= \frac{3}{4}\Omega\) for a keplerian disk. I am too lazy to latex the algebruh but 
+                    the idea is to solve for the derivative of \(w\) equals to zero.  to get \(|w| =\frac{1}{2} |\frac{d\Omega}{d\ln R}|\)
+                </li>
+            </ol>
+        </p>
+<footer style="text-align: center;">
+    <p>
+        Made by <a href="https://twitter.com/peterma02" >
+        @peterma02 </a>- 2024 ©
+    </p>
+</footer>
+
+</body>
+
+</html>
