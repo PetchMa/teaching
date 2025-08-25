@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="shortcut icon" type="image/jpg" href="../img/favicon.ico"/>
+<title>Peter Ma</title>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-157223762-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-157223762-1');
+</script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<link rel="stylesheet" href="../css/style.css">
+<script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<!-- <script src="https://cdn.plot.ly/plotly-1.42.5.min.js"></script> -->
+<script src='js/d3.min.js'> </script>
+<script src="https://d3js.org/d3.v4.js"></script>
+<!-- <script src="js/plotly-latest.min.js"></script> -->
+<!-- Latest compiled and minified plotly.js JavaScript -->
+<script src="https://cdn.plot.ly/plotly-latest.min.js" charset="utf-8"></script>
+
+<!-- OR use a specific plotly.js release (e.g. version 1.52.3) -->
+<script src="https://cdn.plot.ly/plotly-1.52.3.min.js" charset="utf-8"></script>
+
+<!-- OR an un-minified version is also available -->
+
+
+<script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
+
+<!-- for testing with local version of cytoscape.js -->
+<!--<script src="../cytoscape.js/build/cytoscape.js"></script>-->
+
+<script src="https://unpkg.com/webcola/WebCola/cola.min.js"></script>
+
+<body style="transform: scale(0.9); transform-origin: 50% 0%;">
+<div class="page_setup">
+<div class="container">
+    <div class="row "  style="padding-top:2%!important ; padding-left: 10%; padding-right: 5%;">
+        <span class="peterma" style="color: #b80707; font-size: 300%;">
+            Stellar Evolution and Structure Lecture 1 
+        </span>
+        <h4>
+            Peter Ma | Jan 25th 2025
+        </h4>
+        <p>
+            What is a star? How do we model them and what properties do we care about these objects? In the first 
+            lecture we will explore these properties.
+        </p>
+        <p>
+        <a href="../index.html"><< Back</a>
+        </p>
+        <h1>
+            Lec 1.1 - Introduction
+        </h1>
+        <p>
+            By definition a star is :<i>
+                A body that is bounded by self-gravity and radies energy supplied by an internal source. (grav. or 
+                nuclear).
+            </i> This means that <b>evolution (birth + death)</b>
+        </p>
+        <p>
+            Things we care about in a star
+        </p>
+        <ul>
+            <li>Luminosity</li>
+            <li>Temperature</li>
+            <li>Chemical Composition</li>
+            <li>
+                Mass
+            </li>
+            <li>
+                Radius
+            </li>
+        </ul>
+        <p>
+            Here we often normalise by units related to our own sun called \(\odot\) symbol. With 
+            some numbers like:
+        </p>
+        <ul>
+            <li>
+                \(M_\odot = 2\times 10^{33}g\)
+            </li>
+            <li>
+                \(R_\odot = 7 \times 10^{10}cm\)
+            </li>
+            <li>
+                \(L_\odot = 4 \times 10^{33} ergs/s\)
+            </li>
+            <li>
+                \(T_\odot = 6000K\)
+            </li>
+        </ul>
+        <h4>
+            Hertzsprung-RusselL Diagram
+        </h4>
+        <p>
+            Map that relates Luminosity <b>\(L\)</b>to effective surface temperature <b>\(T\)</b>. But these are not directly
+            plotted but instead it plots <b>Magnitudes</b> and <b>Color</b>.  We define color the difference in brightness between two specific wavelengths of light observed from a celestial object, and this difference is directly related to the object's temperature, 
+            with hotter objects appearing bluer and cooler objects appearing redder. We define magnitude (absolute) as 
+            the log scale of Luminosity, meaning that a difference of one magnitude corresponds to a roughly 2.5 times change in brightness.  
+        </p>
+        <ol>Key points:
+            <li>
+                 temperature is inverted and everything is in log scales. 
+            </li>
+            <li>
+                Its <b>Not?!</b> a scatter plot. The properties are correlated and has physics going on inside. 
+            </li>
+            <li>
+                We approximate the star as a black body radiation with Stephon-Boltzman equation with the energy flux 
+                \[F = \sigma T^4\Rightarrow L = 4\pi r^2 \sigma T^4\]. This lets us calculate the relationships between sizes 
+                of objects. For example the Red Giant, and White Dwarf. 
+
+                <p>
+                    Red Giant \[T = 3000K,\quad L = 10^4 L_\odot \Rightarrow \frac{R_{giant}}{R_\odot} 
+                    = (\frac{L_{giant}}{L_\odot})^{1/2} \cdot (\frac{T_{giant}}{T\odot})^{-2} \approx (10^4)^{1/2}(1/2)^{-2} \approx 100 \times 4 \]
+                    Red giant is hundreds of times larger
+                </p>
+                <p>
+                    White Dwarf \[T = 24000K,\quad L = 10^{-3} L_\odot \Rightarrow \frac{R_{dwarf}}{R_\odot} 
+                    = (\frac{L_{dwarf}}{L_\odot})^{1/2} \cdot (\frac{T_{dwarf}}{T\odot})^{-2} \approx (10^4)^{-3/2}/36 \approx 10^{-3} \]
+                    White Dwarf is thousand of times smaller. And thus compact object.
+                </p>
+            </li>
+        </ol>
+       <p>Okay but why did we choose luminosity and the effective temperature? Well effective temperature 
+        is in the blackbody limit that produces Bolometric luminosity. 
+       </p>
+       <p>
+        Stellar energy has a hidden variable which is age. We see that the luminosity of main sequence stars 
+        correlate with mass of \(L \propto M^{\alpha},\quad \alpha \approx 3-3.5\). Large stars loose energy FAST.
+       </p>
+       <p>
+        <b>Takeaway:</b> older populations have fewer high luminosity objects because they burn away quicker. And their 
+        fuel resvoir is proportional to mass and thus for a fixed mass we expect the life on a main sequence to be \(1/M^2\).
+       </p>
+       <p>
+        We can approximate time of evolution to be \(t = t_\odot (\frac{M}{M_\odot})^{-2.5}\). This is the ratio of time 
+        relative to our sun. 
+       </p>
+
+       <h1>
+        Equations of Stellar Structure
+       </h1>
+       <p>
+        We have a few equations that we care about (1) Continuity of mass (2) hydrostatic equilibrium (3) energy equation 
+        (4) energy transport
+       </p>
+       <p>
+        We assume the setting: (1) isolated (2) spherical (3) uniform composition (4) its gas
+       </p>
+       <p>
+        <b>Mass conservation: </b> \(dm = 4\pi r^2 \rho(r) dr\) since we are spherically symmetrical.
+        \[m(r) = \int_0^r 4\pi (r`)^2\rho(r`) dr`\]
+        With total mass being \(M= m(R)\) where its the total radius of the star.
+       </p>
+       <p>
+        <b>hydrostatic Equillibrium:</b> this is force balance. 
+        \[\Delta m \ddot r = \overbrace{\frac{-Gm\Delta m}{r^2}}^{grav}+ \underbrace{[P(r) - P(r+dr)] dS}_{pressure force}\]
+        This becomes when we divide by the mass and volume on everything
+        \[\frac{d^2r}{dt^2} = \overbrace{\frac{-Gm}{r^2}}^{grav}+ \underbrace{-\frac{1}{\rho}\frac{dP}{dr}}_{pressure force}\]
+
+       </p>
+       <b>
+        <p>
+        Add (1)+(2)
+       </b> If its in equilibrium then we have the net force is zero
+       \[\frac{-Gm}{r^2} = \frac{1}{\rho}\frac{dP}{dr}\]
+       We can then mass conservation equation \(dr  = \frac{dm}{4\pi r^2 \rho}\) we can then replace 
+       \[\frac{-Gm}{r^2} = \frac{1}{\rho}\frac{dP}{\frac{dm}{4\pi r^2 \rho}}\]
+       \[\frac{-Gm}{r^2} = \frac{1}{\rho} (4\pi r^2 \rho)\frac{dP}{dm}\]
+       \[\boxed{\frac{-Gm}{4\pi r^4} =  \frac{dP}{dm}}\]
+
+    </p>
+    <p>
+        We can simply integrate the equation 
+        \[\int_0^R \frac{-Gm}{4\pi r^4}dm =  \int dP\]
+        \[\frac{-GM^2}{4\pi r^4}dm =  P(R)-P(0)\]
+        We se the pressure outside to be 0. 
+        \[\frac{GM^2}{4\pi r^4}dm =  P(0)\]
+
+    </p>
+    <h1>
+        Lec 1.2 - Virial Theorem and Free Fall
+    </h1>
+    <p>
+        <b>Free-fall Time:</b> Gravitation contraction occurs when there is no pressure to counter act the 
+        force of the gravitational pull. Then we have the following PDE (no pressure then becomes): 
+        \[\frac{\partial^2 r}{\partial t^2} = \frac{-Gm}{r^2} - \frac{\partial P}{\partial r} \frac{1}{\rho}\Rightarrow a = \frac{Gm(r)}{r^2}\]
+        The time to collapse we can just do simple kinematics 
+        \[R = \frac{1}{2}at^2\]
+        \[R = \frac{1}{2}\frac{GM}{R^2}t^2\]
+        Rearrange
+        \[t_{eff} = (\frac{2R^3}{GM})^{1/2}\]
+        We can rearrange by multiplying up and down by the surface area
+        \[t_{eff} = (\frac{2}{G (4/3\pi)}\frac{(4/3\pi) R^3}{M})^{1/2}\]
+        We can then get the average density 
+        \[t_{eff} = (\frac{2}{G (4/3\pi)}\ \frac{1}{bar \rho})^{1/2}\]
+        \[\boxed{t_{eff} = \sqrt{\frac{3}{2 \pi G \bar \rho}}}\]
+
+    </p>
+    <p>
+     <b>Another way of deriving free fall: </b> The other way is going through energy conservation. We match the potential energy 
+     with the kinetic energy. And then integrate to get out the velocities. \[\boxed{t_{eff} \approx \frac{1}{\sqrt{G \bar\rho}}}\]
+    </p>
+    <p>
+        If we compared this to the sun which has a density of water... we get a free fall of 1000seconds while a neutron star is 
+        \(10^{-4}sec\)...
+    </p>
+    <p>
+        Gravitational collapse is never UNOPPOSED. And so the change in gravitational potential introduces 
+        thermal motion of particles giving increase pressure that counters the collapse. The star can reach a new equilibrium and 
+        evolve quasi-statically...
+    </p>
+
+
+    <p><b>Dynamical Timescale: </b> is the free fall time. 
+        If dynamic time much smaller than the age, then its fast variation in the star can be related to dynamical process being 
+        in action, sometimes not involving the entire star.. 
+    </p>
+    <p>
+            If the star is in equilibrium then the dynamic time scale is the radial oscillation. If the star cant be in equilibirum and recover 
+            then this is the timescale for supernovae. The density can be calculate and thus we can compute the 
+            radial oscillation of stars. So denser stars has faster oscillation.
+    </p>
+    <h4>
+        Virial Theorem
+    </h4>
+    <p>
+        We can integrate the hydrostatic equilibrium equation 
+        \[\frac{dP}{dr} = - \frac{G \rho(r) m(r)}{r^2}\]
+        Mutliply both sides
+        \[\frac{dP}{dr} 4\pi r^3 dr= - \frac{G \rho(r) m(r)}{r^2}4\pi r^3 dr \]
+        Integrate by parts the left handside \(dv = dP\quad u = 4\pi r^3 \Rightarrow du = 12 \pi r^2 dr, v = P\)
+
+        \[\int_0^R dP 4\pi r^3 = uv - \int vdu = P(r) 4\pi r^3 - \int 12 \pi P r^2 dr = -3 \int P4\pi r^2 dr = -3 \bar{P}V \]
+       Here we get an average pressure.
+       \[\]
+        On the right hand side we get gravitational potential 
+        \[\boxed{\Omega = -3 \bar P V}\]
+        So in equilibrium the pressure is supported by one third of the gravitational force to collapse inwards.
+    </p>
+    <p>
+        What we should note is, there is not specified source yet... This internal pressure can be a gas or raditaion. 
+        If its a gas it can be classical or quantised gass and those can be relativistic or non-relativistic. 
+        And so this will drive the way we discuss the structures within the stars.
+    </p>
+   <h4>
+    Ideal Monatomic Gass (Non-relativistic)
+   </h4>
+   <p>
+    In this case assume ideal gass so we have \(PV = N kT \Rightarrow P=nkT\) where small n is the number density.
+   </p>
+   <p>
+    Kinetic energy is \(E_k = \frac{3}{2}kT \Rightarrow u = \frac{3}{2}nkT = \frac{3}{2} \rho/m_g kT \)
+   </p>
+   <p>
+    The pressure is thus \(P = \frac{3}{2}u\) We can then plug this into the virial theorem: 
+   </p>
+   <p>
+   \[\Omega = -3 \bar P V\]
+   \[\Omega = -3 \int_0^R 4\pi r^2 P(r) dr = -3 \int_0^R 4\pi r^2 \frac{2}{3}u(r) dr  \]
+   \[\Omega = -2\int_0^R 4\pi r^2 u(r) dr  \]
+   \[\Omega = -2U  \]
+   
+   Here \(U\) is the total internal kinetic energy.
+   \[\]
+   Let us try to get the potential energy 
+   \[\Omega = -\int \frac{Gm(r)}{r}dm\]
+   if we normalise by the total mass we get unitless scaling  \(m` = m/M\) and \(r` = r/R\)
+   \[\Omega = - \frac{GM^2}{R} \int_0^1 m'/r'dm\]
+   \[\Omega = - \frac{GM^2}{R} \alpha\]
+
+   Let us try to rewrite the internal kinetic energy in terms of temperature: 
+   \[U =\int_0^R 4\pi r^2 u(r) dr\]
+   \[U =\int_0^R 4\pi r^2 \frac{3}{2}nkT dr\]
+   \[U =\frac{3k}{2} \int_0^R 4\pi r^2 nT dr\]
+   \[U =\frac{3k}{2} \int_0^R 4\pi r^2 \frac{\rho}{m_g}T dr\]
+   We notice that \(\rho 4\pi r^2 dr = dm\)
+   \[U =\frac{3k}{2 m_g} \int_0^M T dm\]
+   And so we see that this is the average temperature over mass.
+   \[U =\frac{3k}{2 m_g} \bar{T} M\]
+   We can sub into the Virial theorem as 
+   \[\Omega = -2 U \Rightarrow \frac{\alpha GM^2}{R} = 2 \cdot 3/2 K/m_g \bar{T}M\]
+   \[\Omega = -2 U \Rightarrow \boxed{\bar{T} =\frac{\alpha}{3}\frac{GM}{R}} \]
+   This simply means that the scaling is 
+   \[\boxed{\bar{T} \approx M^{2/3}\bar{\rho}^{1/3}}\] The temperature of the star is the following.
+</p>
+   <h4>
+    Ideal Classical Gas, Non-relativistic
+   </h4>
+   <p>
+    We can derive the general relation between pressure and internal energy. 
+    Consider a box of size \(L_x = L_y = L_z\) we get the following:
+    Momentum and velocity \(v_x,v_y,v_z\) and \(p_x,p_y,p_z\). We can see that the number of collisions 
+    per tme is \[\frac{v_z}{2L}\]
+    The momentum transfer is thus \(\frac{v_z}{2L} \cdot 2 P_z = \frac{\Delta p}{\Delta t}\). 
+    This means the number of total gas particles in the box \(N\) and the pressure on the area of \(L^2\) is 
+    \[P = \frac{N \langle \frac{P_z v_z}{L} \rangle }{L^2} = \frac{N}{L^3} \langle p_z v_z \rangle\]
+    In general though we have some isotropic fluid
+    \(\langle p\cdot v \rangle =3 \langle p_z v_z \rangle\).
+    And thus \[\boxed{P = \frac{n}{3} \langle p\cdot v \rangle}\]
+    This also works for quantum like particle. 
+    \[\]
+    We reconzie that for classical non-relativistic the momentum is just 
+    \[p = mv \Rightarrow \langle p \cdot v \rangle = \langle m v^2 \rangle\]
+    And so we ahev that 
+    \[P = \frac{n}{3} \langle mv^2 \rangle = \frac{2}{3} n \langle \frac{1}{2} mv^2 \rangle = \frac{2}{3} [E_k/V]\]
+    This is case of perfect monatomic gas. 
+   </p>
+   <p>
+    \[\boxed{P = \frac{2}{3} [E_k /V]}\]
+    \[\langle P \rangle = -3 \Omega/V\]
+    \[\frac{2}{3} [E_k /V] \rangle = -3 \Omega/V\]
+    \[\boxed{2 E_k + \Omega = 0}\]
+    This is for non-relativistic gas.
+   </p>
+   <p>
+    We see that the total energy is 
+    \[E = E_k + \Omega\]
+    if the gas is in hydrostatic equilibirum. 
+    \[\]
+    if the total energy in the system is less than zero then the system is bound. Tightly bounded systems are hot as they have 
+    large \(E_K\). 
+   </p>
+   <p>
+    For the sun we can define a <b>thermal timescale</b>. This means trying to find the time scale where the interal energy 
+    changes. 
+    \[\boxed{\frac{U}{L} = \frac{\alpha GM^2}{2RL}}\]
+    Is the time scale to radiate away the internal energy. This is also called the Kelvin Kelvin-Helmholtz time scale.
+    Here \(L\) is the luminosity.
+   </p>
+   <p>
+    During collapse the radius decreases which increase the potential energy which increaes timeperature which increases fusion. 
+    If there is no fusion then star goes into a less bound state and radius increases and temperature drops.
+   </p>
+   <h4>
+    Ideal Classical Gas, Ultra Relativistic 
+   </h4>
+   <p>
+    The internal energy becomes the following: 
+    \[\epsilon^2 = p^2c^2+m^2c^4\]
+    Relation between energy of a particle \(\epsilon\) and momentum is the relatistic limit. \(pc >> mc^2\). 
+    Here we have that 
+    \[\boxed{P = \frac{n}{3}\langle pc \rangle = \frac{1}{3} [E_k/V]}\]
+    Virial theorem 
+    \[\boxed{E_k +\Omega = 0}\]
+    This means zero binding energy and thus is on the cusp of about to be destroyed and go unstable. 
+   </p>
+   <h1>
+    1.3 Mean Molecular Weight and Equations of State
+   </h1>
+   <h4>
+    Mean Molecular Weight
+   </h4>
+   <p>
+    Baryon number is the sum of protons and electrons which is \(p+e^- =A\) where as the atomic number 
+    \(p= Z\).
+   </p>
+   <p>
+    Single Atom gas has multiple species, thermal equilibirum with \(N\) species.
+    \[p = \sum_i P_i = \sum_i (n_i)kT = \frac{\rho}{m_p}kT \sum \frac{x_i}{A_i} = \left(\frac{1}{\mu_I m_p} \right)kT\]
+    
+   </p>
+    </div>  
+</div>
+<!-- \[dQ = d\epsilon + PdV\]
+\[d\epsilon =  PdV - dQ \]
+<p>
+    We can integrate through this
+</p>
+\[\epsilon =  PV - Q \] -->
+
+<footer style="text-align: center;">
+    <p>
+        Made by <a href="https://twitter.com/peterma02" >
+        @peterma02 </a>- 2024 ©
+    </p>
+</footer>
+
+</body>
+
+</html>
