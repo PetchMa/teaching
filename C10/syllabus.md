@@ -7,7 +7,7 @@
 **Email:** peter_ma@berkeley.edu  
 
 **Sections:** 
-- Monday 12:10-1pm (Section 104) in Campbell 131
+- Monday 12:10-1pm (Section 104) in Campbell 121
 
 - Monday 1:10-2pm (Section 105) in Campbell 131
 

@@ -1,0 +1,161 @@
+\documentclass[letterpaper,12pt,addpoints]{exam}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+
+\usepackage[top=1in, bottom=1in, left=0.75in, right=0.75in]{geometry}
+\usepackage{amsmath,amssymb,graphicx}
+\usepackage{tcolorbox}
+\usepackage{multicol}
+
+\newcommand{\university}{UC Berkeley}
+\newcommand{\faculty}{Astronomy Department}
+\newcommand{\class}{Astro C10}
+\newcommand{\examnum}{QUIZ \#2}
+%\newcommand{\examdate}{09/24/2020}
+\newcommand{\timelimit}{20 minutes}
+
+\pagestyle{headandfoot}
+\firstpageheader{}{}{}
+\firstpagefooter{}{Page \thepage\ of \numpages}{}
+\runningheader{\class}{\examnum}
+\runningheadrule
+\runningfooter{}{Page \thepage\ of \numpages}{}
+
+\begin{document}
+
+\title{\Large \textbf{\university\\ \faculty\\
+\bigskip
+\class \ -- \examnum}}
+\author{UGSI: Eli Gendreau-Distler}
+\date{\examdate}
+
+\maketitle
+
+\begin{center}
+\makebox[12cm]{\textbf{Name}:\ \hrulefill}
+\medskip
+\vspace{0.5cm}
+\makebox[12cm]{\textbf{Student ID Number}:\ \hrulefill}
+\end{center}
+\noindent \rule{\textwidth}{1pt}
+
+\noindent This quiz contains \numquestions\ questions and will be graded out of \numpoints\ points. The questions focus primarily on material from after the midterm, with an emphasis on content we have discussed in section. I suggest that you start by looking over all the questions to see which ones you feel most comfortable answering first, then circling back to the challenging questions at the end. \textbf{To receive full credit, you must show your work and include units.} Good luck!
+
+\begin{center}
+\textbf{Distribution of Marks}\\
+\medskip
+\gradetable[v][questions]
+\end{center}
+
+\newpage
+
+\centering \textbf{\large Useful Constants and Equations}
+
+\begin{center}
+
+\textbf{Constants (approximate)}
+    $$c = 3 \times 10^8 \textrm{ m}/\textrm{s} = 3 \times 10^5 \textrm{ km}/\textrm{s}$$
+    $$h = 6 \times 10^{-34} \textrm{ J s}$$
+    $$1 \textrm{ m} = 10^9 \textrm{ nm} = 10^{-3} \textrm{ km}$$
+    $$1 \textrm{ pc} =  3 \times 10^{16} \textrm{ m} = 3 \textrm{ light-years}$$
+    $$1 L_\odot = 4 \times 10^{26} \textrm{ W}$$
+    $$1 R_\odot = 7\times 10^{8} \textrm{ m}$$
+    $$1 M_\odot = 2 \times 10^{30} \textrm{ kg}$$
+    $$1 T_\odot = 5 \times 10^{3} \textrm{ K}$$
+    $$\sigma = 6 \times 10^{-8} \frac{\textrm{W}}{\textrm{m}^2\textrm{ K}^4}$$
+    \vspace{.5in}
+    
+\textbf{Equations}
+    $$c = \lambda f$$
+    $$E = hf = \frac{hc}{\lambda}$$
+    $$\lambda_{\textrm{peak}} \cdot T \approx 3.0 \times 10^6 \textrm{ nm K}$$
+    $$L = A \sigma T^4$$
+    $$\frac{v}{c} = \frac{\Delta \lambda}{\lambda_0} = \frac{\lambda - \lambda_0}{\lambda_0}$$
+    $$d = \frac{\textrm{arcsec}}{\theta}\textrm{pc}$$
+    $$B = \frac{L}{4\pi d^2}$$
+    $$L \varpropto M^4$$
+    $$t_{\textrm{life}} \varpropto M/L$$
+    $$A = 4\pi R^2 $$
+    %$$\frac{\Delta F}{F} = \frac{A_{\textrm{planet}}}{A_{\textrm{star}}}$$ 
+    
+    
+\end{center}
+
+%#########################################################################
+
+\clearpage
+\vspace{0.5in}
+\begin{questions}
+\question
+\textbf{A new star has just been discovered in our Milky Way Galaxy! Astronomers measure its spectrum within a few hours of the discovery.}
+\begin{parts}
+
+\part[2] The table below lists several properties of stars. Circle the properties in the table that we can measure from the star's spectrum alone.
+\vspace{0.5cm}
+\begin{center}
+\tcolorbox[colback=gray!10!white, colframe=gray!30!white,, title=Stellar Properties, width=0.6\textwidth, fonttitle=\centering\bfseries\color{black}]
+    \begin{multicols}{2}
+        Luminosity \vspace{8pt}\\
+        Brightness \vspace{8pt}\\
+        Temperature \vspace{8pt}\\
+        Radius \vspace{8pt}\\
+        Mass \vspace{8pt}\\
+        Chemical composition \vspace{8pt}\\
+        Parallax \vspace{8pt}\\
+        Lifetime \vspace{8pt}\\
+        Distance \vspace{8pt}\\
+        Age
+    \end{multicols}
+\endtcolorbox
+\end{center}
+\vspace{0.5cm}
+\part[4] Explain how each of the properties you circled can be determined from the star's spectrum.
+\vspace{6cm}
+\part[6] We cannot measure the star's parallax right away, but 6 months later we measure a parallax angle of \(10\) arcseconds. What is the distance to the star in units of parsecs?
+
+\newpage
+
+\part[4] Why wasn't it possible to measure the parallax angle immediately after the star was discovered?
+
+\vspace{7cm}
+
+\part[8] Describe how to calculate the star's luminosity using result(s) from earlier parts of this problem. Be sure to specify which additional measurements you would need to make (if any) and which equation you would use to solve for the luminosity. You do not need to carry out any calculations, just describe how you would do so.
+
+\end{parts}
+
+\clearpage
+\question
+\textbf{The Sun has a main sequence lifetime of around 10 billion years.}
+\begin{parts}
+
+\part[3] What will the Sun become after it dies? 
+\vspace{4cm}
+\part[8] How would we need to change the Sun's mass if we wanted to increase its main-sequence lifetime to 80 billion years?
+\vspace{10cm}\\
+If you did not solve part (b), you may assume the Sun's mass must be doubled when solving parts (c) and (d).
+\vspace{0.15cm}
+\part[3] Suppose we change the Sun's mass as you described in part (b). Would your answer to part (a) change? If so, what would be your new answer? If not, why not? \\
+\vspace{4cm}
+\newpage
+\part[8] Suppose we change the Sun's mass as you described in part (b). What is the ratio of the Sun's new luminosity to its old luminosity?
+\vspace{10cm}
+\part[4] Your friend claims to have discovered a star with a main-sequence lifetime of 5 billion years which has the same mass as the Sun. Should you believe them? Why or why not?
+
+\end{parts}
+\end{questions}
+
+% \clearpage
+% This page is intentionally left blank to accommodate work that wouldn't fit elsewhere and/or scratch work.
+
+% \clearpage
+% This page is intentionally left blank to accommodate work that wouldn't fit elsewhere and/or scratch work.
+
+% \clearpage
+% This page is intentionally left blank to accommodate work that wouldn't fit elsewhere and/or scratch work.
+
+% \clearpage
+% This page is intentionally left blank to accommodate work that wouldn't fit elsewhere and/or scratch work.
+
+% \clearpage
+% This page is intentionally left blank to accommodate work that wouldn't fit elsewhere and/or scratch work.
+\end{document}

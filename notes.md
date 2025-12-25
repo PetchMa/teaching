@@ -1,0 +1,1 @@
+python markdown_converter_simple.py C10/syllabus.md -t "Astronomy C10 Syllabus" -s "Fall 2025"

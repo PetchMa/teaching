@@ -142,11 +142,27 @@ HTML_TEMPLATE = """
         
         a {
             color: #8B0000;
-            text-decoration: none;
+            text-decoration: underline;
+            font-weight: 500;
         }
         
         a:hover {
-            text-decoration: underline;
+            text-decoration: none;
+            background-color: #f8f9fa;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+        
+        a:visited {
+            color: #8B0000;
+        }
+        
+        a[href^="mailto:"] {
+            color: #8B0000;
+        }
+        
+        a[href^="https://"], a[href^="http://"] {
+            color: #8B0000;
         }
         
         hr {
@@ -197,8 +213,32 @@ HTML_TEMPLATE = """
 </html>
 """
 
+def enhance_links(markdown_content):
+    """Enhance links to ensure they work properly in PDFs."""
+    import re
+    
+    # Ensure email links are properly formatted
+    markdown_content = re.sub(
+        r'([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})',
+        r'[\1](mailto:\1)',
+        markdown_content
+    )
+    
+    # Ensure URLs are properly formatted if they're not already
+    # This handles cases where URLs might be plain text
+    markdown_content = re.sub(
+        r'(?<!\[)(?<!\]\()(https?://[^\s\)]+)',
+        r'[\1](\1)',
+        markdown_content
+    )
+    
+    return markdown_content
+
 def convert_markdown_to_html(markdown_content, title="Document", subtitle=None):
     """Convert markdown content to HTML with custom styling."""
+    # Enhance links first
+    markdown_content = enhance_links(markdown_content)
+    
     # Convert markdown to HTML
     html_content = markdown.markdown(
         markdown_content,
@@ -234,7 +274,7 @@ def save_html(html_content, output_path):
         logger.error(f"Error saving HTML: {e}")
         return False
 
-def generate_pdf_with_pandoc(html_path, pdf_path):
+def generate_pdf_with_pandoc(html_path, pdf_path, markdown_path=None):
     """Generate PDF using pandoc if available."""
     # Try multiple possible pandoc locations
     pandoc_paths = [
@@ -246,27 +286,142 @@ def generate_pdf_with_pandoc(html_path, pdf_path):
     
     for pandoc_path in pandoc_paths:
         try:
-            # Try to use pandoc to convert HTML to PDF (first try with default engine)
-            result = subprocess.run([
-                pandoc_path, 
-                html_path, 
-                '-o', pdf_path
-            ], capture_output=True, text=True)
+            # Method 1: Convert markdown directly to PDF (best for structure)
+            if markdown_path:
+                # Create a LaTeX template for better link handling
+                latex_template = r"""
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{listings}
+\usepackage{fancyvrb}
+\usepackage{upquote}
+\usepackage{textcomp}
+\usepackage{lineno}
+
+% Link colors and styling
+\hypersetup{
+    colorlinks=true,
+    linkcolor=darkred,
+    filecolor=darkred,
+    urlcolor=darkred,
+    citecolor=darkred,
+    pdftitle={$title$},
+    pdfauthor={Peter Ma},
+    pdfsubject={Astronomy C10 Syllabus},
+    pdfkeywords={astronomy, syllabus, berkeley}
+}
+
+% Define dark red color
+\definecolor{darkred}{RGB}{139,0,0}
+
+% Section formatting
+\titleformat{\section}{\Large\bfseries\color{darkred}}{\thesection}{1em}{}
+\titleformat{\subsection}{\large\bfseries\color{darkred}}{\thesubsection}{1em}{}
+
+% Header and footer
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\textcolor{darkred}{Astronomy C10}}
+\fancyhead[R]{\textcolor{darkred}{\thepage}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{darkred}\leaders\hrule height \headrulewidth\hfill}}
+
+\begin{document}
+
+$body$
+
+\end{document}
+"""
+                
+                # Write the template to a temporary file
+                template_path = Path(markdown_path).parent / "latex_template.tex"
+                with open(template_path, 'w') as f:
+                    f.write(latex_template)
+                
+                result = subprocess.run([
+                    pandoc_path, 
+                    markdown_path,  # Use original markdown for best structure
+                    '-o', pdf_path,
+                    '--pdf-engine=xelatex',
+                    '--template', str(template_path),
+                    '--variable=geometry:margin=1in',
+                    '--variable=fontsize:11pt',
+                    '--variable=mainfont:DejaVu Sans',
+                    '--variable=monofont:DejaVu Sans Mono',
+                    '--variable=colorlinks:true',
+                    '--variable=linkcolor:darkred',
+                    '--variable=urlcolor:darkred',
+                    '--variable=citecolor:darkred',
+                    '--variable=linkstyle:underline',
+                    '--toc',
+                    '--number-sections',
+                    '--highlight-style=tango'
+                ], capture_output=True, text=True)
+                
+                # Clean up template file
+                if template_path.exists():
+                    template_path.unlink()
+                
+                if result.returncode == 0:
+                    logger.info(f"PDF generated with pandoc + LaTeX from markdown ({pandoc_path}): {pdf_path}")
+                    return True
             
-            if result.returncode == 0:
-                logger.info(f"PDF generated with pandoc ({pandoc_path}): {pdf_path}")
-                return True
-            
-            # If that fails, try with wkhtmltopdf engine
+            # Method 2: Convert HTML to PDF with LaTeX engine
             result = subprocess.run([
                 pandoc_path, 
                 html_path, 
                 '-o', pdf_path,
-                '--pdf-engine=wkhtmltopdf'
+                '--pdf-engine=xelatex',
+                '--variable=geometry:margin=1in',
+                '--variable=fontsize:11pt',
+                '--variable=mainfont:DejaVu Sans',
+                '--variable=monofont:DejaVu Sans Mono',
+                '--variable=colorlinks:true',
+                '--variable=linkcolor:darkred',
+                '--variable=urlcolor:darkred',
+                '--variable=citecolor:darkred',
+                '--toc',
+                '--number-sections'
             ], capture_output=True, text=True)
             
             if result.returncode == 0:
-                logger.info(f"PDF generated with pandoc ({pandoc_path}): {pdf_path}")
+                logger.info(f"PDF generated with pandoc + LaTeX from HTML ({pandoc_path}): {pdf_path}")
+                return True
+            
+            # Method 3: Default engine with structure options
+            result = subprocess.run([
+                pandoc_path, 
+                html_path, 
+                '-o', pdf_path,
+                '--toc',
+                '--number-sections',
+                '--variable=geometry:margin=1in'
+            ], capture_output=True, text=True)
+            
+            if result.returncode == 0:
+                logger.info(f"PDF generated with pandoc default engine ({pandoc_path}): {pdf_path}")
+                return True
+            
+            # Method 4: wkhtmltopdf engine as fallback
+            result = subprocess.run([
+                pandoc_path, 
+                html_path, 
+                '-o', pdf_path,
+                '--pdf-engine=wkhtmltopdf',
+                '--toc',
+                '--number-sections'
+            ], capture_output=True, text=True)
+            
+            if result.returncode == 0:
+                logger.info(f"PDF generated with pandoc + wkhtmltopdf ({pandoc_path}): {pdf_path}")
                 return True
             else:
                 logger.warning(f"Pandoc ({pandoc_path}) failed: {result.stderr}")
@@ -322,12 +477,12 @@ def generate_pdf_with_browser_print(html_path, pdf_path):
         logger.error(f"Error opening browser: {e}")
         return False
 
-def save_pdf(html_path, pdf_path):
+def save_pdf(html_path, pdf_path, markdown_path=None):
     """Try multiple methods to generate PDF."""
     logger.info("Attempting to generate PDF...")
     
-    # Method 1: Try pandoc
-    if generate_pdf_with_pandoc(html_path, pdf_path):
+    # Method 1: Try pandoc (best for structure)
+    if generate_pdf_with_pandoc(html_path, pdf_path, markdown_path):
         return True
     
     # Method 2: Try wkhtmltopdf
@@ -373,7 +528,7 @@ def convert_markdown_file(input_path, output_dir=None, title=None, subtitle=None
         return False
     
     # Try to generate PDF
-    pdf_success = save_pdf(html_path, pdf_path)
+    pdf_success = save_pdf(html_path, pdf_path, input_path)
     
     if pdf_success:
         logger.info(f"Conversion completed successfully!")

@@ -328,7 +328,8 @@
     \[\langle P \rangle = -3 \Omega/V\]
     \[\frac{2}{3} [E_k /V] \rangle = -3 \Omega/V\]
     \[\boxed{2 E_k + \Omega = 0}\]
-    This is for non-relativistic gas.
+    This is for non-relativistic gas. We see that this means it is STABLE.
+    \[E_k + \Omega < 0\]
    </p>
    <p>
     We see that the total energy is 
@@ -353,6 +354,13 @@
     Ideal Classical Gas, Ultra Relativistic 
    </h4>
    <p>
+    The relativistic limit is when the velocity of the particles is close to the speed of light.
+   </p>
+   <p>
+    \[\frac{pc}{mc^2} >> 1 \Rightarrow \text{relativistic}\]
+    \[\frac{pc}{mc^2} << 1 \Rightarrow \text{non-relativistic}\]
+   </p>
+   <p>
     The internal energy becomes the following: 
     \[\epsilon^2 = p^2c^2+m^2c^4\]
     Relation between energy of a particle \(\epsilon\) and momentum is the relatistic limit. \(pc >> mc^2\). 
@@ -374,10 +382,101 @@
    </p>
    <p>
     Single Atom gas has multiple species, thermal equilibirum with \(N\) species.
-    \[p = \sum_i P_i = \sum_i (n_i)kT = \frac{\rho}{m_p}kT \sum \frac{x_i}{A_i} = \left(\frac{1}{\mu_I m_p} \right)kT\]
-    
+    \[p = \sum_i P_i = \sum_i (n_i)kT = \frac{\rho}{m_p}kT \sum \frac{x_i}{A_i} 
+    = \left(\frac{1}{\mu_I m_p} \right)kT\]
    </p>
-    </div>  
+    <h1>
+        1.4 Equation of State
+    </h1>
+    <p>
+        We want to be able to relate the pressure with other properties like density and temperature.
+        This will allow us to solve the equations of stellar structure.
+    </p>
+    <p>
+        To be able to get an equation of state Local Thermodynamic Equilibrium (LTE) is needed to say something 
+        about the macroscopic properties of the gas.
+    </p>
+    <h4>
+        Non-relativistic Gas
+    </h4>
+    <p>
+        We know that \(p = mv\) and the energy is \(E = \frac{1}{2}mv^2\).
+        We can then write the pressure as \[P = \frac{1}{3}\langle \frac{p\cdot p}{m}\rangle\]
+        \[\boxed{P = \frac{1}{3}\langle 2E_k\rangle = \frac{2}{3} \langle E_k\rangle }\]
+    </p>
+    <p>
+        There are other properties: 
+        \[\epsilon = mc^2 + 1/2 mv^2\]
+        \[p = mv\]
+        \[pc = kT\] 
+    </p>
+    <h4>
+        Relativistic Gas
+    </h4>
+    <p>
+        We know that \(p = mv\) and the energy is \(E_k =pc\).
+        We can then write the pressure as \[P = \frac{1}{3}\langle \frac{p\cdot c}{m}\rangle\]
+        \[\boxed{P = \frac{1}{3}\langle E_k\rangle  }\]
+    </p>
+    <p>
+        There are other properties: 
+        \[\epsilon = (pc)^2 + (mc^2)^2\]
+        \[E_k = pc = \epsilon - mc^2\]
+        \[p = \gamma mv\]
+        \[pc = p_fc\] 
+    </p>
+    <!-- <h4>
+        Classical / Degenerate Divide
+    </h4>
+    <p>
+        The dividing line between classical and degenerate gas can be intuitively derived by considering the 
+        Heisenberg Uncertainty Principle.
+        \[\Delta x \Delta p \geq \frac{h}{4\pi}\]
+        This means the \(\Delta x \sim n^{-1/3}\) and we know that the momentum 
+        is related to the temperature \(p^2/m \sim kT \Rightarrow p \sim (kTm)^{1/2}\).
+        This means that the density needs to be \(n \propto T^{3/2}\). This is for the classical/degen divide 
+        for when there non-relativistic gas.
+    </p>
+<p>
+    When it is relativistic we have that \(p^2/m\)
+</p> -->
+    <h4>
+        Degenerate Gas
+    </h4>
+    <p>
+        We can look at the equation of state for degenerate gas for non-relativistic and ultra-relativistic gas.
+        We see that for non-relativsitic gas we have :
+    </p>
+    <p>
+    \[\Delta x \Delta p \geq \frac{h}{4\pi}\]
+    \[\Delta x \sim n^{-1/3}\] 
+    \[\Delta p \sim n^{1/3} \tag{fermi momentum}\]
+    \[E_k \sim p^2\]
+    \[E_k \sim n^{2/3}\]
+</p>
+    <p>
+        We can get the pressure  
+    
+    \[P = n E_k = n^{2/3+3/3} = n^{5/3}\]
+</p>
+    <p>
+        For the case of the relativsitc gas we have that: 
+   
+    \[E_k \sim pc\]
+    \[P = n E_k = n^{1/3+3/3} = n^{4/3}\]
+</p>
+ 
+<h4>
+    Relativistic vs Non-relativistic
+</h4>
+<P>
+    For <b>Classical</b> gass we check \(kT<< mc^2\)
+</P>
+<p>
+    For <b>Degenerate</b> gas we see when the fermi momentum is similar to the relativistic momentum:
+</p>
+\[mc \sim p_f \sim n^{1/3}\]
+</div>  
 </div>
 <!-- \[dQ = d\epsilon + PdV\]
 \[d\epsilon =  PdV - dQ \]
