@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="shortcut icon" type="image/jpg" href="../img/favicon.ico"/>
+<title>Peter Ma</title>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-157223762-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-157223762-1');
+</script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<link rel="stylesheet" href="../css/style.css">
+<script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<!-- <script src="https://cdn.plot.ly/plotly-1.42.5.min.js"></script> -->
+<script src='js/d3.min.js'> </script>
+<script src="https://d3js.org/d3.v4.js"></script>
+<!-- <script src="js/plotly-latest.min.js"></script> -->
+<!-- Latest compiled and minified plotly.js JavaScript -->
+<script src="https://cdn.plot.ly/plotly-latest.min.js" charset="utf-8"></script>
+
+<!-- OR use a specific plotly.js release (e.g. version 1.52.3) -->
+<script src="https://cdn.plot.ly/plotly-1.52.3.min.js" charset="utf-8"></script>
+
+<!-- OR an un-minified version is also available -->
+
+
+<script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
+
+<!-- for testing with local version of cytoscape.js -->
+<!--<script src="../cytoscape.js/build/cytoscape.js"></script>-->
+
+<script src="https://unpkg.com/webcola/WebCola/cola.min.js"></script>
+
+<body style="transform: scale(0.9); transform-origin: 50% 0%;">
+<div class="page_setup">
+<div class="container">
+    <div class="row "  style="padding-top:2%!important ; padding-left: 10%; padding-right: 5%;">
+        <span class="peterma" style="color: #b80707; font-size: 300%;">
+            Stellar Evolution and Structure Lecture 2
+        </span>
+        <h4>
+            Peter Ma | Jan 25th 2025
+        </h4>
+        <p>
+            We want to investigate the Dynamical Stability, Thermal Stability and Eddington Luminosity limits of a star.
+            And likewise how this affects the minimum and maximum mass of a star. And finally what processes are responsible 
+            for fueling the star and how this affects the energy production.
+        </p>
+        <p>
+        <a href="../index.html"><< Back</a>
+        </p>
+        <h1>
+            Lec 2.1 - Dynamical and Thermal stability
+        </h1>
+        <p>
+            To understand dynamical stability we need to check its adiabatic index if it is close to \(\frac{4}{3}\)
+            Here is a demonstration of why the adiabatic index close to 4/3 is bad.
+        </p>
+        <p>
+            For something to be in adiabatic condition it must satisfy the following:
+            \[PV^{\gamma} = \text{constant}\]
+            \[d(PV^{\gamma}) = 0\]
+            \[P dV^{\gamma} + V^{\gamma} dP = 0\]
+            \[P dV^{\gamma} = -V^{\gamma} dP\]
+            \[P \gamma V^{\gamma-1}dV = -V^{\gamma} dP\]
+            \[PdV = -\frac{V}{\gamma}dP\]
+            <p>
+                We can also check ideal gas law 
+                \[PV = nkT \sim U\]
+                \[dPV = d U\]
+                \[VdP + PdV = d U\]
+                \[VdP  -\frac{V}{\gamma}dP = d U\]
+                \[(1  -\frac{1}{\gamma})dP = \frac{d U}{V}\]
+                \[(\frac{\gamma  -1}{\gamma})dP = \frac{d U}{V}\]
+                \[P =  \frac{\gamma}{\gamma  -1}\frac{ U}{V}\]
+            We see that for the virials theroem says 
+            \[\Omega = -3 \bar P V\]
+            \[\Omega = -3  \frac{\gamma}{\gamma  -1}\frac{ U}{V} V\]
+            \[\Omega = -3  \frac{\gamma}{\gamma  -1}U\]
+            \[U + \Omega = U  - 3  \frac{\gamma}{\gamma  -1}U\]
+            \[(1  - 3  \frac{\gamma}{\gamma  -1})U = 0 \Rightarrow \gamma = \frac{4}{3}\]
+            if \(\gamma = \frac{4}{3}\) then we get zero!
+            </p>
+        </p>
+        <h4>
+            Photon Gas
+        </h4>
+        <p>
+            A photon gas is a collection of photons in thermal equilibrium, behaving as a statistical system 
+            with specific thermodynamic properties.
+             We can think of this in relation to radiation pressure within stars.
+            We can see that the photon energy density:
+            \[ u \propto aT^4\]
+            Since photons are relativistic we see that equation of state has no dependence on density. 
+
+            \[P = 1/3 U/V = \frac{1}{3} u\]
+            \[P = \frac{1}{3} aT^4\]
+            \[P = \frac{1}{3} aT^4\]
+            This is blackbody radiation. 
+            </p>
+    <h4>
+        Dynamical Stability 
+    </h4>
+    <p>
+        We see that for there to be gas pressure to dominate over the radiation pressure or else the adiabatic index 
+        will be close to 4/3. Let us see how this is the case.
+        </p>
+        <p>
+            If radiation dominates then, we are relativistic. 
+            This means 
+            \[P \sim -1/3 U/V \]
+            \[U = PV/(\gamma -1)\]
+            \[3 = 1/(\gamma -1)\Rightarrow \gamma = 4/3\]
+            We know this is bad!
+        </p>
+        <p>
+            The dividing line here is: 
+        </p>
+        <p>
+            \[\boxed{P_{rad} = \frac{1}{3} aT^4 \sim nkT \Rightarrow T \propto n^{1/3}}\]
+
+        </p>
+        <p>
+            We see that if we are gas pressure dominate then we are non-relativistic. 
+            This means 
+            \[P_{gas} \sim \rho k T \sim  M/R^3 \cdot M/R \Rightarrow M/R^4 \]
+        </p>
+       <p>
+        This means anything that is relativistic will be unstable INCLUDING things within the classical regime that 
+        is below the relativistic limit for the gas but have radiation pressure dominating. This in turn means it sets a maximum 
+        mass for a star!
+        \[\frac{P_{rad}}{P_{gas}} \sim \frac{1/3 aT^4}{M/R^4} \sim \frac{ (M/R)^4}{M/R^4} \sim M^2\]
+        Depending on models this is approximately \(M \sim 100 M_{\odot}\)
+       </p>
+       <h4>
+        Thermal Stability
+       </h4>
+       <P>
+        Thermal instability is when temperature is not coupled to pressure in the equation of state. 
+        This is the line of degeneracy. This means that when it heats up, the pressure does not increase 
+        to expand the material and cool it down. Furthermore we will see that the luminosity of the nuclear reaction is 
+        highly coupled to the temperature and thus when it heats up luminosity increases increasing radiation pressure dramatically which 
+        pushes it into dynamical instability. 
+       </P>
+    <h4>
+        Eddington Luminosity Limit
+    </h4>
+    <p>
+        We want to see how bright can something shine before it blows away the particles that are graviationally bound to it.
+        We balance 
+        \[F_{rad} = F_{g}\]
+        \[F_{g} = \frac{GMm_p}{r^2}\]
+        On the other hand the radiation force is  given by
+        \[F_{rad} = \frac{L \sigma_T}{4\pi r^2 c}\]
+        Which means we can equate the two: 
+        \[\frac{L \sigma_T}{4\pi r^2 c} = \frac{GMm_p}{r^2}\]
+        \[L = \frac{GMm_p c}{\sigma_T}\]
+    </p>
+    <h4>
+        Nuclear Fusion
+    </h4>
+    <p>
+        Nuclear fusion is the process of two or more atomic nuclei joining together to form a single heavier nucleus.
+        However to be able to successfully fuse two nuclei together we need to overcome the coulomb barrier.
+        This is not very easy to do.
+    </p>
+    <p>
+        We consider the distance for strong force interaction is through the heisenberg uncertainty principle.
+        \[\Delta t \Delta E \geq h\]
+        \[\Delta t  = \frac{h}{E}\]
+        \[\Delta t  = \frac{h}{mc^2}\]
+        And then we can find the distance by 
+        \[d \sim c \Delta t = \frac{h}{mc}\sim 10^{-13}cm\]
+        We see that we need to get close enough to this potential well 
+        \[E \sim  \frac{Z_eZ_p}{d} \sim 1MeV \sim kT \Rightarrow T \sim 10^{10}K\]
+        At this temperature this will completely destroy the nuclei as the binding energy of the proton 
+        is at relativisitic and is unstable.
+    </p>
+    <p>
+        We see then that quantum tunneling is the process of a particle passing through a 
+        potential barrier without having enough energy to do so. And is what brings nuclear fusion to happen. 
+    </p>
+    <P>
+        We can calculate the tunneling probability by solving for the wave function of the particle in the potential barrier.
+        \[P = \exp{\sqrt{E_g/E}}\]
+        Where \(E_g = [\pi Z_eZ_p]^2 mc^2\) is gamow energy peak.
+    </P>
+    <p>
+        We see this compared with the energy tail of the maxwellian distribution which produces a window 
+        for which fusion happens. This is because the tail is \[e^{-E/kT} \cdot e^{\sqrt{E_g/E}}\]
+        This prdouces a peak at \[E_0 = (\sqrt{E_g}kT)^{2/3}\]
+    </p>
+    <p>
+        We can we can then calculate the energy rate production as a function of temperature.
+        \[\epsilon \propto \rho T^4\] while the CNO fusion \[\epsilon \propto \rho T^{18}\]!
+    </p>
+</div>  
+</div>
+
+
+<footer style="text-align: center;">
+    <p>
+        Made by <a href="https://twitter.com/peterma02" >
+        @peterma02 </a>- 2024 ©
+    </p>
+</footer>
+
+</body>
+
+</html>
