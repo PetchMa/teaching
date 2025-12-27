@@ -63,9 +63,9 @@
         <p>
         <a href="../index.html"><< Back</a>
         </p>
-       <h4>
+       <h1>
         Birth 
-    </h4>
+    </h1>
        <p>
         The birth of a star requires it to be formed from cloud of molecular gas. The reason for stars to form there 
         is that only those clouds are large enough and cold enough to undergo gravitational collapse. 
@@ -114,9 +114,9 @@
             </li>
         </ol>
        </p>
-     <h4>
+     <h1>
         Life - Main Sequence
-     </h4>
+     </h1>
      <p>
         The life of a star stays on the main sequence and burns hydrogen in its core. The Main Sequence (MS) is defined by a state of Complete Equilibrium. A star on the MS satisfies two conditions simultaneously:
         Hydrostatic Equilibrium and Thermal Equilibrium (This means there is no net change in the star's entropy with time).
@@ -135,6 +135,9 @@
         \[\frac{dL}{dr} = 4\pi r^2 \rho \epsilon \tag{energy production}\]
         We can then use homology to get the following scalings:
      </p>
+     <h4>
+        Homology
+     </h4>
      <p>
         Homology essentially, homology treats different stars as scaled versions of each other. They assume in HE, same opacity, same EOS and 
         such. Example <b>mass conservation</b>:
@@ -197,10 +200,201 @@
      </p>
 
 
-     <h4>
+     <h1>
         Death - post main sequence
+     </h1>
+     <h4>
+        Big picture Death:
      </h4>
-     
+     <h2>1. The Dividing Line: Degeneracy Pressure</h2>
+    <p>The key event in a star's late life is whether its core crosses the <strong>boundary of electron degeneracy</strong> in the temperature-density plane <span class="citation"></span>.</p>
+    <ul>
+        <li><strong>If it crosses:</strong> The core becomes supported by electron degeneracy pressure. This pressure is independent of temperature, so it stops the contraction and prevents the core from heating up further to ignite the next fuel (e.g., Carbon). The star dies as a <strong>White Dwarf</strong> <span class="citation"></span>.</li>
+        <li><strong>If it never crosses:</strong> The core continues to contract and heat up, igniting successively heavier elements (C, Ne, O, Si) until it forms an Iron core and collapses/explodes <span class="citation"></span>.</li>
+    </ul>
+
+    <h2>2. Low and Intermediate Mass Stars (M &lt; 8 M<sub>&#9737;</sub>)</h2>
+    <p>These stars end their lives as <strong>White Dwarfs (WDs)</strong> because their cores become degenerate before they can fuse Carbon <span class="citation"></span>.</p>
+    
+    
+
+    <ul>
+        <li><strong>Very Low Mass (M &lt; 1 M<sub>&#9737;</sub>):</strong>
+            <ul>
+                <li>They never get hot enough to ignite Helium.</li>
+                <li><strong>End Result:</strong> <strong>Helium White Dwarf</strong> <span class="citation"></span>.</li>
+            </ul>
+        </li>
+        <li><strong>Low Mass (1 &lt; M &lt; 2 M<sub>&#9737;</sub>):</strong>
+            <ul>
+                <li>They develop a degenerate Helium core.</li>
+                <li>Helium ignition happens explosively via a <strong>"Helium Flash"</strong> <span class="citation"></span>.</li>
+                <li>Eventually, they build a Carbon/Oxygen core that becomes degenerate.</li>
+                <li><strong>End Result:</strong> <strong>Carbon/Oxygen (CO) White Dwarf</strong> <span class="citation"></span>.</li>
+            </ul>
+        </li>
+        <li><strong>Intermediate Mass (2 &lt; M &lt; 8 M<sub>&#9737;</sub>):</strong>
+            <ul>
+                <li>They ignite Helium gradually (non-degenerately) <span class="citation"></span>.</li>
+                <li>They build up a C/O core which eventually becomes degenerate.</li>
+                <li><strong>End Result:</strong> <strong>Carbon/Oxygen (CO) White Dwarf</strong> <span class="citation"></span>.</li>
+            </ul>
+        </li>
+    </ul>
+
+    <h2>3. Massive Stars (M &ge; 8 M<sub>&#9737;</sub>)</h2>
+    <p>These stars are massive enough that their cores remain non-degenerate during contraction.</p>
+    <ul>
+        <li>They ignite Carbon and proceed through heavier nuclear burning stages.</li>
+        <li><strong>End Result:</strong> They ultimately explode as supernovae, leaving behind a <strong>Neutron Star (NS)</strong> or a <strong>Black Hole (BH)</strong> <span class="citation"></span>.</li>
+    </ul>
+
+    <h2>4. The White Dwarf Graveyard</h2>
+    <p>For the vast majority of stars (the low/intermediate ones), the final state is a White Dwarf, which is described in <strong>Lecture 22</strong> as follows:</p>
+    <ul>
+        <li><strong>Structure:</strong> They consist of a degenerate electron core (providing pressure) and a thin non-degenerate envelope (insulating the core) <span class="citation"></span>.</li>
+        <li><strong>Cooling:</strong> Since they have no nuclear fuel, they shine by radiating away their stored thermal energy (from the ions, not electrons). They simply cool down and fade over billions of years <span class="citation"></span>.</li>
+        <li><strong>Mass Limit:</strong> They cannot exceed the <strong>Chandrasekhar Mass (&asymp; 1.4 M<sub>&#9737;</sub>)</strong>, or they would become dynamically unstable <span class="citation"></span>.</li>
+    </ul>
+     <h4>
+        White Dwarf
+     </h4>
+     <p>
+        White dwarfs are the final stage of stellar evolution for stars with masses less than 8 \(M_\odot\). And they are unique 
+        in that they are supported by electron degeneracy pressure rather than thermal pressure.
+     </p>
+     <p>
+        Let us find how the radius and mass scale with each other.
+         We start with the hydrostatic equilibrium equation:
+        \[\frac{dP}{dr} = -\frac{Gm}{r} \rho\]
+        \[\frac{P}{r} \sim -\frac{Gm}{r} \rho\]
+        \[P \sim -\frac{Gm^2}{r^4}\]
+        \[P \sim K \rho^{5/3} \tag{EOS degenerate NR}\]
+        plug in for density
+        \[P \sim K M^{5/3} \frac{1}{R^5} \]
+        \[ -\frac{GM^2}{r^4} \propto K M^{5/3} \frac{1}{R^5}\]
+        \[ -\frac{G}{r^4} \propto K M^{-1/3} \frac{1}{R^5}\]
+        \[\boxed{R \propto M^{-1/3}}\]
+        <B>
+            Chandrasekhar Limit:
+        </B> given by when equation of state goes relativistic and is dynamically unstable.
+        \[P \sim K M^{4/3} \frac{1}{R^4} \]
+        \[ -\frac{GM^2}{r^4} \propto K M^{4/3} \frac{1}{R^4}\]
+        We see that radius cancels out and we get just a mass relation: 
+        \[\boxed{M \propto (K/G)^{3/2} \sim 1.44 M_\odot}\]
+
+     </p>
+     <p>
+        <b>Temperature and Luminosity relation</b>
+        The White Dwarf has a highly conductive, isothermal core (at temperature \(T_c\)) wrapped in a thin, 
+        non-degenerate, radiative envelope.
+         The luminosity is determined by how easily heat can leak through this opaque envelope.
+         \[\frac{dP}{dr} = -\frac{Gm}{r^2} \rho\tag{hydrostatic equilibrium}\]
+         \[\frac{dT}{dr} = \frac{-3\kappa \rho}{16 \pi ac} \frac{L}{4\pi r^2T^3} \tag{radiative diffusion}\]
+         We divde the two equations to get:
+         \[\frac{dT}{dP} = \frac{\kappa L}{MT^3}\]
+         bring in the opacity from kramers opacity law:
+         \[\kappa \propto \rho T^{-7/2}\]
+         \[\frac{dT}{dP} = \frac{L}{MT^{17/2}}P\]
+         We integrate 
+         \[\int T^{17/2}dT = \int \frac{L}{M}PdP\]
+         \[\frac{2}{19}T^{19/2} = \frac{L}{M}P^2\]
+         \[\frac{2}{19}T^{19/4} (\frac{L}{M})^{-2}= P\]
+
+        We can drop in ideal gas law 
+        \[\rho \propto \frac{P}{kT}\]
+        \[\rho \propto \frac{\frac{2}{19}T^{19/4} (\frac{L}{M})^{-2}}{T}\]
+
+        At the core the equation of state needs to match 
+        \[P = kT = \rho^{5/3}\]
+        together we get that:
+        \[\boxed{L \propto M T^{7/2}}\]
+
+
+     </p>
+     <p>
+        <b>Cooling time:</b> since there is no energy production,
+         the white dwarf will cool down via radiative diffusion.
+         
+
+     </p>
+     <p>
+        Total energy stored: 
+        \[U = MT\]
+        We also know that the temperature luminosity relation is:
+        \[L\propto T^{7/2}\]
+        \[L^{2/7}\propto T\]
+        And we know that 
+        \[L = \frac{dU}{dt}\]
+        We rewrite 
+        \[\]
+        \[L = M\frac{dT}{dt}\]
+        \[L = M\frac{dL^{2/7}}{dt}\]
+        \[L = ML^{-5/7}\frac{dL}{dt}\]
+        \[dt= ML^{-5/7}\frac{dL}{L}\]
+        \[\int dt= \int ML^{-12/7}dL\]
+        \[\boxed{t\propto  ML^{-5/7}}\]
+     </p>
+     <h4>
+        Massive Stars \(M > 8 M_\odot\)
+     </h4>
+     <p>
+        Massive stars continue to fuse Helium into larger more massive elements. 
+        At the end of its nuclear burning sequence, a massive star develops an "onion skin" structure with 
+        layers of progressively heavier elements, 
+        ending with an Iron (Fe) core in the center. Iron cannot fuse to release energy; instead, 
+        fusion would consume energy.
+     </p>
+     <p>
+        <b>Photodisintegration:</b> Iron is broken up into smaller nuclei.
+        This process is endothermic (absorbs heat), drastically reducing the core's thermal pressure. Changes the adiabatic 
+        index to 4/3 and becomes unstable.
+      </p>
+      <p>
+        <b>Inverse Beta Decay</b>Electron Capture: 
+        Due to high densities, electrons are forced into protons to form neutrons and neutrinos. And looses degeneracy pressure.
+      </p>
+      <p>
+        <b>Free fall:</b>
+        With pressure support gone, the core collapses under gravity on a dynamical timescale free fall.
+      </p>
+      <p>
+        <b>
+            The Bounce:
+        </b>The collapse continues until the core density exceeds nuclear density. 
+        At this point, the strong nuclear force becomes repulsive (the Equation of State goes back to 5/3), 
+        causing the inner core to rebound or "bounce". 
+      </p>
+      <p>
+        <b>Shock:</b>This bounce generates a big shock wave that moves outward.
+      </p>
+      <p>
+        <b>Stalling:</b> As the shock moves through the outer iron core, 
+        it loses energy by dissociating heavy nuclei, causing it to stall.
+      </p>
+      <p>
+        <b>
+            Neutrino Revival:
+        </b>
+        The collapsing core releases a massive burst of neutrinos. These neutrinos deposit 
+        some of their energy into the stalled shock layer, reheating it and "reviving" the shock.
+      </p>
+      <p>
+        <b>Key Calculations:</b>
+        Energetics of the core: 
+        \[\Delta E = GM_c^2/R_c \sim 10^{53} ergs\]
+        Energy of the shock: 
+        \[\Delta E = \frac{1}{2} M_c v_s^2 \sim 10^{51} ergs\]
+        Energy of the neutrinos should be carying away the result which is \(99\%\) of the energy. The neutrinos 
+        are fromed via inverse beta decay and electron capture. 
+
+
+      </p>
+      <p>
+        <b>Neutrino Trapping:</b>
+        We find the cross section for neutrino scattering and then find the mean free path to see that the core would be 
+        too dense and thus traps the neutrinos in it.
+      </p>
     </div>  
 </div>
 
