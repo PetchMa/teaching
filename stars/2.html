@@ -210,6 +210,40 @@
         We can we can then calculate the energy rate production as a function of temperature.
         \[\epsilon \propto \rho T^4\] while the CNO fusion \[\epsilon \propto \rho T^{18}\]!
     </p>
+    <h4>
+        Min and Max Mass of a Star
+    </h4>
+    <p>
+        The upper bound of the mass of a star is set by the dominance of radiation pressure over gas pressure which 
+        turns the adiabatic index closer to 4/3. This means the photon gas is the dominat pressure component over
+        the non-relativistic gas. Photon gas is dynamically unstable. The upper limit is about 100 \(M_{\odot}\).
+    </p>
+    <p>
+        The lower bound is set by the temperature of which nuclear fusion can occur. We can find the maxium temperature 
+        and make sure it surpasses the temperature needed to ignite fusion.
+    </p>
+    <p>
+        We know that the pressure at the core is a mix of degenerate and normal matter
+        \[\boxed{P = kN_rn_e^{5/3}+n_ikT} \]
+        We know that the electrons go degenerate first before the ions. 
+        We can replace each with densities.
+        \[P = kN_r(\frac{\rho}{\mu_em_e})^{5/3}+(\frac{\rho}{\mu_im_i})kT \]
+        We remember we need this to be hydrostatic equilibrium. So we have: 
+        \[\frac{-Gm}{r^2} = \frac{1}{\rho}\frac{dP}{dr}\]
+        \[\frac{-Gm}{r^2} rho = P/r\]
+        \[\frac{-Gm}{r} rho = P\]
+        \[\rho^{1/3} = m^{1/3}/r\]
+        \[-Gm \rho^{1/3}/m^{1/3} rho = P\]
+        \[\boxed{-Gm^{2/3} \rho^{4/3}= P}\]
+        \[kN_r(\frac{\rho}{\mu_em_e})^{5/3}+(\frac{\rho}{\mu_im_i})kT  = -Gm^{2/3} \rho^{4/3}\]
+        We simplify  and swallow the constants 
+        \[A \rho^{1/3} + B \rho^{2/3} = kT\]
+        We can then find the maximum temperature by solving this quadratic like equation. 
+        The solution also gives rise to the temperature dependence of \(T \propto M^{4/3}\). 
+        The mass needs to be \(M > \# T^{3/4}\) where the constant 
+        comes from properly solving the quadratic equation.
+    \[\boxed{M > \# T_{ignite}^{3/4}}\]
+       
 </div>  
 </div>
 

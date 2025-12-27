@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="shortcut icon" type="image/jpg" href="../img/favicon.ico"/>
+<title>Peter Ma</title>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-157223762-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-157223762-1');
+</script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<link rel="stylesheet" href="../css/style.css">
+<script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<!-- <script src="https://cdn.plot.ly/plotly-1.42.5.min.js"></script> -->
+<script src='js/d3.min.js'> </script>
+<script src="https://d3js.org/d3.v4.js"></script>
+<!-- <script src="js/plotly-latest.min.js"></script> -->
+<!-- Latest compiled and minified plotly.js JavaScript -->
+<script src="https://cdn.plot.ly/plotly-latest.min.js" charset="utf-8"></script>
+
+<!-- OR use a specific plotly.js release (e.g. version 1.52.3) -->
+<script src="https://cdn.plot.ly/plotly-1.52.3.min.js" charset="utf-8"></script>
+
+<!-- OR an un-minified version is also available -->
+
+
+<script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
+
+<!-- for testing with local version of cytoscape.js -->
+<!--<script src="../cytoscape.js/build/cytoscape.js"></script>-->
+
+<script src="https://unpkg.com/webcola/WebCola/cola.min.js"></script>
+
+<body style="transform: scale(0.9); transform-origin: 50% 0%;">
+<div class="page_setup">
+<div class="container">
+    <div class="row "  style="padding-top:2%!important ; padding-left: 10%; padding-right: 5%;">
+        <span class="peterma" style="color: #b80707; font-size: 300%;">
+            Stellar Evolution and Structure Lecture 4
+        </span>
+        <h4>
+            Peter Ma | Jan 25th 2025
+        </h4>
+        <p>
+          Using what we have derived, let us now try and understand the birth, life and death of a star.
+        </p>
+        <p>
+        <a href="../index.html"><< Back</a>
+        </p>
+       <h4>
+        Birth 
+    </h4>
+       <p>
+        The birth of a star requires it to be formed from cloud of molecular gas. The reason for stars to form there 
+        is that only those clouds are large enough and cold enough to undergo gravitational collapse. 
+       </p>
+       <p>
+        We go back to fuids to find the jeans length. 
+        \[1/k_j = \sqrt{\frac{v_s^2}{4\pi G \rho_0}} \]
+        We can then find the mass for gravitational collpase.
+        \[M_j = \frac{4\pi}{3}k_j^3 \rho_0\]
+        \[M_j = \frac{4\pi}{3}(\sqrt{\frac{{v_s^2}}{ 4\pi G \rho_0}})^3 \rho_0\]
+        \[M_j = \frac{4\pi}{3}(\frac{v_s^2}{4\pi G})^3 \rho_0^{-1/2}\]
+        We know that the speed of sound is related to the temperature by 
+        \[v_s^2 = \frac{ kT}{\mu m_p}\]
+        We can then find the mass for gravitational collapse.
+        \[M_j = \frac{4\pi}{3}(\sqrt{\frac{ kT}{\mu m_p}})^3 \rho_0^{-1/2}\]
+        \[\boxed{M_j = \frac{4\pi}{3}(\sqrt{\frac{ k}{\mu m_p}})^3 T^{3/2}\rho_0^{-1/2}}\]
+        \[\boxed{M_j \propto T^{3/2}\rho_0^{-1/2}}\]
+        <ol>
+            <li>
+                <b>Cloud Collapse:</b> Isothermal collapse as molecular lines cool it down. Collapse on free fall time scales.
+            </li>
+            <li>
+                <b>Fragmentation: </b> clouds collapse but collapses in slightly unevenly and triggers fragmentation as 
+                different areas trigger jeans instability at different times.
+            </li>
+            <li>
+                <b>Proto-core:</b> As the density goes up, it becomes optically thick and suddenly is in hydrostatic equilibrum on very short 
+                timescales. 
+            </li>
+            <li>
+                <b>Accreation Phase:</b> the cloud starts to accrete onto the proto-core. This adds additional mass and heat as the gravitational potential is converted into a luminosity.
+                Energy Source: The protostar is not yet powered by nuclear fusion.
+                 Its luminosity comes from the gravitational potential energy released as gas falls onto the core.
+                  The luminosity is given by: \(L \approx L_{acc} \sim \frac{1}{2} \frac{G M \dot{M}}{R}\) evolving on Kelvin-Helmholtz time scales.
+            </li>
+            <li>
+                <b>Molecular Disassociation and Ionization: </b>As the cloud contracts, it heats up. However, when the gas reaches specific critical temperatures, the thermal energy is no longer used to increase temperature (pressure support). Instead, it is consumed to change the state of the matter (breaking bonds or stripping electrons). 
+                This is dynamically unstable and triggers collapse. It collapses on free fall time scales while dissociation and ionization releases heat which adds pressure support.
+                However the process of heating up it collapses at thermal timescale and then the cycle repeats.
+            </li>
+            <li>
+                <b>Pre-main sequence phase: </b> Because the outer layers are so opaque (resistant to radiation), 
+                radiation cannot easily transport the energy out and thus the stars are almost entirely convective. 
+                This state forces the protostar to reside on the Hayashi Line in the HR diagram—a nearly vertical line representing the region where fully convective stars in hydrostatic equilibrium must exist
+                Any star to the right of this line (cooler) cannot be in hydrostatic equilibrium, which is why it is a "forbidden region".
+            </li>
+        </ol>
+       </p>
+     <h4>
+        Life - Main Sequence
+     </h4>
+     <p>
+        The life of a star stays on the main sequence and burns hydrogen in its core. The Main Sequence (MS) is defined by a state of Complete Equilibrium. A star on the MS satisfies two conditions simultaneously:
+        Hydrostatic Equilibrium and Thermal Equilibrium (This means there is no net change in the star's entropy with time).
+     </p>
+     <p>
+        To understand the life of a MS star requires us to solve the stellar structure equations. But we can also get out useful scalings 
+        using Homology.
+     </p>
+     <p>
+        Here are the stellar structure equations:
+        \[\frac{dM}{dr} = 4\pi r^2 \rho \tag{mass conservation}\]
+        \[\frac{dP}{dr} = -\frac{GM}{r^2} \rho \tag{hydrostatic equilibrium}\]
+        We can have radiative diffusion or convection as the dominant energy transport.
+        \[\frac{dT}{dr} = -4 \pi r^2 \rho [\frac{-Gm}{4\pi r^2} \frac{T}{P} \nabla_{rad}],\quad \nabla_{rad}= \frac{3\kappa }{16 \pi a c G} \frac{lm}{mT^4} \tag{radiative diffusion}\]
+        \[\frac{dT}{dr} = -4 \pi r^2 \rho [\frac{-Gm}{4\pi r^2} \frac{T}{P} \nabla_{ad}],\quad \nabla_{ad} \Rightarrow \frac{r}{T} \frac{dT}{dr}_{ad} = \frac{1}{\gamma}\frac{\rho}{P} \frac{dP}{dr} \tag{convection diffusion}\]
+        \[\frac{dL}{dr} = 4\pi r^2 \rho \epsilon \tag{energy production}\]
+        We can then use homology to get the following scalings:
+     </p>
+     <p>
+        Homology essentially, homology treats different stars as scaled versions of each other. They assume in HE, same opacity, same EOS and 
+        such. Example <b>mass conservation</b>:
+        \[\frac{dM_1}{dr_1} = 4\pi r_1^2 \rho_1 \]
+        \[dM_1 = dM_2 \frac{M_1}{M_2} \]
+        \[dr_1 = dr_2 \frac{r_1}{r_2} \]
+        We can then write the mass conservation equation as:
+        \[\frac{dM_1}{dr_1} = \frac{dM_2}{dr_2} \frac{M_1}{M_2} \frac{r_2}{r_1} \]
+        add in the mass continuity equation 
+        \[4\pi r_1^2 \rho_1  =  4\pi r_2^2 \rho_2  \frac{M_1}{M_2} \frac{r_2}{r_1} \]
+        \[r_1^3 \rho_1  =  \rho_2  \frac{M_1}{M_2} r_2^3 \]
+        \[\boxed{ \frac{\rho_1}{ \rho_2}   =    \frac{M_1}{M_2}(\frac{r_1}{r_2})^{-3}} \]
+
+ 
+     </p>
+     <p>
+        <b>Hydrostatic equilibrium</b>:
+        \[\frac{dP_1}{dr_1} = -\frac{G M_1}{r_1^2} \rho_1 \]
+        \[dP_1 = dP_2 \frac{P_1}{P_2} \]
+        \[dr_1 = dr_2 \frac{r_1}{r_2} \]
+        We can then write the hydrostatic equilibrium equation as:
+        \[\frac{dP_1}{dr_1} = \frac{dP_2}{dr_2} \frac{P_1}{P_2} \frac{r_2}{r_1} \]
+        add in the hydrostatic equilibrium equation 
+        \[-\frac{G M_1}{r_1^2} \rho_1  =  -\frac{G M_2}{r_2^2} \rho_2  \frac{P_1}{P_2} \frac{r_2}{r_1} \]
+        Simplify
+        \[-\frac{M_1}{r_1} \rho_1  =  -\frac{ M_2}{r_2} \rho_2  \frac{P_1}{P_2} \]
+        \[\frac{ M_1}{M_2} \frac{r_2}{r_1} \frac{\rho_1}{\rho_2}  = \frac{P_1}{P_2} \]
+        We can replace density with our previous homology result 
+        \[\frac{ M_1}{M_2} \frac{r_2}{r_1} \frac{M_1}{M_2}\frac{r_2^3}{r_1^3}  = \frac{P_1}{P_2} \]
+        \[\boxed{ \frac{P_1}{P_2} = \frac{ M_1^2}{M_2^2} \frac{r_2^4}{r_1^4}  }\]
+        If we used the equation of state \(P= nkT\) we can get 
+        \[\frac{P_1}{P_2} = \frac{\rho_1}{\rho_2} \frac{T_1}{T_2}\]
+        \[\frac{P_1}{P_2} = \frac{M_1 /R_1^3}{M_2 /R_2^3} \frac{T_1}{T_2}\]
+
+        We can then replace to get 
+        \[\boxed{ \frac{T_1}{T_2} = \frac{ M_1}{M_2} \frac{r_2}{r_1}  }\]
+
+
+     </p>
+     <p>
+        <b>Radiative:</b> let us look at how to get out luminosity: 
+        \[\frac{dT_1}{dr_1} = \frac{-3 \kappa \rho_1}{4 ac} \frac{1}{T_1^3} \frac{l}{4\pi r_1^2}\]
+        Let us slowly replace everything with our homology results:
+        \[ \frac{T_1}{T_2} = \frac{ M_1}{M_2} \frac{r_2}{r_1} \]
+        \[\frac{dT_1}{dr_1} = \frac{-3 \kappa \rho_1}{4 ac} \frac{1}{(T_2 \frac{ M_1}{M_2} \frac{r_2}{r_1})^3 } \frac{l}{4\pi r_1^2}\]
+        
+        more homology results
+        \[\frac{\rho_1}{ \rho_2}   =    \frac{M_1}{M_2}(\frac{r_1}{r_2})^{-3}\]
+        place it in 
+        \[\frac{dT_1}{dr_1} = \frac{-3 \kappa \rho_2 \frac{M_1}{M_2}(\frac{r_1}{r_2})^{-3}}{4 ac} \frac{1}{(T_2 \frac{ M_1}{M_2} \frac{r_2}{r_1})^3 } \frac{l}{4\pi (r_2 \frac{R_1}{R_2})^2}\]
+        \[\frac{dT_1}{dr_1} = \frac{-3 \kappa \rho_2 }{4 ac} \frac{1}{ ( \frac{ M_1}{M_2})^{2}T_2  } \frac{\frac{l_1}{l_2}}{4\pi (r_2 \frac{R_1}{R_2})^2}\]
+        \[\frac{dT_1}{dr_1} = (\frac{ M_1}{M_2})^{-2} (\frac{ r_1}{r_2})^{-2}\]
+
+        We replace the derivative: 
+        \[\frac{dT_1}{dr_1}  = \frac{dT_2}{dr_1} \frac{T_2 (\mu1/\mu2) (M_1/M_2)(R_2/R_1)}{r_2 R_1/R_2}  = \mu (M_1/M_2) (R_2/R_1)^2\]
+        Now we figure out the right side:
+        \[\boxed{\frac{l_1}{l_2} \propto (\frac{m_1}{m_2})^{3} \mu_1^{4} \mu_2^{4}}\]
+        If you add back krammers opacity you get 
+     </p>
+    </div>  
+</div>
+
+
+<footer style="text-align: center;">
+    <p>
+        Made by <a href="https://twitter.com/peterma02" >
+        @peterma02 </a>- 2024 ©
+    </p>
+</footer>
+
+</body>
+
+</html>

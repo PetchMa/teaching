@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="shortcut icon" type="image/jpg" href="../img/favicon.ico"/>
+<title>Peter Ma</title>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-157223762-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-157223762-1');
+</script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<link rel="stylesheet" href="../css/style.css">
+<script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<!-- <script src="https://cdn.plot.ly/plotly-1.42.5.min.js"></script> -->
+<script src='js/d3.min.js'> </script>
+<script src="https://d3js.org/d3.v4.js"></script>
+<!-- <script src="js/plotly-latest.min.js"></script> -->
+<!-- Latest compiled and minified plotly.js JavaScript -->
+<script src="https://cdn.plot.ly/plotly-latest.min.js" charset="utf-8"></script>
+
+<!-- OR use a specific plotly.js release (e.g. version 1.52.3) -->
+<script src="https://cdn.plot.ly/plotly-1.52.3.min.js" charset="utf-8"></script>
+
+<!-- OR an un-minified version is also available -->
+
+
+<script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
+
+<!-- for testing with local version of cytoscape.js -->
+<!--<script src="../cytoscape.js/build/cytoscape.js"></script>-->
+
+<script src="https://unpkg.com/webcola/WebCola/cola.min.js"></script>
+
+<body style="transform: scale(0.9); transform-origin: 50% 0%;">
+<div class="page_setup">
+<div class="container">
+    <div class="row "  style="padding-top:2%!important ; padding-left: 10%; padding-right: 5%;">
+        <span class="peterma" style="color: #b80707; font-size: 300%;">
+            Stellar Evolution and Structure Lecture 3
+        </span>
+        <h4>
+            Peter Ma | Jan 25th 2025
+        </h4>
+        <p>
+           We now seek to derive the complete stellar structure equations. This includes mass conservation, hydrostatic equilibrium so far. We want to then derive 
+           the radiative transfer equation and the energy equation. With the equation of state this allows us to solve for the structure of the star.
+        </p>
+        <p>
+        <a href="../index.html"><< Back</a>
+        </p>
+       <h4>
+        Radiative Transfer
+       </h4>
+       <p>
+        Consider a box of length \(ds\). And in it is a bunch of stuff which can interact with light coming through it. 
+        Coming into this box is light with intensity \(I_{\nu}\) and leaving is \(I_{\nu} - dI_{\nu}\). Some bits of light will be absorbed. 
+        Each absorber has some cross section of interaction \(\sigma_{\nu}\) and some density \(n\). The number of absorbers is \(n \sigma_{\nu} ds\).
+        \[\frac{dI_\nu}{I_\nu}= -n\sigma ds\].
+        This term can be seen as an optical depth \(d\tau_{\nu} = n\sigma ds\). We can write this interms of a density instead 
+        of number density \(d\tau = \rho \kappa_{\nu} ds\). where \(\kappa_{\nu}\) is the opacity. However this only captures 
+        the absorption of light. We also need an emission term (source term). 
+        \[\frac{dI_\nu}{I_\nu}= -n\sigma ds + \frac{j_\nu}{\alpha_\nu}\] Which is called a source function.
+        \(S_\nu =\frac{j_\nu}{\alpha_\nu} \). For a black body we have that \(j_\nu = B_\nu(T)\). We say that 
+        \(\frac{j_\nu}{\rho \kappa_\nu} \) and get the transfer: 
+        \[\boxed{\frac{dI_\nu}{ds}=-\kappa_\nu \rho I_\nu + j_\nu}\]
+        Now let us consider the case when we have a source term and it is blackbody. 
+        The condition for blackbody is that thermal equilibrium, isotropic, must absorb all light shown on it be optically thick.
+        \[\frac{dI_\nu}{ds}=-\kappa_\nu \rho (I_\nu + B_\nu(T))\]
+        \[B_\nu(T) = \frac{2h\nu^3}{c^2} \frac{1}{e^{h\nu/kT}-1}\]
+        If we care about it radiating outwards in a spherical shell, we can write the transfer equation as:
+        \[I(\theta, z) = B_\nu - \frac{\cos \theta}{\kappa \rho} \frac{dI_\nu}{dz}\]
+        We then do first order perturbation of the equation from blackbody.
+        \[I = B_\nu + \delta I^1_\nu\]
+        Which gives 
+        \[B_\nu + \delta I^1_\nu = B_\nu - \frac{\cos \theta}{\kappa \rho} \frac{d}{dz}[B_\nu + \delta I^1_\nu]\]
+        \[\delta I^1_\nu =  - \frac{\cos \theta}{\kappa \rho} \frac{d}{dz}[B_\nu + \delta I^1_\nu]\]
+        Drop the derivatives of higher order terms
+        \[\delta I^1_\nu =  - \frac{\cos \theta}{\kappa \rho} \frac{d}{dz}[B_\nu ]\]
+        Next we want to find the flux through the shell. 
+        \[F_\nu = \int I \cos \theta d\Omega = \int  B_\nu - \frac{\cos \theta}{\kappa \rho} \frac{dI_\nu}{dz} d\Omega\]
+        \[F_\nu = \int  B_\nu \cos \theta d\Omega - \int\frac{\cos^2 \theta}{\kappa \rho} \frac{dI_\nu}{dz} d\Omega\]
+        The first term is isotropic and drops to zero integrating over all angles.
+        \[F_\nu =  - \int\frac{\cos^2 \theta}{\kappa \rho} \frac{dB_\nu}{dz} d\Omega\]
+        We also see there is no angle dependence since its isotropic
+        \[F_\nu =  - \frac{dB_\nu}{dz} \int\frac{\cos^2 \theta}{\kappa \rho}  d\Omega\]
+        \[F_\nu \sim - \frac{dB_\nu}{dz}\]
+        We can do chain rule to get
+        \[F_\nu \sim - \frac{dB_\nu}{dT} \frac{dT}{dz}\]
+        We integrate through all frequencies 
+        \[F \sim \int \frac{1}{\kappa_\nu}\frac{dB_\nu}{dT} \frac{dT}{dz} d\nu \]
+        \[F \sim\frac{dT}{dz} \overbrace{ \int \frac{1}{\kappa_\nu}\frac{dB_\nu}{dT} d\nu}^{Rosseland Mean Opacity}  \]
+        \[F = \frac{dT}{dz}  \frac{T^3 \sigma }{ \rho \kappa_{R}} \]
+        To get the total energy we convert this to a luminosity: 
+        \[\boxed{\frac{dT}{dr} = (-\frac{L}{4\pi r^2}) \frac{\rho \kappa_{R}}{T^3} \frac{-3}{16 \sigma}} \]
+        This is the radiative transfer equation for a star.
+       </p>
+       <p>
+        Radiative diffusion assumes that energy is transported down a negative temperature gradient 
+        (\(dT/dr < 0\)), a process microscopically driven by the random motion of photons. 
+        This transport relies on a small deviation from perfect isotropic blackbody radiation (anisotropy), 
+        which is sufficient to carry the star's entire luminosity. 
+        The magnitude of this temperature gradient is proportional to the local density \(\rho(r)\)
+         and the energy flux (\(L/4\pi r^2\)) 
+         passing through the shell. A star is considered to be in 
+         "radiative equilibrium" if this radiative gradient alone is 
+         capable of transporting the total luminosity. However, this 
+         approximation is valid only in regimes of Local Thermodynamic Equilibrium 
+         (LTE) where the photon mean free path is much smaller than the stellar radius (\(l_\nu \ll R_*\)); 
+         therefore, while it applies to stellar interiors, it is not valid for the surface, 
+         photosphere, or atmosphere.
+       </p>
+  
+    <p>
+        We can write the radiative transport in dimensionless quantities: 
+        \[\nabla_{rad} = \frac{\partial \ln T}{\partial \ln r} = \frac{3\kappa_r}{16G\pi ac}\frac{LP}{mT^4}\]
+        We can actually compute the rosseland mean opacity and how it depends on temperature: 
+        \[\kappa_{R} \propto \rho T^{-7/2}\]
+        This takes the form of Kramers opacity. This opacity is used for both bound-bound and bound free emission.
+        As it gets hotter the opacity rapidly decreases while the density linear increases with opacity.
+    </p>
+    <p>
+        <b>Conduction:</b> In Conduction is caused by the thermal motion of electrons. 
+        In a classical gas like the Sun, electrons interact frequently (short mean free path), 
+        making conduction inefficient compared to radiative diffusion 
+        In degenerate cores, electrons move at relativistic speeds and have long mean free paths (due to filled quantum states). 
+        Here, electron conduction becomes very efficient, leading to nearly isothermal cores.
+    </p>
+    <h4>
+        Convection
+    </h4>
+    <p>
+        Convection occurs when a blob of fluid is hot it rises and then cools and then sinks back down and in the process 
+        it transports energy. This is caused by the buoyancy force. The buoyancy force is caused by the difference in density between the hot and cold blob.
+        Lets try to make this concrete:
+    </p>
+    <p>
+        Consider a blob of fluid with distance \(r\) and \(r+dr\) out. There is two blobs of fluids. The lower one 
+        denoted by \(1\) and the upper one denoted by \(2\). There is also the properties of ambient outside denoted as 
+        \(*\) and ones of the blob denoted \(blob\). 
+        \[\]
+    </p><p>
+        We wish to write the properties of the higher blob in terms of the lower blob.
+        \[\rho_{2blob} = \rho_{1blob}+ \frac{d\rho_{1blob}}{dr} \cdot dr\]
+        But we realise this blob is adiabatic and does not exchange heat outside:
+        \[\frac{d\rho_{1blob}}{dr} = \frac{1}{\gamma}\frac{\rho_{1blob}}{P_{1blob}} \frac{dP_{1blob}}{dr}\]
+        \[\boxed{\rho_{2blob} = \rho_{1blob}+   \frac{1}{\gamma}\frac{\rho_{1blob}}{P_{1blob}} \frac{dP_{1blob}}{dr}}\]
+        We then look at the abmient environment
+        \[\boxed{\rho_{2*} = \rho_{1*}+ \frac{d\rho_{1*}}{dr} \cdot dr}\]
+        To then calculate the net force density we look at \(\rho_{1*} = \rho_{1blob}\)
+        \[f_{net} = -g(\rho_{2blob}-\rho_{2*}) = g( \rho_{1blob}+   \frac{1}{\gamma}\frac{\rho_{1blob}}{P_{1blob}} \frac{dP_{1blob}}{dr} -\rho_{1*}- \frac{d\rho_{1*}}{dr} \cdot dr) \]
+    <p>
+        \[F_{net} = g(   \frac{d\rho_{1*}}{dr} \cdot dr -  \frac{1}{\gamma}\frac{\rho_{1blob}}{P_{1blob}} \frac{dP_{1blob}}{dr})\]
+    <p>We get a differential equation where there is a coefficent 
+        \[A = \frac{d\rho}{dr}  -  \frac{1}{\gamma}\frac{\rho}{P} \frac{dP}{dr}\]
+        \[N = \sqrt{-Ag}\]
+        if \(N\) <b>complex</b> then it will oscillate and remain stable and NOT trigger convection.
+        If \(N\) is <b>real</b> then it will grow and trigger convection.
+    </p>
+    </p>
+    </p>
+    <p>
+        We can make this even more explicit for condition to trigger convection. If we are classical gas
+        \[P = \frac{\rho}{\mu m_p}kT\]
+        We can then write the differential equation as:
+        \[A = \frac{d\rho}{dr}  -  \frac{1}{\gamma}\frac{\rho}{P} \frac{dP}{dr}\]
+        \[\frac{dP}{dr} = \frac{P}{T}\frac{dT}{dr} + \frac{P}{\rho} \frac{d\rho}{dr}\]
+        \[\frac{1}{T}\frac{dT}{dr} = \frac{1}{P}\frac{dP}{dr} - \frac{1}{\rho} \frac{d\rho}{dr}\]
+        if we are in adiabatic condition then we have that 
+        \[\frac{dT}{dr}_{ad} = \frac{1}{\gamma}\frac{\rho}{P} \frac{dP}{dr}\]
+        We can write 
+        \[A = \frac{1}{T}[\frac{dT}{dr}_{ad} - \frac{dT}{dr}]\]
+        \[\boxed{\frac{dT}{dr}_{ad} >\frac{dT}{dr} \Rightarrow \text{trigger convection} }\]
+    </p>
+    <p>
+        <b>Dominant energy transport: defined by if convection ever gets triggered. If it ever gets triggered it always wins.</b>
+        \[\boxed{\frac{dT}{dr}_{ad} >\frac{dT}{dr} \Rightarrow \text{ convection wins} }\]
+        \[\boxed{\frac{dT}{dr}_{ad} <\frac{dT}{dr} \Rightarrow \text{ radiation wins} }\]
+    </p>
+    <h4>
+        Stellar Structure Equations
+    </h4>
+    <p>
+        We can now write down the stellar structure equations.
+        \[\frac{dM}{dr} = 4\pi r^2 \rho \tag{mass conservation}\]
+        \[\frac{dP}{dr} = -\frac{GM}{r^2} \rho \tag{hydrostatic equilibrium}\]
+        \[\frac{dT}{dr} = -\frac{3}{16\sigma} \frac{L}{4\pi r^2} \frac{\rho \kappa_{R}}{T^3} \tag{radiative diffusion}\]
+        \[\frac{dL}{dr} = 4\pi r^2 \rho \epsilon \tag{energy production}\]
+    </p>
+    <P>
+        We also have equation of state which is relates pressure with density and temperature.
+    </P>
+<h4>
+    Mixing Length Theory
+</h4>
+<p>
+    Model for convection. MLT treats convection like a field of rising bubbles. 
+    It assumes a "blob" (or convective cell) of gas is displaced from its original position
+</p>
+<p>
+    There is a scale height distance: 
+    \[H_p = |\frac{dr}{d\ln P}| = |P \frac{dr}{dP}| = \frac{P}{\rho g} = l_m = \text{mixing length}\]
+</p>
+<p>
+    Total energy transported out is the temperature difference of the blob and the ambient environment.
+    \[ u \sim c_p\Delta T \Rightarrow \Delta T =  (T_{blob} - T_{*}) = (\frac{dT}{dr}_{ad} -  \frac{dT}{dr} )l_m\]
+    We then 
+    \[\Delta T = \frac{T}{H_p}l_m (\nabla_{rad} - \nabla_{ad})\]
+</p>
+    </div>  
+</div>
+
+
+<footer style="text-align: center;">
+    <p>
+        Made by <a href="https://twitter.com/peterma02" >
+        @peterma02 </a>- 2024 ©
+    </p>
+</footer>
+
+</body>
+
+</html>
