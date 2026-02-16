@@ -65,6 +65,14 @@
         <p>
         <a href="../index.html"><< Back</a>
         </p>
+        <div style="align-items: center;  ">
+        <iframe width="560" height="315" 
+        src="https://www.youtube.com/embed/1JEyvAJ49JA" 
+        title="Lecture" frameborder="0" 
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+    </iframe>
+</div>
         <h1>
             Lec 2.1 - Dynamical and Thermal stability
         </h1>
@@ -114,6 +122,11 @@
             \[P = \frac{1}{3} aT^4\]
             This is blackbody radiation. 
             </p>
+            <p>
+                This is bad because we know that 
+                \(P \sim T^4 \) and that \(\rho kT \sim T^4 \Rightarrow \rho \sim T^3\) and that 
+                \[P \sim \rho^{4/3} \Rightarrow \text{unstable adiabatic index!}\]
+            </p>
     <h4>
         Dynamical Stability 
     </h4>
@@ -158,6 +171,18 @@
         highly coupled to the temperature and thus when it heats up luminosity increases increasing radiation pressure dramatically which 
         pushes it into dynamical instability. 
        </P>
+       <p>
+        We can explicitly show this, consider the unstable setting where 
+        \[\frac{\Delta q}{\Delta T} > 0\]
+        This is thermally unstable because increase in heat creates an increase in temperature which is bad becuase thats just an 
+        exponential growth. Let us look at thesecond law of thermodynamics:
+        \[\Delta q = c_v \Delta T + P \Delta V\]
+        We know that no work is done because \(P \sim \rho^{5/3}\) and is not dependent on temperature and hence don't change
+        \[ \frac{\Delta q}{\Delta T} = c_v  + P \frac{\Delta V}{\Delta T}\]
+        \[ \frac{\Delta q}{\Delta T} = c_v  >0 \Rightarrow \text{unstable}\]
+
+        
+       </p>
     <h4>
         Eddington Luminosity Limit
     </h4>
@@ -168,6 +193,9 @@
         \[F_{g} = \frac{GMm_p}{r^2}\]
         On the other hand the radiation force is  given by
         \[F_{rad} = \frac{L \sigma_T}{4\pi r^2 c}\]
+        This can be intuitively understood as energy flux \(\frac{L}{4\pi r^2}\) times the momentum flux \(\frac{1}{c}\) to get a pressure
+         times 
+        an area \(\sigma_T\) which is related to the force!
         Which means we can equate the two: 
         \[\frac{L \sigma_T}{4\pi r^2 c} = \frac{GMm_p}{r^2}\]
         \[L = \frac{GMm_p c}{\sigma_T}\]
