@@ -565,17 +565,42 @@ my teaching abilities! These range from topics that I am studying to topics that
 (function() {
     var nav = document.querySelector('.floating-nav');
     var introEnd = document.getElementById('intro-end');
-    if (!nav || !introEnd) return;
-    var observer = new IntersectionObserver(function(entries) {
-        entries.forEach(function(entry) {
-            if (entry.isIntersecting) {
-                nav.classList.remove('visible');
-            } else {
-                nav.classList.add('visible');
-            }
+    if (!nav) return;
+    if (introEnd) {
+        var observer = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    nav.classList.remove('visible');
+                } else {
+                    nav.classList.add('visible');
+                }
+            });
+        }, { threshold: 0 });
+        observer.observe(introEnd);
+    }
+    var links = Array.from(nav.querySelectorAll('a[href^="#"]'));
+    var sections = links.map(function(l) {
+        var s = document.getElementById(l.getAttribute('href').slice(1));
+        return s ? { link: l, section: s } : null;
+    }).filter(Boolean);
+    var ticking = false;
+    function updateActive() {
+        var readingLine = 120;
+        var active = sections[0] || null;
+        sections.forEach(function(p) {
+            if (p.section.getBoundingClientRect().top <= readingLine) active = p;
         });
-    }, { threshold: 0, rootMargin: '0px 0px 0px 0px' });
-    observer.observe(introEnd);
+        sections.forEach(function(p) { p.link.classList.remove('active'); });
+        if (active) active.link.classList.add('active');
+        ticking = false;
+    }
+    window.addEventListener('scroll', function() {
+        if (!ticking) {
+            requestAnimationFrame(updateActive);
+            ticking = true;
+        }
+    }, { passive: true });
+    updateActive();
 })();
 </script>
 

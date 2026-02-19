@@ -74,25 +74,30 @@ html {
     transition: opacity 0.3s ease;
 }
 .floating-nav.visible {
-    opacity: 0.5;
+    opacity: 1;
     pointer-events: auto;
 }
 .floating-nav.visible:hover {
-    opacity: 0.95;
+    opacity: 1;
 }
 .floating-nav a {
     display: block;
     padding: 1.15rem 2rem;
     font-size: 1.65rem;
-    color: #666 !important;
-    background: rgba(255,255,255,0.9);
+    color: #444 !important;
+    background: #fff;
     border-radius: 12px;
     text-decoration: none !important;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.12);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.18);
     border-left: 6px solid transparent;
     transition: color 0.2s, border-color 0.2s, background 0.2s;
 }
 .floating-nav a:hover {
+    color: #b80707 !important;
+    border-left-color: #b80707;
+    background: rgba(255,255,255,0.98);
+}
+.floating-nav a.active {
     color: #b80707 !important;
     border-left-color: #b80707;
     background: rgba(255,255,255,0.98);
@@ -118,21 +123,21 @@ html {
     transition: opacity 0.3s ease;
 }
 .lecture-nav.visible {
-    opacity: 0.5;
+    opacity: 1;
     pointer-events: auto;
 }
 .lecture-nav.visible:hover {
-    opacity: 0.95;
+    opacity: 1;
 }
 .lecture-nav a {
     display: block;
     padding: 1.15rem 2rem;
     font-size: 1.65rem;
-    color: #666 !important;
-    background: rgba(255,255,255,0.9);
+    color: #444 !important;
+    background: #fff;
     border-radius: 12px;
     text-decoration: none !important;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.12);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.18);
     border-left: 6px solid transparent;
     transition: color 0.2s, border-color 0.2s, background 0.2s;
 }
