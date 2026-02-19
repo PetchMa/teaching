@@ -59,6 +59,99 @@ html {
     color: white !important;
 }
 
+/* Floating section nav - desktop only, appears after scrolling past intro */
+.floating-nav {
+    position: fixed;
+    top: 50%;
+    left: 1.5rem;
+    transform: translateY(-50%);
+    z-index: 90;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+.floating-nav.visible {
+    opacity: 0.5;
+    pointer-events: auto;
+}
+.floating-nav.visible:hover {
+    opacity: 0.95;
+}
+.floating-nav a {
+    display: block;
+    padding: 1.15rem 2rem;
+    font-size: 1.65rem;
+    color: #666 !important;
+    background: rgba(255,255,255,0.9);
+    border-radius: 12px;
+    text-decoration: none !important;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.12);
+    border-left: 6px solid transparent;
+    transition: color 0.2s, border-color 0.2s, background 0.2s;
+}
+.floating-nav a:hover {
+    color: #b80707 !important;
+    border-left-color: #b80707;
+    background: rgba(255,255,255,0.98);
+}
+@media (max-width: 900px) {
+    .floating-nav {
+        display: none;
+    }
+}
+
+/* Lecture page section nav - same style as floating-nav */
+.lecture-nav {
+    position: fixed;
+    top: 50%;
+    left: 1.5rem;
+    transform: translateY(-50%);
+    z-index: 90;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+.lecture-nav.visible {
+    opacity: 0.5;
+    pointer-events: auto;
+}
+.lecture-nav.visible:hover {
+    opacity: 0.95;
+}
+.lecture-nav a {
+    display: block;
+    padding: 1.15rem 2rem;
+    font-size: 1.65rem;
+    color: #666 !important;
+    background: rgba(255,255,255,0.9);
+    border-radius: 12px;
+    text-decoration: none !important;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.12);
+    border-left: 6px solid transparent;
+    transition: color 0.2s, border-color 0.2s, background 0.2s;
+}
+.lecture-nav a:hover {
+    color: #b80707 !important;
+    border-left-color: #b80707;
+    background: rgba(255,255,255,0.98);
+}
+.lecture-nav a.active {
+    color: #b80707 !important;
+    border-left-color: #b80707;
+    background: rgba(255,255,255,0.98);
+}
+@media (max-width: 900px) {
+    .lecture-nav {
+        display: none;
+    }
+}
+
 .profile_pic{
     width: auto;
     height: 180px;
@@ -72,11 +165,11 @@ html {
   border: 2px solid black; /* Optional border for visibility */
 }
 
-/* Responsive video embed - adapts to mobile */
+/* Responsive video embed - fills container width */
 .video-responsive {
   position: relative;
   width: 100%;
-  max-width: 560px;
+  max-width: 100%;
   margin: 0 auto;
 }
 .video-responsive::before {
@@ -91,12 +184,36 @@ html {
   width: 100% !important;
   height: 100% !important;
 }
-/* Wider video (e.g. 800x500) */
+/* Wider video (e.g. 800x500) - also fills container */
 .video-responsive-lg {
-  max-width: 800px;
+  max-width: 100%;
 }
 .video-responsive-lg::before {
   padding-bottom: 62.5%; /* 8:5 aspect ratio */
+}
+
+/* Wrapper for sticky video - maintains layout when video is pinned */
+.video-sticky-wrap {
+  position: relative;
+}
+
+/* Sticky video - pins to right when scrolled past (lecture notes only) */
+.video-responsive.video-pinned {
+  position: fixed;
+  right: 1.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: min(320px, 25vw);
+  max-width: 100%;
+  z-index: 85;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  border-radius: 8px;
+  overflow: hidden;
+}
+@media (max-width: 900px) {
+  .video-responsive.video-pinned {
+    display: none;
+  }
 }
 
 iframe {

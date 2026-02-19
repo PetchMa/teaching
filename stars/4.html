@@ -47,7 +47,13 @@
 
 <script src="https://unpkg.com/webcola/WebCola/cola.min.js"></script>
 
-<body style="transform: scale(0.9); transform-origin: 50% 0%;">
+<body>
+<nav class="lecture-nav" aria-label="Jump to section">
+    <a href="#birth">Birth</a>
+    <a href="#life-main-sequence">Life - Main Sequence</a>
+    <a href="#death-post-main-sequence">Death - Post Main Sequence</a>
+</nav>
+<div style="transform: scale(0.9); transform-origin: 50% 0%;">
 <div class="page_setup">
 <div class="container">
     <div class="row "  style="padding-top:2%!important ; padding-left: 10%; padding-right: 5%;">
@@ -71,7 +77,7 @@
         referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
     </iframe>
 </div>
-       <h1>
+       <h1 id="birth">
         Birth 
     </h1>
        <p>
@@ -122,7 +128,7 @@
             </li>
         </ol>
        </p>
-     <h1>
+     <h1 id="life-main-sequence">
         Life - Main Sequence
      </h1>
      <p>
@@ -208,7 +214,7 @@
      </p>
 
 
-     <h1>
+     <h1 id="death-post-main-sequence">
         Death - post main sequence
      </h1>
      <h4>
@@ -490,13 +496,55 @@
     </div>  
 </div>
 
-
 <footer style="text-align: center;">
     <p>
         Made by <a href="https://twitter.com/peterma02" >
         @peterma02 </a>- <script>document.write(new Date().getFullYear())</script> ©
     </p>
 </footer>
+
+</div>
+<script>
+(function(){
+  var n=document.querySelector('.lecture-nav');
+  var i=document.querySelector('.video-responsive')||document.querySelector('h1');
+  if(!n)return;
+  if(i){var o=new IntersectionObserver(function(e){e.forEach(function(x){n.classList.toggle('visible',!x.isIntersecting)});},{threshold:0});o.observe(i);}
+  var v=document.querySelector('.video-responsive');
+  if(v){
+    var wrap=document.createElement('div');
+    wrap.className='video-sticky-wrap';
+    v.parentNode.insertBefore(wrap,v);
+    wrap.appendChild(v);
+    var vp=new IntersectionObserver(function(e){e.forEach(function(x){
+      if(!x.isIntersecting&&x.boundingClientRect.bottom<0){
+        var h=v.offsetHeight;
+        v.classList.add('video-pinned');
+        wrap.style.minHeight=h+'px';
+      }else{
+        v.classList.remove('video-pinned');
+        wrap.style.minHeight='';
+      }
+    });},{threshold:0});
+    vp.observe(wrap);
+  }
+  var links=Array.from(n.querySelectorAll('a[href^="#"]'));
+  var sections=links.map(function(l){var s=document.getElementById(l.getAttribute('href').slice(1));return s?{link:l,section:s}:null}).filter(Boolean);
+  var ticking=false;
+  function updateActive(){
+    var readingLine=120;
+    var active=sections[0]||null;
+    sections.forEach(function(p){
+      if(p.section.getBoundingClientRect().top<=readingLine){active=p;}
+    });
+    sections.forEach(function(p){p.link.classList.remove('active');});
+    if(active)active.link.classList.add('active');
+    ticking=false;
+  }
+  window.addEventListener('scroll',function(){if(!ticking){requestAnimationFrame(updateActive);ticking=true;}},{passive:true});
+  updateActive();
+})();
+</script>
 
 </body>
 

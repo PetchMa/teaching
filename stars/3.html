@@ -47,7 +47,14 @@
 
 <script src="https://unpkg.com/webcola/WebCola/cola.min.js"></script>
 
-<body style="transform: scale(0.9); transform-origin: 50% 0%;">
+<body>
+<nav class="lecture-nav" aria-label="Jump to section">
+    <a href="#radiative-transfer">Radiative Transfer</a>
+    <a href="#convection">Convection</a>
+    <a href="#stellar-structure-equations">Stellar Structure Equations</a>
+    <a href="#mixing-length-theory">Mixing Length Theory</a>
+</nav>
+<div style="transform: scale(0.9); transform-origin: 50% 0%;">
 <div class="page_setup">
 <div class="container">
     <div class="row "  style="padding-top:2%!important ; padding-left: 10%; padding-right: 5%;">
@@ -72,7 +79,7 @@
         referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
     </iframe>
 </div>
-       <h4>
+       <h4 id="radiative-transfer">
         Radiative Transfer
        </h4>
        <p>
@@ -149,7 +156,7 @@
         In degenerate cores, electrons move at relativistic speeds and have long mean free paths (due to filled quantum states). 
         Here, electron conduction becomes very efficient, leading to nearly isothermal cores.
     </p>
-    <h4>
+    <h4 id="convection">
         Convection
     </h4>
     <p>
@@ -200,7 +207,7 @@
         \[\boxed{\frac{dT}{dr}_{ad} >\frac{dT}{dr} \Rightarrow \text{ convection wins} }\]
         \[\boxed{\frac{dT}{dr}_{ad} <\frac{dT}{dr} \Rightarrow \text{ radiation wins} }\]
     </p>
-    <h4>
+    <h4 id="stellar-structure-equations">
         Stellar Structure Equations
     </h4>
     <p>
@@ -227,7 +234,7 @@
 
 
     </p>
-<h4>
+<h4 id="mixing-length-theory">
     Mixing Length Theory
 </h4>
 <p>
@@ -247,13 +254,55 @@
     </div>  
 </div>
 
-
 <footer style="text-align: center;">
     <p>
         Made by <a href="https://twitter.com/peterma02" >
         @peterma02 </a>- <script>document.write(new Date().getFullYear())</script> ©
     </p>
 </footer>
+
+</div>
+<script>
+(function(){
+  var n=document.querySelector('.lecture-nav');
+  var i=document.querySelector('.video-responsive')||document.querySelector('h1');
+  if(!n)return;
+  if(i){var o=new IntersectionObserver(function(e){e.forEach(function(x){n.classList.toggle('visible',!x.isIntersecting)});},{threshold:0});o.observe(i);}
+  var v=document.querySelector('.video-responsive');
+  if(v){
+    var wrap=document.createElement('div');
+    wrap.className='video-sticky-wrap';
+    v.parentNode.insertBefore(wrap,v);
+    wrap.appendChild(v);
+    var vp=new IntersectionObserver(function(e){e.forEach(function(x){
+      if(!x.isIntersecting&&x.boundingClientRect.bottom<0){
+        var h=v.offsetHeight;
+        v.classList.add('video-pinned');
+        wrap.style.minHeight=h+'px';
+      }else{
+        v.classList.remove('video-pinned');
+        wrap.style.minHeight='';
+      }
+    });},{threshold:0});
+    vp.observe(wrap);
+  }
+  var links=Array.from(n.querySelectorAll('a[href^="#"]'));
+  var sections=links.map(function(l){var s=document.getElementById(l.getAttribute('href').slice(1));return s?{link:l,section:s}:null}).filter(Boolean);
+  var ticking=false;
+  function updateActive(){
+    var readingLine=120;
+    var active=sections[0]||null;
+    sections.forEach(function(p){
+      if(p.section.getBoundingClientRect().top<=readingLine){active=p;}
+    });
+    sections.forEach(function(p){p.link.classList.remove('active');});
+    if(active)active.link.classList.add('active');
+    ticking=false;
+  }
+  window.addEventListener('scroll',function(){if(!ticking){requestAnimationFrame(updateActive);ticking=true;}},{passive:true});
+  updateActive();
+})();
+</script>
 
 </body>
 

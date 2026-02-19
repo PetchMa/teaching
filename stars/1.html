@@ -47,7 +47,15 @@
 
 <script src="https://unpkg.com/webcola/WebCola/cola.min.js"></script>
 
-<body style="transform: scale(0.9); transform-origin: 50% 0%;">
+<body>
+<nav class="lecture-nav" aria-label="Jump to section">
+    <a href="#intro">Introduction</a>
+    <a href="#equations-stellar-structure">Equations of Stellar Structure</a>
+    <a href="#virial-theorem">Virial Theorem and Free Fall</a>
+    <a href="#mean-molecular-weight">Mean Molecular Weight</a>
+    <a href="#equation-of-state">Equation of State</a>
+</nav>
+<div style="transform: scale(0.9); transform-origin: 50% 0%;">
 <div class="page_setup">
 <div class="container">
     <div class="row "  style="padding-top:2%!important ; padding-left: 10%; padding-right: 5%;">
@@ -72,7 +80,7 @@
         referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
     </iframe>
 </div>
-        <h1>
+        <h1 id="intro">
             Lec 1.1 - Introduction
         </h1>
         <p>
@@ -162,7 +170,7 @@
         relative to our sun. 
        </p>
 
-       <h1>
+       <h1 id="equations-stellar-structure">
         Equations of Stellar Structure
        </h1>
        <p>
@@ -203,7 +211,7 @@
         \[\frac{GM^2}{4\pi r^4}dm =  P(0)\]
 
     </p>
-    <h1>
+    <h1 id="virial-theorem">
         Lec 1.2 - Virial Theorem and Free Fall
     </h1>
     <p>
@@ -378,7 +386,7 @@
     \[\boxed{E_k +\Omega = 0}\]
     This means zero binding energy and thus is on the cusp of about to be destroyed and go unstable. 
    </p>
-   <h1>
+   <h1 id="mean-molecular-weight">
     1.3 Mean Molecular Weight and Equations of State
    </h1>
    <h4>
@@ -393,7 +401,7 @@
     \[p = \sum_i P_i = \sum_i (n_i)kT = \frac{\rho}{m_p}kT \sum \frac{x_i}{A_i} 
     = \left(\frac{1}{\mu_I m_p} \right)kT\]
    </p>
-    <h1>
+    <h1 id="equation-of-state">
         1.4 Equation of State
     </h1>
     <p>
@@ -502,6 +510,50 @@
         @peterma02 </a>- <script>document.write(new Date().getFullYear())</script> ©
     </p>
 </footer>
+
+</div>
+</div>
+<script>
+(function(){
+  var n=document.querySelector('.lecture-nav');
+  var i=document.querySelector('.video-responsive')||document.querySelector('h1');
+  if(!n)return;
+  if(i){var o=new IntersectionObserver(function(e){e.forEach(function(x){n.classList.toggle('visible',!x.isIntersecting)});},{threshold:0});o.observe(i);}
+  var v=document.querySelector('.video-responsive');
+  if(v){
+    var wrap=document.createElement('div');
+    wrap.className='video-sticky-wrap';
+    v.parentNode.insertBefore(wrap,v);
+    wrap.appendChild(v);
+    var vp=new IntersectionObserver(function(e){e.forEach(function(x){
+      if(!x.isIntersecting&&x.boundingClientRect.bottom<0){
+        var h=v.offsetHeight;
+        v.classList.add('video-pinned');
+        wrap.style.minHeight=h+'px';
+      }else{
+        v.classList.remove('video-pinned');
+        wrap.style.minHeight='';
+      }
+    });},{threshold:0});
+    vp.observe(wrap);
+  }
+  var links=Array.from(n.querySelectorAll('a[href^="#"]'));
+  var sections=links.map(function(l){var s=document.getElementById(l.getAttribute('href').slice(1));return s?{link:l,section:s}:null}).filter(Boolean);
+  var ticking=false;
+  function updateActive(){
+    var readingLine=120;
+    var active=sections[0]||null;
+    sections.forEach(function(p){
+      if(p.section.getBoundingClientRect().top<=readingLine){active=p;}
+    });
+    sections.forEach(function(p){p.link.classList.remove('active');});
+    if(active)active.link.classList.add('active');
+    ticking=false;
+  }
+  window.addEventListener('scroll',function(){if(!ticking){requestAnimationFrame(updateActive);ticking=true;}},{passive:true});
+  updateActive();
+})();
+</script>
 
 </body>
 

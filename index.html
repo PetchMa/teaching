@@ -55,7 +55,14 @@
 
 <script src="https://unpkg.com/webcola/WebCola/cola.min.js"></script>
 
-<body style="transform: scale(0.95); transform-origin: 50% 0%;">
+<body>
+<nav class="floating-nav" aria-label="Jump to section">
+    <a href="#fluid">Fluids</a>
+    <a href="#stars">Stars</a>
+    <a href="#galaxy">Galaxies</a>
+    <a href="#ml_lab">ML Lab</a>
+</nav>
+<div class="page-content" style="transform: scale(0.95); transform-origin: 50% 0%;">
 <div class="page_setup">
 <div class="container">
     <div class="row "  style="padding-top:2%!important ; padding-left: 10%; padding-right: 5%;">
@@ -75,7 +82,7 @@ my teaching abilities! These range from topics that I am studying to topics that
         <p>
             <a href="https://peterma.ca/"><< Home Page</a>
         </p>
-        <div class="toc-box">
+        <div class="toc-box" id="intro-end">
         <h4>
             Table of Contents
         </h4>
@@ -539,6 +546,7 @@ my teaching abilities! These range from topics that I am studying to topics that
 </div>
 
 </div>
+</div>
 
 
 <p>
@@ -552,6 +560,24 @@ my teaching abilities! These range from topics that I am studying to topics that
     </p>
 </footer>
 <a href="#" class="back-to-top" title="Back to top">↑ Top</a>
+
+<script>
+(function() {
+    var nav = document.querySelector('.floating-nav');
+    var introEnd = document.getElementById('intro-end');
+    if (!nav || !introEnd) return;
+    var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+                nav.classList.remove('visible');
+            } else {
+                nav.classList.add('visible');
+            }
+        });
+    }, { threshold: 0, rootMargin: '0px 0px 0px 0px' });
+    observer.observe(introEnd);
+})();
+</script>
 
 </body>
 

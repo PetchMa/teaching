@@ -48,7 +48,15 @@
 
 <script src="https://unpkg.com/webcola/WebCola/cola.min.js"></script>
 
-<body style="transform: scale(0.9); transform-origin: 50% 0%;">
+<body>
+<nav class="lecture-nav" aria-label="Jump to section">
+    <a href="#mhd">Magnetohydrodynamics (MHD)</a>
+    <a href="#maxwells-equations">Maxwell's Equations</a>
+    <a href="#induction-equation">Induction Equation</a>
+    <a href="#mhd-equation">MHD Equation</a>
+    <a href="#mhd-waves">MHD Waves</a>
+</nav>
+<div style="transform: scale(0.9); transform-origin: 50% 0%;">
 <div class="page_setup">
 <div class="container">
     <div class="row "  style="padding-top:2%!important ; padding-left: 10%; padding-right: 5%;">
@@ -68,14 +76,14 @@
         </p>
         <div class="video-responsive">
             <iframe width="560" height="315" src="https://www.youtube.com/embed/XtopXkc9Tsk?si=tRIL4LcvQ1M0bL-8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>                </div>
-        <h1>
+        <h1 id="mhd">
             Magnetohydrodynamics (MHD)
         </h1>
        <p>
         MHD is the study of the dynamics of electrically conducting fluids, this includes things like plasmas,
         liquid metals, and electrolytes, in the presence of magnetic and electric fields. To begin, we start off with Maxwell's equations.
        </p>
-        <h4>
+        <h4 id="maxwells-equations">
             Maxwell's Equations
         </h4>
         <p>
@@ -109,7 +117,7 @@
             <!-- \[\nabla \times B = \frac{1}{c}\frac{\partial E}{\partial t}\]
             And we know that -->
         </p>
-        <h4>
+        <h4 id="induction-equation">
             Induction Equation
         </h4>
         <p>
@@ -136,7 +144,7 @@
             When it is small then magnetic diffusion dominates. When the number is large then we are in the perfect conductor limit!
             Since \(\sigma \to \infty\) as \(\eta \sim \sigma^{-1}\). 
         </p>
-        <h4>
+        <h4 id="mhd-equation">
             MHD Equation 
         </h4>
         <p>
@@ -164,7 +172,7 @@
             \[\boxed{\beta = \frac{P}{B^2/8\pi}}\]
             Which determines regimes of strong or weak B field dominace. 
         </p>
-        <h4>
+        <h4 id="mhd-waves">
             MHD Waves!
         </h4>
         <p>
@@ -258,6 +266,49 @@
         @peterma02 </a>- <script>document.write(new Date().getFullYear())</script> ©
     </p>
 </footer>
+
+</div>
+<script>
+(function(){
+  var n=document.querySelector('.lecture-nav');
+  var i=document.querySelector('.video-responsive')||document.querySelector('h1');
+  if(!n)return;
+  if(i){var o=new IntersectionObserver(function(e){e.forEach(function(x){n.classList.toggle('visible',!x.isIntersecting)});},{threshold:0});o.observe(i);}
+  var v=document.querySelector('.video-responsive');
+  if(v){
+    var wrap=document.createElement('div');
+    wrap.className='video-sticky-wrap';
+    v.parentNode.insertBefore(wrap,v);
+    wrap.appendChild(v);
+    var vp=new IntersectionObserver(function(e){e.forEach(function(x){
+      if(!x.isIntersecting&&x.boundingClientRect.bottom<0){
+        var h=v.offsetHeight;
+        v.classList.add('video-pinned');
+        wrap.style.minHeight=h+'px';
+      }else{
+        v.classList.remove('video-pinned');
+        wrap.style.minHeight='';
+      }
+    });},{threshold:0});
+    vp.observe(wrap);
+  }
+  var links=Array.from(n.querySelectorAll('a[href^="#"]'));
+  var sections=links.map(function(l){var s=document.getElementById(l.getAttribute('href').slice(1));return s?{link:l,section:s}:null}).filter(Boolean);
+  var ticking=false;
+  function updateActive(){
+    var readingLine=120;
+    var active=sections[0]||null;
+    sections.forEach(function(p){
+      if(p.section.getBoundingClientRect().top<=readingLine){active=p;}
+    });
+    sections.forEach(function(p){p.link.classList.remove('active');});
+    if(active)active.link.classList.add('active');
+    ticking=false;
+  }
+  window.addEventListener('scroll',function(){if(!ticking){requestAnimationFrame(updateActive);ticking=true;}},{passive:true});
+  updateActive();
+})();
+</script>
 
 </body>
 
