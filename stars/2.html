@@ -326,23 +326,28 @@
 <script>
 (function(){
   var n=document.querySelector('.lecture-nav');
-  var i=document.querySelector('.video-responsive')||document.querySelector('h1');
-  if(!n)return;
-  if(i){var o=new IntersectionObserver(function(e){e.forEach(function(x){n.classList.toggle('visible',!x.isIntersecting)});},{threshold:0});o.observe(i);}
   var v=document.querySelector('.video-responsive');
+  var wrap=null;
   if(v){
-    var wrap=document.createElement('div');
+    wrap=document.createElement('div');
     wrap.className='video-sticky-wrap';
     v.parentNode.insertBefore(wrap,v);
     wrap.appendChild(v);
+  }
+  var i=wrap||document.querySelector('h1');
+  if(!n)return;
+  if(i){var o=new IntersectionObserver(function(e){e.forEach(function(x){n.classList.toggle('visible',!x.isIntersecting)});},{threshold:0});o.observe(i);}
+  if(v){
     var vp=new IntersectionObserver(function(e){e.forEach(function(x){
       if(!x.isIntersecting&&x.boundingClientRect.bottom<0){
-        var h=v.offsetHeight;
+        var h=wrap.offsetHeight;
         v.classList.add('video-pinned');
         wrap.style.minHeight=h+'px';
+        document.body.appendChild(v);
       }else{
         v.classList.remove('video-pinned');
         wrap.style.minHeight='';
+        wrap.appendChild(v);
       }
     });},{threshold:0});
     vp.observe(wrap);
