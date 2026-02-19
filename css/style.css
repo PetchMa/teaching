@@ -1,5 +1,62 @@
+/* Teaching site enhancements */
+html {
+    scroll-behavior: smooth;
+}
 .page_setup{
     padding-top: 1%;
+}
+.toc-box {
+    background: #fafafa;
+    border-left: 4px solid #b80707;
+    padding: 1.5rem 1.5rem 1rem;
+    margin: 1.5rem 0;
+    border-radius: 0 8px 8px 0;
+}
+.section-card {
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    padding: 2rem;
+    margin: 2.5rem 0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+.section-card h1 {
+    margin-top: 0;
+    padding-top: 0;
+}
+.lec-badge {
+    display: inline-block;
+    padding: 0.15em 0.5em;
+    font-size: 0.85em;
+    background: #f5f5f5;
+    border-radius: 4px;
+    margin: 0 0.1em;
+    text-decoration: none !important;
+    color: #b80707 !important;
+    border: 1px solid #e0e0e0;
+    transition: background 0.2s, border-color 0.2s;
+}
+.lec-badge:hover {
+    background: #fff0f0;
+    border-color: #b80707;
+}
+.back-to-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    padding: 0.5rem 1rem;
+    background: #b80707;
+    color: white !important;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    text-decoration: none !important;
+    opacity: 0.8;
+    transition: opacity 0.2s;
+    z-index: 100;
+}
+.back-to-top:hover {
+    opacity: 1;
+    color: white !important;
 }
 
 .profile_pic{
@@ -15,8 +72,35 @@
   border: 2px solid black; /* Optional border for visibility */
 }
 
+/* Responsive video embed - adapts to mobile */
+.video-responsive {
+  position: relative;
+  width: 100%;
+  max-width: 560px;
+  margin: 0 auto;
+}
+.video-responsive::before {
+  content: "";
+  display: block;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+}
+.video-responsive iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100% !important;
+  height: 100% !important;
+}
+/* Wider video (e.g. 800x500) */
+.video-responsive-lg {
+  max-width: 800px;
+}
+.video-responsive-lg::before {
+  padding-bottom: 62.5%; /* 8:5 aspect ratio */
+}
+
 iframe {
-  width: 560px;  /* Set iframe width */
+  width: 560px;  /* Set iframe width (fallback for non-responsive) */
   height: 315px; /* Set iframe height */
 }
 .box {
