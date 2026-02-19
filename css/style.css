@@ -2,6 +2,14 @@
 html {
     scroll-behavior: smooth;
 }
+footer {
+    margin-top: 0;
+    padding-top: 1.5rem;
+}
+footer p {
+    margin-top: 0;
+    margin-bottom: 0;
+}
 .page_setup{
     padding-top: 1%;
 }
