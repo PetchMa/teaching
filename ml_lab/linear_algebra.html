@@ -1,0 +1,1792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="shortcut icon" type="image/jpg" href="../img/favicon.ico"/>
+<title>Linear algebra primer (ML onboarding) | Peter Ma</title>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-157223762-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-157223762-1');
+</script>
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<link rel="stylesheet" href="../css/style.css">
+<style>
+    .la-feedback-box {
+        margin: 1rem 0 1.35rem;
+        padding: 1rem 1.35rem 1.15rem;
+        background: #fff8f8;
+        border: 2px solid #b80707;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(184, 7, 7, 0.12);
+        max-width: 42rem;
+    }
+    .la-feedback-box .la-feedback-title {
+        display: block;
+        font-size: 1.08rem;
+        color: #b80707;
+        margin-bottom: 0.45rem;
+        letter-spacing: 0.02em;
+    }
+    .la-feedback-box p {
+        margin: 0;
+        line-height: 1.5;
+    }
+    .la-worksheet-box {
+        margin: 1rem 0 1.35rem;
+        padding: 1rem 1.35rem 1.15rem;
+        background: #f5f9ff;
+        border: 2px solid #1565c0;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(21, 101, 192, 0.12);
+        max-width: 42rem;
+    }
+    .la-worksheet-box .la-worksheet-title {
+        display: block;
+        font-size: 1.08rem;
+        color: #0d47a1;
+        margin-bottom: 0.45rem;
+        letter-spacing: 0.02em;
+    }
+    .la-worksheet-box p {
+        margin: 0;
+        line-height: 1.5;
+        color: #1565c0;
+    }
+    .la-worksheet-box a {
+        font-weight: 600;
+        color: #0d47a1;
+    }
+    /* Feedback + worksheet: two columns on wide screens, stacked on narrow */
+    .la-callouts-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem 1.25rem;
+        align-items: stretch;
+        width: 100%;
+        max-width: 52rem;
+        margin: 1rem 0 1.35rem;
+    }
+    .la-callouts-row--end {
+        margin-top: 2.5rem;
+        margin-bottom: 0;
+    }
+    .la-callouts-row .la-feedback-box,
+    .la-callouts-row .la-worksheet-box {
+        flex: 1 1 280px;
+        min-width: 0;
+        margin: 0;
+        max-width: none;
+    }
+    @media (max-width: 700px) {
+        .la-callouts-row {
+            flex-direction: column;
+            max-width: 42rem;
+        }
+        .la-callouts-row .la-feedback-box,
+        .la-callouts-row .la-worksheet-box {
+            flex: 1 1 auto;
+            width: 100%;
+            max-width: 42rem;
+        }
+    }
+</style>
+<script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<!-- <script src="https://cdn.plot.ly/plotly-1.42.5.min.js"></script> -->
+<script src='js/d3.min.js'> </script>
+<script src="https://d3js.org/d3.v4.js"></script>
+<!-- <script src="js/plotly-latest.min.js"></script> -->
+<!-- Latest compiled and minified plotly.js JavaScript -->
+<script src="https://cdn.plot.ly/plotly-latest.min.js" charset="utf-8"></script>
+
+<!-- OR use a specific plotly.js release (e.g. version 1.52.3) -->
+<script src="https://cdn.plot.ly/plotly-1.52.3.min.js" charset="utf-8"></script>
+
+<!-- OR an un-minified version is also available -->
+
+
+<script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
+
+<!-- for testing with local version of cytoscape.js -->
+<!--<script src="../cytoscape.js/build/cytoscape.js"></script>-->
+
+<script src="https://unpkg.com/webcola/WebCola/cola.min.js"></script>
+
+</head>
+<body>
+<nav class="lecture-nav" aria-label="Jump to section">
+    <a href="#applications">Applications</a>
+    <a href="#isothermal-atmosphere">Isothermal Atmosphere</a>
+    <a href="#spherical-star">Spherical Star</a>
+    <a href="#bernoullis-principle">Bernoulli's Principle</a>
+</nav>
+<div style="transform: scale(0.9); transform-origin: 50% 0%;">
+<div class="page_setup">
+<div class="container">
+    <div class="row "  style="padding-top:2%!important ; padding-left: 10%; padding-right: 5%;">
+        <span class="peterma" style="color: #b80707; font-size: 300%;">
+            Linear Algebra
+        </span>
+        <h4>
+            Peter Ma | May 9th 2026
+        </h4>
+        <p style="margin-bottom: 1rem; max-width: 52rem;">
+            For animated intuition on the same topics, Grant Sanderson’s
+            <a href="https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab" target="_blank" rel="noopener noreferrer"><i>Essence of linear algebra</i> playlist</a>
+            on YouTube (opens in a new tab).
+        </p>
+        <div class="la-callouts-row">
+        <div class="la-feedback-box" role="region" aria-label="Student feedback">
+            <strong class="la-feedback-title">Have feedback on these notes?</strong>
+            <p>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSfdo5te4lW666UeFEny7sRF2zErTOV_Um6ZRPh8O_xgdXqFOA/viewform?usp=publish-editor" target="_blank" rel="noopener noreferrer">Open the feedback form</a>
+                (new tab). I use responses to improve this module for new students. If your comments are about this page, choose <b>Linear Algebra</b> in the first question.
+            </p>
+        </div>
+        <div class="la-worksheet-box" role="region" aria-label="Worksheet Colab notebook">
+            <strong class="la-worksheet-title">Worksheet (Google Colab)</strong>
+            <p>
+                Work through this companion notebook while you read: <a href="https://colab.research.google.com/drive/1xtT1yZFuekQwlg7B0nQBS95alf1GD_Qe?usp=sharing" target="_blank" rel="noopener noreferrer">open the Colab worksheet</a> (new tab). Sign in with a Google account if Colab asks; then use <b>File → Save a copy in Drive</b> if you want your own editable version.
+            </p>
+        </div>
+        </div>
+        <p>
+            <b>Who these notes are for.</b>
+            If you have taken something like <b>AP Calculus</b> (or an equivalent first-year calculus course), you already bring a lot to the table:
+            you are comfortable with functions, graphs, slopes, and solving equations. You do <i>not</i> need to have seen a full college linear algebra class.
+            This page is meant to onboard you into the vocabulary ML and physics papers use—vectors, matrices, span, eigenvalues—so the rest of the lab feels less like alphabet soup.
+        </p>
+        <p>
+            <b>How to read it.</b>
+            Go at your own pace. When a paragraph feels heavy, try the colored questions (red) on paper, peek at a picture or interactive widget, or ask a tool (blue) for a second explanation in different words.
+            This is <i>not</i> a substitute for a real linear algebra course; it is a friendly on-ramp so you can read code and papers and ask sharper questions.
+        </p>
+        <p style="color:#b80707">
+            <b>
+                Red \(=\) stop and think / work on question
+            </b>
+        </p>
+        <p style="color:blue">
+            <b>
+                Blue \(=\) ask ChatGPT or AI
+            </b>
+        </p>
+        <p>
+        <a href="../index.html"><< Back</a>
+        </p>
+        <h1 id="applications">
+            Why Linear Algebra?
+         </h1>
+         <p>
+            When I first started studying, I had no real reason <i>why</i> I should care about linear algebra.
+            Later, working in ML research and physics-style projects, the same few ideas kept showing up: matrices as transformations,
+            solving linear systems, eigenvalues, decompositions. This primer is the short version of that story.
+         </p>
+         <p>
+            Here is a practical way to think about why linear algebra is everywhere.
+            Many real systems are messy and curved, but if you zoom in close enough they often look <i>almost</i> straight—like a function
+            that is well approximated by its tangent line in calculus. In that “almost linear” regime, we can package the behavior
+            in matrices and vectors and get exact answers (or very stable numerical ones). So linear algebra is not magic; it is the
+            part of the math world we know how to organize and compute with especially well.
+         </p>
+         <p>
+            Linear algebra is also the right language when one object has <i>several</i> numbers attached to it (not just \(x\) on a line).
+            That can sound scary, but you already use “several numbers at once” all the time. For example, when you tell a friend to meet you
+            at 12:00 PM between Powell St. and Market St. on the 13th floor, you are giving four pieces of information at once (time and space)—
+            that is four-dimensional data in the same sense we will use the word here.
+         </p>
+         <h1>
+            Some notations
+         </h1>
+         <p>
+            Textbooks (and this page) use a few symbols over and over. You do not need to memorize them like a spelling test—just keep this tab open
+            and glance back when something looks odd. Plain English is always the real idea.
+            <ul>
+                <li>
+                    \(\mathbb{R}\) means the <b>real numbers</b>: every decimal number you can put on an ordinary number line
+                    (for us, “all the numbers you get in AP-style calculus,” with \(-\infty\) and \(\infty\) as directions, not numbers you plug into formulas).
+                </li>
+                <li>
+                    \(\forall\) reads “<b>for all</b>” (whenever you pick something from a set, something is true).
+                </li>
+                <li>
+                    \(\exists\) reads “<b>there exists</b>” (at least one choice makes something true).
+                </li>
+                <li>
+                    \(\in\) reads “<b>is in</b>” or “<b>is an element of</b>”. For example \(a \in \{a,b,c\}\) means “\(a\) is one of the items in the list \(\{a,b,c\}\).”
+                </li>
+                <li>
+                    \(\{...\}\) means a <b>set</b>: a bag of distinct things (numbers, vectors, whatever), with no implied order.
+                </li>
+            </ul>
+         </p>
+        <h1 id="applications">
+           Introduction
+        </h1>
+        <p>
+            Linear algebra is the study of linear “stuff.” Start from something you know: a function \(f(x)=mx+b\) from algebra.
+            Its graph is a line. In <i>this</i> primer, when we say a function is <b>linear</b> in the linear-algebra sense, we mean something a bit stricter:
+            the graph must pass through the origin (no \(+\,b\) bump unless we handle it separately). Why the extra rule? Because it matches how matrices act on vectors.
+            Can we be more precise?
+        </p>
+        <p>
+            <b>Definition: \(f:\mathbb{R}\to\mathbb{R}\) is linear if for all numbers \(x,y,c\in \mathbb{R}\):
+                
+                <ol>
+                    <li>
+                        (Additivity) \(f(x+y) = f(x)+f(y)\)
+                    </li>
+                    <li>
+                        (Homogeneity) \(f(cx) = cf(x)\)
+                    </li>
+                </ol></b>
+                <!-- <p>
+                    This is a fancy way of saying if you where to shift/scale the variable \(x\) before inputting it into the function,
+                    it is equivalent to scaling/shifting the output of the function! Lets see this in action:
+                </p> -->
+                <b>
+                    Example: \(f(x)= mx\)
+                    \[f(x+y) =m(x+y) = mx+my = f(x)+f(y) \]
+                    \[f(cx) =m(cx) = cf(x) \]
+                    Thus we have shown that it is a linear function!
+                </b>
+            </p>
+        <p>
+            <p style="color:#b80707">
+                <b>
+                    Question: is it possible to show that \(f(x) = mx+b\) is a linear function? (Hint: it is not! But try to show why.)
+                </b>
+            </p>
+        </p>
+        <p>
+            So far we only wiggled a single input \(x\) on the number line. The fun starts when one object carries several numbers at once—we package those as <b>vectors</b> next.
+        </p>
+        <h1 id="applications">
+            Vector Space, Vectors, and Subspaces
+        </h1>
+        <p>
+            What is a vector space?
+        </p>
+        <p>
+            Picture the ordinary \(xy\)-plane from precalculus: every point has two coordinates \((x,y)\). That plane, together with the rules for adding points
+            and scaling them by numbers, is the standard example of a <b>vector space</b> called \(\mathbb{R}^2\). Add a third coordinate and you get \(\mathbb{R}^3\)
+            (think “\(x,y,z\) space” in physics). The symbol \(\mathbb{R}^n\) just means “lists of \(n\) real numbers,” even when \(n\) is too big to draw—
+            we keep the same addition and scaling rules on paper.
+        </p>
+        <p>
+            <b>Vectors</b> are the objects living inside a vector space: ordered lists of numbers you can add and scale, like \((3,-1,2)\) in \(\mathbb{R}^3\).
+            If you took physics, “has magnitude and direction” is the same idea drawn as an arrow from the origin.
+        </p>
+        <p>
+            <b>Scalars</b> are things inside just \(\mathbb{R}\), the normal number line. Things like \(1, 0, 1201239\) or \(\pi\) are all just scalars—no higher-dimensional gadgets.
+        </p>
+        <p>
+            Universities often print a “checklist” definition of a vector space (a bunch of axioms). It is good to know such a list exists,
+            but for this onboarding page you can treat it as <i>background</i>: it is the legal contract that makes sure addition and scalar multiplication behave
+            the way your intuition expects. If you want the full story later, take a real linear algebra course—or ask an AI to walk through one axiom at a time.
+        </p>
+        <p>
+            For completeness, here is the usual list. Let \(V\) be a vector space and let \(u,v,w\in V\) (vectors in \(V\)). Then the following must hold:
+        </p>
+        <ol>
+            <li>Associativity of vector addition: \(u + (v + w) = (u + v) + w\)</li>
+            <li>Commutativity of vector addition: \(u + v = v + u\)</li>
+            <li>Identity element of vector addition (zero must exist): \(\exists 0\in V \)</li>
+            <li>Inverse elements of vector addition (additive inverses exist): for every \(u\in V\) there exists \(-u\in V\) with \(u + (-u) = 0\)</li>
+            <li>Compatibility of scalar multiplication with field multiplication: \(a(bv) = (ab)v\)</li>
+            <li>Identity element of scalar multiplication (i.e., the field must contain \(1\), and \(1\cdot u=u\) for all \(u\in V\))</li>
+            <li>Distributivity of scalar multiplication with respect to vector addition: \(a(u + v) = au + av\)</li>
+            <li>Distributivity of scalar multiplication with respect to field addition: \((a + b)v = av + bv\)</li>
+        </ol>
+        <p style="color:blue">
+            <b>
+                Ask ChatGPT: why did mathematicians define a vector space with these 8 axioms this way?
+            </b>
+        </p>
+       <p>
+        <b>What does this have to do with multidimensional things?</b>
+       </p>
+       <p>
+        Well we have just generalized the rules of the lame old 1-D world of real numbers 
+        to the \(n\)-D world and brought with us all the mathematical 
+        tools from that 1-D world into the \(n\)-D world! Let us look at an example.
+       </p>
+       <p>
+        \(\mathbb{R}^3\) is the 3-D world. You can think of it as a 3-D cube with grids. Vectors in this vector space include 
+                \((0,0,0) \in \mathbb{R}^3\), but there are infinitely many others, 
+    like \((3,12,-1)\) or \((-2,1.23, 919)\)—whatever; the list goes on. 
+    This is a vector space because it has all those properties we described before. Namely vector addition and scalar multiplication.  
+       </p>
+       <p>
+        <b>Vector Addition: \((3,12,-1) + (4,1,2) = (3+4,12+1,-1+2) = (7,13,1) \) </b>
+        You just add them up like normal numbers, repeated per entry. 
+       </p>
+       <p>
+       <b>Scalar Multiplication: \(3 \cdot (3,12,-1) = (9,36,-3) \) </b>
+       You just multiply each entry. 
+      </p>
+      <div class="r2-vec-widget" id="r2-vec-widget" aria-label="Interactive \(\mathbb{R}^2\) vector addition and scalar multiplication">
+        <p style="margin-top:1.25em;"><b>Interactive \(\mathbb{R}^2\) sketch</b> — drag the colored dots to change \(\mathbf{u}\) and \(\mathbf{v}\); use the slider to stretch or flip \(\mathbf{u}\). Watch how the purple diagonal \(\mathbf{u}+\mathbf{v}\) completes the parallelogram.</p>
+        <div class="r2-vec-widget-inner">
+          <svg id="r2-vec-svg" width="480" height="360" viewBox="0 0 480 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Vector diagram">
+            <defs>
+              <marker id="r2-arrow-u" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+                <path d="M0,0 L8,4 L0,8 z" fill="#b80707"/>
+              </marker>
+              <marker id="r2-arrow-v" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+                <path d="M0,0 L8,4 L0,8 z" fill="#1565c0"/>
+              </marker>
+              <marker id="r2-arrow-sum" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+                <path d="M0,0 L8,4 L0,8 z" fill="#6a1b9a"/>
+              </marker>
+              <marker id="r2-arrow-cu" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+                <path d="M0,0 L8,4 L0,8 z" fill="#e65100"/>
+              </marker>
+            </defs>
+            <g id="r2-grid"></g>
+            <line id="r2-axis-x" stroke="#bbb" stroke-width="1"/>
+            <line id="r2-axis-y" stroke="#bbb" stroke-width="1"/>
+            <path id="r2-parallel" fill="rgba(106,27,154,0.06)" stroke="#aaa" stroke-width="1" stroke-dasharray="5 4" opacity="1"/>
+            <line id="r2-line-cu" stroke="#e65100" stroke-width="2.5" marker-end="url(#r2-arrow-cu)"/>
+            <line id="r2-line-u" stroke="#b80707" stroke-width="2.5" marker-end="url(#r2-arrow-u)"/>
+            <line id="r2-line-v" stroke="#1565c0" stroke-width="2.5" marker-end="url(#r2-arrow-v)"/>
+            <line id="r2-line-sum" stroke="#6a1b9a" stroke-width="3" marker-end="url(#r2-arrow-sum)"/>
+            <circle id="r2-handle-u" r="9" fill="#b80707" stroke="#fff" stroke-width="2" cursor="grab" style="touch-action:none"/>
+            <circle id="r2-handle-v" r="9" fill="#1565c0" stroke="#fff" stroke-width="2" cursor="grab" style="touch-action:none"/>
+            <g id="r2-labels" font-family="system-ui, sans-serif" font-size="13" fill="#333"></g>
+          </svg>
+          <div class="r2-vec-controls">
+            <label for="r2-scalar-slider">Scalar \(c\) for \(c\mathbf{u}\): <span id="r2-scalar-val">1</span></label>
+            <input type="range" id="r2-scalar-slider" min="-2" max="3" step="0.05" value="1"/>
+            <div class="r2-vec-readout" id="r2-readout"></div>
+          </div>
+        </div>
+      </div>
+      <style>
+        .r2-vec-widget { margin: 1.5rem 0; padding: 1rem 1.25rem; background: #fafafa; border: 1px solid #e8e8e8; border-radius: 8px; border-left: 4px solid #b80707; max-width: 560px; }
+        .r2-vec-widget-inner { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 1rem; }
+        .r2-vec-controls { flex: 1; min-width: 200px; padding-top: 0.5rem; }
+        .r2-vec-controls label { display: block; margin-bottom: 0.35rem; font-weight: 600; }
+        .r2-vec-controls input[type="range"] { width: 100%; max-width: 280px; }
+        .r2-vec-readout { margin-top: 0.75rem; font-size: 0.95rem; line-height: 1.45; font-family: ui-monospace, monospace; color: #222; }
+      </style>
+      <script>
+      (function () {
+        var root = document.getElementById('r2-vec-widget');
+        if (!root) return;
+        var svg = document.getElementById('r2-vec-svg');
+        var gridG = document.getElementById('r2-grid');
+        var axisX = document.getElementById('r2-axis-x');
+        var axisY = document.getElementById('r2-axis-y');
+        var lineU = document.getElementById('r2-line-u');
+        var lineV = document.getElementById('r2-line-v');
+        var lineSum = document.getElementById('r2-line-sum');
+        var lineCu = document.getElementById('r2-line-cu');
+        var par = document.getElementById('r2-parallel');
+        var handleU = document.getElementById('r2-handle-u');
+        var handleV = document.getElementById('r2-handle-v');
+        var labelsG = document.getElementById('r2-labels');
+        var slider = document.getElementById('r2-scalar-slider');
+        var scalarVal = document.getElementById('r2-scalar-val');
+        var readout = document.getElementById('r2-readout');
+
+        var W = 480, H = 360;
+        var ox = W / 2, oy = H / 2;
+        var scale = 38;
+        var u = { x: 2.2, y: 1.1 };
+        var v = { x: -1.4, y: 2.0 };
+        var drag = null;
+
+        function clamp(n, lo, hi) { return Math.max(lo, Math.min(hi, n)); }
+
+        function toXY(wx, wy) {
+          return { x: ox + wx * scale, y: oy - wy * scale };
+        }
+
+        function toWorld(px, py) {
+          return {
+            x: (px - ox) / scale,
+            y: (oy - py) / scale
+          };
+        }
+
+        function buildGrid() {
+          var frag = document.createDocumentFragment();
+          var lo = -6, hi = 6;
+          for (var g = lo; g <= hi; g++) {
+            if (g === 0) continue;
+            var lx1 = toXY(g, lo), lx2 = toXY(g, hi);
+            var line1 = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+            line1.setAttribute('x1', lx1.x); line1.setAttribute('y1', lx1.y);
+            line1.setAttribute('x2', lx2.x); line1.setAttribute('y2', lx2.y);
+            line1.setAttribute('stroke', '#e5e5e5');
+            line1.setAttribute('stroke-width', '1');
+            frag.appendChild(line1);
+            var ly1 = toXY(lo, g), ly2 = toXY(hi, g);
+            var line2 = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+            line2.setAttribute('x1', ly1.x); line2.setAttribute('y1', ly1.y);
+            line2.setAttribute('x2', ly2.x); line2.setAttribute('y2', ly2.y);
+            line2.setAttribute('stroke', '#e5e5e5');
+            line2.setAttribute('stroke-width', '1');
+            frag.appendChild(line2);
+          }
+          gridG.innerHTML = '';
+          gridG.appendChild(frag);
+          var x0 = toXY(-6, 0), x1 = toXY(6, 0);
+          axisX.setAttribute('x1', x0.x); axisX.setAttribute('y1', x0.y);
+          axisX.setAttribute('x2', x1.x); axisX.setAttribute('y2', x1.y);
+          var y0 = toXY(0, -6), y1 = toXY(0, 6);
+          axisY.setAttribute('x1', y0.x); axisY.setAttribute('y1', y0.y);
+          axisY.setAttribute('x2', y1.x); axisY.setAttribute('y2', y1.y);
+        }
+
+        function setLine(line, wx1, wy1, wx2, wy2) {
+          var a = toXY(wx1, wy1), b = toXY(wx2, wy2);
+          line.setAttribute('x1', a.x); line.setAttribute('y1', a.y);
+          line.setAttribute('x2', b.x); line.setAttribute('y2', b.y);
+        }
+
+        function fmt(n) {
+          var s = n.toFixed(2);
+          if (s.indexOf('.') >= 0) s = s.replace(/\.?0+$/, '');
+          return s;
+        }
+
+        function draw() {
+          var c = parseFloat(slider.value, 10);
+          scalarVal.textContent = fmt(c);
+          var cu = { x: c * u.x, y: c * u.y };
+          var sum = { x: u.x + v.x, y: u.y + v.y };
+
+          setLine(lineU, 0, 0, u.x, u.y);
+          setLine(lineV, 0, 0, v.x, v.y);
+          setLine(lineSum, 0, 0, sum.x, sum.y);
+          setLine(lineCu, 0, 0, cu.x, cu.y);
+
+          var pu = toXY(u.x, u.y), pv = toXY(v.x, v.y);
+          handleU.setAttribute('cx', pu.x); handleU.setAttribute('cy', pu.y);
+          handleV.setAttribute('cx', pv.x); handleV.setAttribute('cy', pv.y);
+
+          var hideCu = Math.hypot(cu.x, cu.y) < 0.06;
+          lineCu.style.display = hideCu ? 'none' : '';
+          if (!hideCu && Math.abs(c - 1) < 0.04) {
+            lineCu.setAttribute('opacity', '0.45');
+          } else {
+            lineCu.removeAttribute('opacity');
+          }
+
+          var p1 = toXY(u.x, u.y), p2 = toXY(sum.x, sum.y), q1 = toXY(v.x, v.y);
+          par.setAttribute('d', 'M' + ox + ',' + oy + ' L' + p1.x + ',' + p1.y + ' L' + p2.x + ',' + p2.y + ' L' + q1.x + ',' + q1.y + ' Z');
+
+          labelsG.innerHTML = '';
+          function addLabel(wx, wy, text, dx, dy, fill) {
+            var t = toXY(wx, wy);
+            var el = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+            el.setAttribute('x', t.x + (dx || 0));
+            el.setAttribute('y', t.y + (dy || 0));
+            el.setAttribute('fill', fill || '#333');
+            el.textContent = text;
+            labelsG.appendChild(el);
+          }
+          addLabel(u.x, u.y, 'u', 10, -6, '#b80707');
+          addLabel(v.x, v.y, 'v', 10, 14, '#1565c0');
+          addLabel(sum.x, sum.y, 'u+v', 8, -8, '#6a1b9a');
+          if (!hideCu) addLabel(cu.x, cu.y, 'c·u', 10, 16, '#e65100');
+
+          readout.innerHTML =
+            '<strong>u</strong> = (' + fmt(u.x) + ', ' + fmt(u.y) + ')<br>' +
+            '<strong>v</strong> = (' + fmt(v.x) + ', ' + fmt(v.y) + ')<br>' +
+            '<strong>u + v</strong> = (' + fmt(sum.x) + ', ' + fmt(sum.y) + ')<br>' +
+            '<strong>c·u</strong> = (' + fmt(cu.x) + ', ' + fmt(cu.y) + ')';
+        }
+
+        function pointerToWorld(ev) {
+          var rect = svg.getBoundingClientRect();
+          var px = ((ev.clientX - rect.left) / rect.width) * W;
+          var py = ((ev.clientY - rect.top) / rect.height) * H;
+          return toWorld(px, py);
+        }
+
+        function onDown(which, ev) {
+          ev.preventDefault();
+          drag = which;
+          if (which === 'u') handleU.style.cursor = 'grabbing';
+          else handleV.style.cursor = 'grabbing';
+        }
+
+        function onMove(ev) {
+          if (!drag) return;
+          ev.preventDefault();
+          var w = pointerToWorld(ev);
+          w.x = clamp(w.x, -5.5, 5.5);
+          w.y = clamp(w.y, -5.5, 5.5);
+          if (drag === 'u') { u.x = w.x; u.y = w.y; }
+          else { v.x = w.x; v.y = w.y; }
+          draw();
+        }
+
+        function onUp() {
+          if (drag === 'u') handleU.style.cursor = 'grab';
+          if (drag === 'v') handleV.style.cursor = 'grab';
+          drag = null;
+        }
+
+        handleU.addEventListener('mousedown', function (e) { onDown('u', e); });
+        handleV.addEventListener('mousedown', function (e) { onDown('v', e); });
+        window.addEventListener('mousemove', onMove);
+        window.addEventListener('mouseup', onUp);
+        handleU.addEventListener('touchstart', function (e) { if (e.touches[0]) onDown('u', e.touches[0]); }, { passive: false });
+        handleV.addEventListener('touchstart', function (e) { if (e.touches[0]) onDown('v', e.touches[0]); }, { passive: false });
+        window.addEventListener('touchmove', function (e) { if (drag && e.touches[0]) onMove(e.touches[0]); }, { passive: false });
+        window.addEventListener('touchend', onUp);
+        slider.addEventListener('input', draw);
+
+        buildGrid();
+        draw();
+      })();
+      </script>
+      <p>
+        <p style="color:#b80707">
+            <b>
+                Question: add these vectors together \((1,2,3,4)+(-12,19,24,1) = ? \), can you compute this 
+                \(-2 \cdot (-12,6,24,1) = ? \)
+            </b>
+        </p>
+    </p>
+    <p>
+        Finally, here is the idea of a <b>subspace</b>. Think of a line through the origin in the plane, or a plane through the origin in 3D:
+        it is a “smaller world” sitting inside the bigger space. Vectors in that smaller world can be added and scaled, and they never “leak out”
+        of the smaller world—as long as the smaller world passes through \(\mathbf{0}\).
+    </p>
+    <p>
+        Formally, a subspace must be closed under addition and scalar multiplication: combine two vectors from the subspace (or scale one),
+        and you always stay inside the same subspace.
+    </p>
+    <p style="color:blue">
+        <b>
+            Ask ChatGPT: explain to me what a subspace is. Give me an analogy. 
+        </b>
+    </p>
+    <p>
+        <b>Example:</b> Consider the horizontal line (the \(x\)-axis) in 2-D space \(\mathbb{R}^2\). This is a subspace! Why?
+        The points \((0,0), (1,0), (2,0), (-3,0)...\) are all in this space (points on that line). So if we 
+        were to add any random pair together... they are still some point on the line!!  \((1,0)+(2,0) = (3,0)...\) 
+        This makes it a subspace.
+    </p>
+    <p style="color:#b80707">
+        <b>
+            Question: is the set \(\{(0,0,0), (1,0,0), (0,1,0)\}\) a subspace?
+        </b>
+    </p>
+    <h1 id="dot-product-norm">
+        Norms and dot products (in \(\mathbb{R}^n\))
+    </h1>
+    <p>
+        Up to now we talked about vector spaces, addition, scalar multiplication, span, and subspaces without ever measuring
+        <i>length</i> or <i>angles</i>. Those measurements are <b>extra structure</b> we add when we work in ordinary coordinate space
+        \(\mathbb{R}^n\) with the usual entries. In ML you will see them all the time (normalizing features, orthogonal bases, Gram–Schmidt, SVD).
+        If you know the distance formula in the plane, \(\sqrt{(x_2-x_1)^2+(y_2-y_1)^2}\), you are already one step from norms—this section makes that connection explicit.
+    </p>
+    <p>
+        <b>Dot product (standard inner product).</b>
+        If \(u = (u_1,\dots,u_n)\) and \(v = (v_1,\dots,v_n)\) are two vectors in \(\mathbb{R}^n\), their
+        <b>dot product</b> is the single number
+        \[
+            u \cdot v \;=\; u_1 v_1 + u_2 v_2 + \cdots + u_n v_n
+            \;=\; \sum_{i=1}^n u_i v_i .
+        \]
+        You multiply matching coordinates and add—like a weighted score across categories. Other books write \(\langle u, v\rangle\) or \(u^\top v\)
+        (thinking of column vectors); in this primer we stick to \(u\cdot v\).
+    </p>
+    <p>
+        <b>Euclidean norm (length).</b>
+        The <b>norm</b> (or length) of \(u\) is
+        \[
+            \|u\| \;=\; \sqrt{u\cdot u} \;=\; \sqrt{u_1^2 + u_2^2 + \cdots + u_n^2}.
+        \]
+        So \(\|u\|\) is always \(\geq 0\), and \(\|u\| = 0\) exactly when \(u\) is the zero vector.
+        A vector with \(\|u\| = 1\) is called a <b>unit vector</b> (we say it is <b>normalized</b>). In 2D or 3D, \(\|u\|\) is the same “arrow length” you draw on paper.
+    </p>
+    <p>
+        <b>Quick meanings.</b>
+        The dot product measures how much two directions “agree.” If \(u\cdot v = 0\), we say they are
+        <b>orthogonal</b> (perpendicular in the plane picture). Later, when you see Gram–Schmidt “subtract the \(q_1\) piece from \(a_2\),”
+        that is built from dot products. And \(\|u - v\|\) is exactly the ordinary distance between the tips of \(u\) and \(v\) when you plot them as arrows from the origin.
+    </p>
+    <p>
+        <b>Worked example.</b>
+        Let \(u = (2,-1,3)\) and \(v = (1,4,-1)\) in \(\mathbb{R}^3\). Then
+        \[
+        \begin{aligned}
+            u\cdot v &= (2)(1) + (-1)(4) + (3)(-1) = 2 - 4 - 3 = -5,\\[0.35em]
+            \|u\| &= \sqrt{2^2 + (-1)^2 + 3^2} = \sqrt{4 + 1 + 9} = \sqrt{14},\\[0.35em]
+            \|v\| &= \sqrt{1^2 + 4^2 + (-1)^2} = \sqrt{1 + 16 + 1} = \sqrt{18} = 3\sqrt{2}.
+        \end{aligned}
+        \]
+        The dot product is negative, so the two arrows would open wider than \(90^\circ\) if you placed them tail-to-tail (an obtuse angle).
+        To turn \(u\) into a unit vector in the same direction, divide by its length:
+        \(\hat{u} = u/\|u\| = (2/\sqrt{14},\,-1/\sqrt{14},\,3/\sqrt{14})\), and check \(\|\hat{u}\| = 1\) if you like expanding the squares.
+    </p>
+    <p style="color:#b80707">
+        <b>
+            Question: compute \(a\cdot b\) and \(\|a\|\) for \(a = (1,2)\) and \(b = (3,-1)\) in \(\mathbb{R}^2\).
+            For what value of \(t\) is \((1,t)\) orthogonal to \((2,-4)\)?
+        </b>
+    </p>
+    <h1 id="applications">
+        Linear Combination, Linear independence, Basis, Dimensions and Span
+    </h1>
+    <p>
+        <b>Linear combination (plain English).</b>
+        Pick a few “building block” vectors, scale each one by a number you choose, then add the pieces together. The result is a <b>linear combination</b>.
+        For example, if \(u,v,w \in \mathbb{R}^3\) and \(a,b,c\in \mathbb{R}\) are scalars, then
+        \(au + bv+ cw\) is a linear combination of \(u,v,w\) with coefficients \(a,b,c\). You are mixing recipes: “\(a\) scoops of \(u\), \(b\) scoops of \(v\), …”
+    </p>
+    <p>
+        We say that vectors are <b>linearly independent</b> when the <i>only</i> way to combine them and get the zero vector
+        is the boring way: use coefficient \(0\) on every vector. If you can get \(\mathbf{0}\) using some nonzero weights, then at least one vector was redundant.
+    <p>
+        <b>Example: </b>\((1,0,0), (0,1,0), (0,0,1)\) are linearly independent, because there are no coefficients \(a,b\) such that \(a(1,0,0)+b(0,1,0) = (0,0,1)\), and similarly for the other pairs. Intuitively, 
+        you can think of this as having three genuinely different directions, because no vector in the list can be built from the others.
+    </p>
+    
+    <p>
+        <b>Counterexample: </b>\((1,0,0), (0,1,1), (1,1,1)\) are <b>not</b> linearly independent, 
+        because \((1,0,0)+(0,1,1)=(1,1,1)\): the third vector is redundant—it is a linear combination of the first two.
+    </p>
+    <p>
+        <b>This is a very important concept. The idea of linear independence underpins the idea of a basis, which determines the dimension of 
+            vector spaces and subspaces.
+        </b>
+    </p>
+    <p>
+       What is a <b>basis</b>? For example, 
+       given a 2-D vector space, we can describe it completely using two vectors, \((1,0)\) and \((0,1)\). Why? Because we can take those two vectors,
+        add them together, scale them, or both, and we can represent <b>any</b> vector in the 2-D space. This is called a <b>basis</b>, similar to the idea of coordinate axes! 
+        \((1,0)\) is like the \(x\)-axis while \((0,1)\) is like the \(y\)-axis! This describes the backbone of the vector space. (By the way, this way of combining vectors by adding, scaling, or both is called a <b>linear combination</b>.)
+    </p>
+    <p><b>Bases are NOT UNIQUE!</b> There can be multiple bases for a vector space. For example, \((1,0),(0,1)\) is a basis for 2-D space, 
+    but \((1,1),(0,1)\) is also a basis.</p>
+    <p style="color:#b80707">
+        <b>
+            Question: why is \((1,1),(0,1)\) also a basis for \(\mathbb{R}^2\)?
+        </b>
+    </p>
+    <p>
+        <b>Span</b> is how we concretely define a <b>subspace</b>. A subspace is said to be spanned by its basis vectors. 
+        This means there are vectors whose linear combinations determine that subspace. Let me give you an example: 
+        \(\text{span}\{(1,0,0), (0,1,0)\}\) is the collection of all possible vectors that can be written as a linear combination 
+        of \((1,0,0)\) and \((0,1,0)\). For example, \((1,3,0)\) is part of the subspace because \((1,0,0)+ 3 \cdot (0,1,0) = (1,3,0)\),
+        while \((0,0,1)\) clearly cannot be written as a linear combination of those two vectors and thus is not in the subspace. 
+        Again, it is very important to remember that a subspace is a mini embedded world, and in this example \(\text{span}\{(1,0,0), (0,1,0)\}\) 
+        defines the \(xy\)-plane in 3-D coordinates. The vectors that determine this subspace form a <b>basis</b> for this subspace.
+    </p>
+    <div class="la-inter-widget" id="lc-span-widget" aria-label="Linear combination and span in the plane">
+        <p style="margin-top:0;"><b>Interactive: linear combinations and span in \(\mathbb{R}^2\)</b> — move the sliders \(\alpha\) and \(\beta\) to build \(\mathbf{w}=\alpha\mathbf{b}_1+\beta\mathbf{b}_2\). Drag the tips of \(\mathbf{b}_1\) and \(\mathbf{b}_2\), or use the basis presets (try “dependent” to see when everything collapses to a single line).</p>
+        <div class="la-inter-row">
+            <svg id="lc-svg" width="440" height="340" viewBox="0 0 440 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Span diagram">
+                <defs>
+                    <marker id="lc-arr-b1" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="#b80707"/></marker>
+                    <marker id="lc-arr-b2" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="#1565c0"/></marker>
+                    <marker id="lc-arr-s1" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="#b80707" opacity="0.55"/></marker>
+                    <marker id="lc-arr-s2" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="#1565c0" opacity="0.55"/></marker>
+                    <marker id="lc-arr-w" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#6a1b9a"/></marker>
+                </defs>
+                <g id="lc-grid"></g>
+                <line id="lc-axis-x" stroke="#bbb" stroke-width="1"/><line id="lc-axis-y" stroke="#bbb" stroke-width="1"/>
+                <line id="lc-span-line" stroke="#ff9800" stroke-width="4" stroke-linecap="round" opacity="0"/>
+                <path id="lc-parallel" fill="rgba(106,27,154,0.07)" stroke="#aaa" stroke-width="1" stroke-dasharray="4 4"/>
+                <line id="lc-ab1" stroke="#b80707" stroke-width="2" stroke-dasharray="5 4" opacity="0.85" marker-end="url(#lc-arr-s1)"/>
+                <line id="lc-ab2" stroke="#1565c0" stroke-width="2" stroke-dasharray="5 4" opacity="0.85" marker-end="url(#lc-arr-s2)"/>
+                <line id="lc-b1" stroke="#b80707" stroke-width="2.5" marker-end="url(#lc-arr-b1)"/>
+                <line id="lc-b2" stroke="#1565c0" stroke-width="2.5" marker-end="url(#lc-arr-b2)"/>
+                <line id="lc-w" stroke="#6a1b9a" stroke-width="3" marker-end="url(#lc-arr-w)"/>
+                <circle id="lc-h1" r="8" fill="#b80707" stroke="#fff" stroke-width="2" cursor="grab" style="touch-action:none"/>
+                <circle id="lc-h2" r="8" fill="#1565c0" stroke="#fff" stroke-width="2" cursor="grab" style="touch-action:none"/>
+                <g id="lc-lbl" font-family="system-ui,sans-serif" font-size="12" fill="#333"/>
+            </svg>
+            <div class="la-inter-controls">
+                <label>\(\alpha\): <span id="lc-aval">1</span><input type="range" id="lc-alpha" min="-2.5" max="2.5" step="0.05" value="1"/></label>
+                <label>\(\beta\): <span id="lc-bval">0.5</span><input type="range" id="lc-beta" min="-2.5" max="2.5" step="0.05" value="0.5"/></label>
+                <div class="la-basis-presets"><span style="font-weight:600;font-size:0.9rem;">Basis presets:</span><br>
+                    <button type="button" class="btn btn-default btn-xs" data-lc-basis="std">standard \((1,0),(0,1)\)</button>
+                    <button type="button" class="btn btn-default btn-xs" data-lc-basis="alt">\((1,1),(0,1)\)</button>
+                    <button type="button" class="btn btn-default btn-xs" data-lc-basis="dep">dependent (line)</button>
+                </div>
+                <div class="la-inter-readout" id="lc-readout"></div>
+            </div>
+        </div>
+    </div>
+    <style>
+        .la-inter-widget { margin: 1.5rem 0; padding: 1rem 1.25rem; background: #fafafa; border: 1px solid #e8e8e8; border-radius: 8px; border-left: 4px solid #b80707; max-width: 640px; }
+        .la-inter-row { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 1rem; }
+        .la-inter-controls { flex: 1; min-width: 200px; }
+        .la-inter-controls label { display: block; margin: 0.5rem 0; font-weight: 600; }
+        .la-inter-controls input[type="range"] { width: 100%; max-width: 260px; display: block; margin-top: 0.25rem; }
+        .la-basis-presets { margin-top: 0.75rem; }
+        .la-basis-presets .btn { margin: 0.2rem 0.35rem 0 0; }
+        .la-inter-readout { margin-top: 0.75rem; font-size: 0.92rem; line-height: 1.45; font-family: ui-monospace, monospace; color: #222; }
+    </style>
+    <script>
+    (function () {
+        var svg = document.getElementById('lc-svg');
+        if (!svg) return;
+        var gridG = document.getElementById('lc-grid');
+        var axX = document.getElementById('lc-axis-x'), axY = document.getElementById('lc-axis-y');
+        var lineB1 = document.getElementById('lc-b1'), lineB2 = document.getElementById('lc-b2');
+        var lineAb1 = document.getElementById('lc-ab1'), lineAb2 = document.getElementById('lc-ab2');
+        var lineW = document.getElementById('lc-w'), par = document.getElementById('lc-parallel');
+        var spanLine = document.getElementById('lc-span-line');
+        var h1 = document.getElementById('lc-h1'), h2 = document.getElementById('lc-h2');
+        var lbl = document.getElementById('lc-lbl');
+        var sA = document.getElementById('lc-alpha'), sB = document.getElementById('lc-beta');
+        var av = document.getElementById('lc-aval'), bv = document.getElementById('lc-bval');
+        var read = document.getElementById('lc-readout');
+        var W = 440, H = 340, ox = W / 2, oy = H / 2, sc = 36;
+        var b1 = { x: 1, y: 0 }, b2 = { x: 0, y: 1 }, drag = null;
+        function clamp(n, lo, hi) { return Math.max(lo, Math.min(hi, n)); }
+        function toXY(wx, wy) { return { x: ox + wx * sc, y: oy - wy * sc }; }
+        function toWorld(px, py) { return { x: (px - ox) / sc, y: (oy - py) / sc }; }
+        function det2(u, v) { return u.x * v.y - u.y * v.x; }
+        function fmt(n) {
+            var s = n.toFixed(2);
+            return s.indexOf('.') >= 0 ? s.replace(/\.?0+$/, '') : s;
+        }
+        function buildGrid() {
+            var frag = document.createDocumentFragment();
+            for (var g = -6; g <= 6; g++) {
+                if (g === 0) continue;
+                var a = toXY(g, -6), b = toXY(g, 6);
+                var L = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                L.setAttribute('stroke', '#ececec'); L.setAttribute('x1', a.x); L.setAttribute('y1', a.y); L.setAttribute('x2', b.x); L.setAttribute('y2', b.y);
+                frag.appendChild(L);
+                a = toXY(-6, g); b = toXY(6, g);
+                L = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                L.setAttribute('stroke', '#ececec'); L.setAttribute('x1', a.x); L.setAttribute('y1', a.y); L.setAttribute('x2', b.x); L.setAttribute('y2', b.y);
+                frag.appendChild(L);
+            }
+            gridG.innerHTML = '';
+            gridG.appendChild(frag);
+            var x0 = toXY(-6, 0), x1 = toXY(6, 0);
+            axX.setAttribute('x1', x0.x); axX.setAttribute('y1', x0.y); axX.setAttribute('x2', x1.x); axX.setAttribute('y2', x1.y);
+            var y0 = toXY(0, -6), y1 = toXY(0, 6);
+            axY.setAttribute('x1', y0.x); axY.setAttribute('y1', y0.y); axY.setAttribute('x2', y1.x); axY.setAttribute('y2', y1.y);
+        }
+        function setL(line, x1, y1, x2, y2) {
+            var a = toXY(x1, y1), b = toXY(x2, y2);
+            line.setAttribute('x1', a.x); line.setAttribute('y1', a.y);
+            line.setAttribute('x2', b.x); line.setAttribute('y2', b.y);
+        }
+        function draw() {
+            var al = parseFloat(sA.value, 10), be = parseFloat(sB.value, 10);
+            av.textContent = fmt(al); bv.textContent = fmt(be);
+            var d = det2(b1, b2);
+            var rank2 = Math.abs(d) > 0.08;
+            var ab1 = { x: al * b1.x, y: al * b1.y }, ab2 = { x: be * b2.x, y: be * b2.y };
+            var wx = ab1.x + ab2.x, wy = ab1.y + ab2.y;
+            setL(lineB1, 0, 0, b1.x, b1.y);
+            setL(lineB2, 0, 0, b2.x, b2.y);
+            setL(lineAb1, 0, 0, ab1.x, ab1.y);
+            setL(lineAb2, 0, 0, ab2.x, ab2.y);
+            setL(lineW, 0, 0, wx, wy);
+            var p0 = toXY(0, 0), p1 = toXY(ab1.x, ab1.y), p2 = toXY(wx, wy), p3 = toXY(ab2.x, ab2.y);
+            par.setAttribute('d', 'M' + p0.x + ',' + p0.y + ' L' + p1.x + ',' + p1.y + ' L' + p2.x + ',' + p2.y + ' L' + p3.x + ',' + p3.y + ' Z');
+            if (rank2) {
+                spanLine.setAttribute('opacity', '0');
+                spanLine.setAttribute('stroke-width', '0');
+            } else {
+                var Ln = Math.hypot(b1.x, b1.y);
+                var dirx = Ln > 0.05 ? b1.x / Ln : 1, diry = Ln > 0.05 ? b1.y / Ln : 0;
+                var R = 8;
+                var e1 = toXY(dirx * R, diry * R), e2 = toXY(-dirx * R, -diry * R);
+                spanLine.setAttribute('x1', e1.x); spanLine.setAttribute('y1', e1.y);
+                spanLine.setAttribute('x2', e2.x); spanLine.setAttribute('y2', e2.y);
+                spanLine.setAttribute('opacity', '0.35');
+                spanLine.setAttribute('stroke-width', '6');
+            }
+            var t1 = toXY(b1.x, b1.y), t2 = toXY(b2.x, b2.y);
+            h1.setAttribute('cx', t1.x); h1.setAttribute('cy', t1.y);
+            h2.setAttribute('cx', t2.x); h2.setAttribute('cy', t2.y);
+            lbl.innerHTML = '';
+            function addT(x, y, txt, dx, dy, fill) {
+                var p = toXY(x, y);
+                var el = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                el.setAttribute('x', p.x + (dx || 0)); el.setAttribute('y', p.y + (dy || 0));
+                el.setAttribute('fill', fill || '#333'); el.textContent = txt;
+                lbl.appendChild(el);
+            }
+            addT(b1.x, b1.y, 'b1', 8, -4, '#b80707');
+            addT(b2.x, b2.y, 'b2', 8, 14, '#1565c0');
+            addT(wx, wy, 'w', 8, -8, '#6a1b9a');
+            read.innerHTML =
+                '<strong>w</strong> = α<b>b</b><sub>1</sub> + β<b>b</b><sub>2</sub> = (' + fmt(wx) + ', ' + fmt(wy) + ')<br>' +
+                (rank2
+                    ? '<span style="color:#2e7d32">Independent:</span> span is all of this plane (2D).'
+                    : '<span style="color:#e65100">Dependent:</span> span is the orange line through the origin (1D).');
+        }
+        function ptr(ev) {
+            var r = svg.getBoundingClientRect();
+            return toWorld(((ev.clientX - r.left) / r.width) * W, ((ev.clientY - r.top) / r.height) * H);
+        }
+        function onDown(which, ev) {
+            ev.preventDefault();
+            drag = which;
+            (which === 'b1' ? h1 : h2).style.cursor = 'grabbing';
+        }
+        function onMove(ev) {
+            if (!drag) return;
+            ev.preventDefault();
+            var w = ptr(ev);
+            w.x = clamp(w.x, -4.5, 4.5); w.y = clamp(w.y, -4.5, 4.5);
+            if (drag === 'b1') { b1.x = w.x; b1.y = w.y; }
+            else { b2.x = w.x; b2.y = w.y; }
+            draw();
+        }
+        function onUp() {
+            if (drag === 'b1') h1.style.cursor = 'grab';
+            if (drag === 'b2') h2.style.cursor = 'grab';
+            drag = null;
+        }
+        h1.addEventListener('mousedown', function (e) { onDown('b1', e); });
+        h2.addEventListener('mousedown', function (e) { onDown('b2', e); });
+        window.addEventListener('mousemove', onMove);
+        window.addEventListener('mouseup', onUp);
+        h1.addEventListener('touchstart', function (e) { if (e.touches[0]) onDown('b1', e.touches[0]); }, { passive: false });
+        h2.addEventListener('touchstart', function (e) { if (e.touches[0]) onDown('b2', e.touches[0]); }, { passive: false });
+        window.addEventListener('touchmove', function (e) { if (drag && e.touches[0]) onMove(e.touches[0]); }, { passive: false });
+        window.addEventListener('touchend', onUp);
+        sA.addEventListener('input', draw);
+        sB.addEventListener('input', draw);
+        document.querySelectorAll('[data-lc-basis]').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                var k = btn.getAttribute('data-lc-basis');
+                if (k === 'std') { b1 = { x: 1, y: 0 }; b2 = { x: 0, y: 1 }; }
+                else if (k === 'alt') { b1 = { x: 1, y: 1 }; b2 = { x: 0, y: 1 }; }
+                else { b1 = { x: 1, y: 0 }; b2 = { x: 1.8, y: 0 }; }
+                draw();
+            });
+        });
+        buildGrid();
+        draw();
+    })();
+    </script>
+    <p>
+        The <b>dimension</b> of a vector space or subspace is given by the number of vectors in your basis! It is like counting the number of axes!
+    </p>
+    <p style="color:#b80707">
+        <b>
+            Question: can you give me a basis for \(\mathbb{R}^4\)?
+        </b>
+    </p>
+    <h1 id="applications">
+        Generalized Linear Functions
+     </h1>
+     <p>
+        In calculus you studied functions from numbers to numbers. In ML we repeatedly study functions that eat a <b>whole list of numbers</b> (a vector)
+        and output another list (maybe a different length). The cleanest family of such maps—before we add fancy nonlinearities like ReLUs—is <b>linear maps</b>,
+        and those are exactly what matrices encode.
+     </p>
+     <p>
+        You might first guess “just reuse \(f(x)=mx+b\) but let \(x\) be a vector.” We can write that down:
+        \[f(x) = Mx+b, \quad x \in \mathbb{R}^n,\; b \in \mathbb{R}^m,\; M \in \mathbb{R}^{m\times n}\]
+        (Here \(M\) can mix coordinates—rotate, shear, scale different directions by different amounts; the old one-variable story \(f(x)=mx\) is the tiny case where \(n=m=1\).)
+     </p>
+     <p>
+        If \(M\) is only a multiple of the identity, \(M=mI\), then the map only scales every coordinate by the same factor \(m\) and then adds \(b\).
+        Real models want richer mixing, so we allow a <b>full</b> matrix \(M\).
+     </p>
+     \[M = \begin{bmatrix}
+     1 & 2 & 3 \\
+     4 & 5 & 6 \\
+     7 & 8 & 9
+     \end{bmatrix}\]
+     <p>
+        The matrix is a rectangular grid of numbers. The important part is the <b>rule for multiplying</b> a matrix by a vector (and by another matrix),
+        because that rule is what makes the grid act like a function you can actually evaluate.
+     </p>
+     <img src="img/1_YGcMQSr0ge_DGn96WnEkZw.png" style="width:300px">
+     <p>
+        Basically, you take a row of the left matrix and a column of the right matrix, multiply corresponding entries, 
+        and then add them to get each entry in your resulting matrix. 
+     </p>
+     <p>
+        The pattern looks busy at first: multiply matching entries from a <b>row</b> of the left factor with a <b>column</b> of the right factor, then add.
+        Work the small examples below by hand once or twice; after that, let a computer do the bookkeeping. The deeper “why this rule?” story comes next.
+     </p>
+     <p>
+        Let's get some practice. 
+     </p>
+     \[\begin{equation}
+     \begin{aligned}
+     \begin{bmatrix}
+     1 & 2 \\
+     3 & 4
+     \end{bmatrix}
+     \begin{bmatrix}
+     5 & 6 \\
+     7 & 8
+     \end{bmatrix}
+     &= 
+     \begin{bmatrix}
+     (1)(5) + (2)(7) & (1)(6) + (2)(8) \\
+     (3)(5) + (4)(7) & (3)(6) + (4)(8)
+     \end{bmatrix} \\
+     &= 
+     \begin{bmatrix}
+     5 + 14 & 6 + 16 \\
+     15 + 28 & 18 + 32
+     \end{bmatrix} \\
+     &= 
+     \begin{bmatrix}
+     19 & 22 \\
+     43 & 50
+     \end{bmatrix}
+     \end{aligned}
+     \end{equation}\]
+     <p>
+        We can do another one with matrices of different sizes (similar to what is inside a neural network!)
+     </p>
+     \[\begin{equation}
+     \begin{aligned}
+     \begin{bmatrix}
+     0.5 & -1.0 \\
+     2.0 & 1.5 \\
+     -0.5 & 3.0
+     \end{bmatrix}
+     \begin{bmatrix}
+     2.0 \\
+     1.0
+     \end{bmatrix}
+     &=
+     \begin{bmatrix}
+     (0.5)(2.0) + (-1.0)(1.0) \\
+     (2.0)(2.0) + (1.5)(1.0) \\
+     (-0.5)(2.0) + (3.0)(1.0)
+     \end{bmatrix} \\
+     &=
+     \begin{bmatrix}
+     1.0 - 1.0 \\
+     4.0 + 1.5 \\
+     -1.0 + 3.0
+     \end{bmatrix}
+     =
+     \begin{bmatrix}
+     0.0 \\
+     5.5 \\
+     2.0
+     \end{bmatrix}
+     \end{aligned}
+     \end{equation}\]
+     <p>
+        <b>Note:</b> Not all matrix products are defined! To multiply \(A B\), the number of columns of \(A\) must match the number of rows of \(B\). 
+        So an \(M \times N\) matrix cannot be multiplied by another \(M \times N\) matrix in that order, because the inner dimensions do not line up.
+        But an \(M \times N\) matrix times an \(N \times P\) matrix is defined and yields an \(M \times P\) result. 
+     </p>
+     <p>
+        <b>Double note:</b> Matrix multiplication can change the <i>dimensions</i> of the input vector! It can turn something 
+        in 2-D into 3-D! See the last example we did: it took a 2-D vector and the result is 3-D. It can also do the opposite. You can map into however many dimensions you 
+        want! This is the beauty of this generalized definition of a linear function. 
+        We see that this is because the matrix is \(3\times 2\) meaning \(2\) dimensions in and \(3\) dimensions out!
+        We would typically write this as \(M : \mathbb{R}^2 \to \mathbb{R}^3\)
+     </p>
+     <p>
+        Once you fix bases (for example the usual bases of \(\mathbb{R}^n\) and \(\mathbb{R}^m\)), every linear map \(\mathbb{R}^n\to\mathbb{R}^m\) is given by <b>exactly one</b> \(m\times n\) matrix, and every \(m\times n\) matrix defines such a map. You want to spin something 
+        90 degrees? There is a matrix for that. You want to flip it on the \(y\)-axis? A matrix has you covered! 
+        You want to take something in 3-D space and squish it into 2-D space? You can do that!
+        Matrix 
+        multiplication is one of the most important operations we do in the modern world... besides adding and subtracting, etc.
+     </p>
+     <h1 id="applications">
+        Why Is Matrix Multiplication Defined This Way?
+     </h1>
+     <p>
+        As you probably noticed... this matrix calculation is annoying. Why do we multiply the rows and the columns? Why 
+        do we add them all up?? It makes no sense; it seems so arbitrary. Well, there is a good reason for that! And that has to do 
+        with function composition.
+     </p>
+     <p>
+        Say you have two linear functions \(f(x) = mx, g(x)= nx\) and you want to nest them together \(f(g(x))\). It is pretty simple: 
+        the new function \(h(x) = f(g(x))\) is just the product of the slopes, \(h(x) = (mn)x\).
+     </p>
+     <p>
+        Since matrices encode linear maps (once you choose the usual coordinate axes in \(\mathbb{R}^n\) and \(\mathbb{R}^m\)), multiplying two matrices should
+        match <b>composing</b> the two maps: do one transformation, then the other. The row-by-column multiplication rule is the bookkeeping that makes
+        “composition of maps” and “product of matrices” line up.
+     </p>
+     <p style="color:#b80707">
+        <b>
+            Question: I keep saying that matrix multiplication defines a linear map. Can you check that this definition 
+            of matrix multiplication is indeed linear? (Just do it with a \(2\times 2\) matrix for simplicity!)
+        </b>
+    </p>
+
+    <p style="color:#b80707">
+        <b>
+            Question: What would the identity matrix look like? In other words, how would you construct a matrix such that when you multiply by it, 
+            you get back the same input? (Think of it like multiplying by \(1\).) Feel free to Google the answer if you get stuck; no need to think too hard about it.
+        </b>
+    </p>
+
+     <h1 id="applications">
+        Null Space, Image Space, Rank, and Inverses
+     </h1>
+     <p>
+        You are probably thinking... We talked about <b>Matrix Multiplication</b> but is there a 
+        <b>Matrix Division???</b> That is a fantastic question. There is! And that is the <b>matrix inverse</b>. 
+     </p>
+     <p>
+        However, not every square matrix can be inverted—only the ones that do not crush distinct inputs onto the same output.
+        We will see how to tell which is which.
+     </p>
+     <p>
+        Remember, a matrix <b>represents</b> a linear map. Two key subspaces attached to that map are its <b>null space</b>
+        and its <b>image space</b> (column space). Let's see what these mean.
+     </p>
+     <p>
+        You can think of the <b>null space</b> as the subspace of all inputs that acts like a black hole.... 
+        It is the subspace of all input vectors that get sent to zero! Let's see an example.
+     </p>
+     <p>
+     \[\begin{aligned}
+     \begin{bmatrix}
+     1 & 2 & 3 \\
+     4 & 5 & 6
+     \end{bmatrix}
+     \begin{bmatrix}
+     1 \\
+     -2 \\
+     1
+     \end{bmatrix}
+     &= 
+     \begin{bmatrix}
+     (1)(1) + (2)(-2) + (3)(1) \\
+     (4)(1) + (5)(-2) + (6)(1)
+     \end{bmatrix} \\
+     &= 
+     \begin{bmatrix}
+     1 - 4 + 3 \\
+     4 - 10 + 6
+     \end{bmatrix} \\
+     &= 
+     \begin{bmatrix}
+     0 \\
+     0
+     \end{bmatrix}
+     \end{aligned}\]
+     <p>
+        We see that \(\begin{bmatrix}
+        1 \\
+        -2 \\
+        1
+        \end{bmatrix}\) became zero when we multiplied it! The null space is the collection of all vectors that when 
+        multiplied by your matrix, become zero! Sucked up like a black hole.
+     </p>
+     <div class="la-inter-widget" id="null-img-widget" aria-label="Null space and image for a 2 by 2 matrix">
+        <p style="margin-top:0;"><b>Interactive: null space vs. image (\(2\times 2\))</b> — Left: drag <b>x</b> (input). Right: <b>Ax</b> (output). Orange on the left shows the <b>null space</b> (directions sent to \(\mathbf{0}\)); orange on the right shows the <b>column space / image</b> when rank is \(1\).</p>
+        <div class="la-inter-row">
+            <svg id="ni-svg" width="500" height="340" viewBox="0 0 500 340" xmlns="http://www.w3.org/2000/svg" role="img">
+                <defs>
+                    <marker id="ni-arr-x" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="#1565c0"/></marker>
+                    <marker id="ni-arr-ax" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#6a1b9a"/></marker>
+                </defs>
+                <text x="125" y="22" text-anchor="middle" font-family="system-ui,sans-serif" font-size="13" fill="#555">domain (input \(\mathbf{x}\))</text>
+                <text x="375" y="22" text-anchor="middle" font-family="system-ui,sans-serif" font-size="13" fill="#555">codomain (output \(A\mathbf{x}\))</text>
+                <line x1="250" y1="28" x2="250" y2="330" stroke="#ddd" stroke-width="2"/>
+                <g id="ni-grid-l"></g><g id="ni-grid-r"></g>
+                <rect id="ni-null-fill" x="10" y="40" width="230" height="285" fill="rgba(255,152,0,0.12)" opacity="0" style="pointer-events:none"/>
+                <line id="ni-ax-lx" stroke="#bbb"/><line id="ni-ax-ly" stroke="#bbb"/>
+                <line id="ni-ax-rx" stroke="#bbb"/><line id="ni-ax-ry" stroke="#bbb"/>
+                <line id="ni-null-line" stroke="#ff9800" stroke-width="5" stroke-linecap="round" opacity="0"/>
+                <line id="ni-img-line" stroke="#ff9800" stroke-width="5" stroke-linecap="round" opacity="0"/>
+                <line id="ni-line-x" stroke="#1565c0" stroke-width="2.5" marker-end="url(#ni-arr-x)"/>
+                <circle id="ni-hx" r="8" fill="#1565c0" stroke="#fff" stroke-width="2" cursor="grab" style="touch-action:none"/>
+                <line id="ni-line-ax" stroke="#6a1b9a" stroke-width="3" marker-end="url(#ni-arr-ax)"/>
+                <circle id="ni-dot-ax" r="6" fill="#6a1b9a" stroke="#fff" stroke-width="2"/>
+            </svg>
+            <div class="la-inter-controls">
+                <div class="la-basis-presets"><span style="font-weight:600;font-size:0.9rem;">Matrix presets:</span><br>
+                    <button type="button" class="btn btn-default btn-xs" data-ni-preset="inv">invertible</button>
+                    <button type="button" class="btn btn-default btn-xs" data-ni-preset="r1">rank 1 (example from text)</button>
+                    <button type="button" class="btn btn-default btn-xs" data-ni-preset="shear">shear</button>
+                    <button type="button" class="btn btn-default btn-xs" data-ni-preset="zero">zero matrix</button>
+                </div>
+                <div class="la-inter-readout" id="ni-readout"></div>
+            </div>
+        </div>
+     </div>
+     <style>
+        #ni-svg { display: block; max-width: 100%; height: auto; }
+     </style>
+     <script>
+     (function () {
+        var svg = document.getElementById('ni-svg');
+        if (!svg) return;
+        var oxL = 125, oxR = 375, oy = 175, sc = 34;
+        var gl = document.getElementById('ni-grid-l'), gr = document.getElementById('ni-grid-r');
+        var axLx = document.getElementById('ni-ax-lx'), axLy = document.getElementById('ni-ax-ly');
+        var axRx = document.getElementById('ni-ax-rx'), axRy = document.getElementById('ni-ax-ry');
+        var nLine = document.getElementById('ni-null-line'), iLine = document.getElementById('ni-img-line');
+        var nFill = document.getElementById('ni-null-fill');
+        var lineX = document.getElementById('ni-line-x'), lineAx = document.getElementById('ni-line-ax');
+        var hx = document.getElementById('ni-hx'), dotAx = document.getElementById('ni-dot-ax');
+        var read = document.getElementById('ni-readout');
+        var W = 500, H = 340, mid = 250, drag = false;
+        var M = { a: 1, b: 0.35, c: -0.25, d: 1 };
+        var xv = { x: 1.2, y: 0.6 };
+        function clamp(n, lo, hi) { return Math.max(lo, Math.min(hi, n)); }
+        function toXY(ox, wx, wy) { return { x: ox + wx * sc, y: oy - wy * sc }; }
+        function toWorld(ox, px, py) {
+            return { x: (px - ox) / sc, y: (oy - py) / sc };
+        }
+        function det() { return M.a * M.d - M.b * M.c; }
+        function norm2(u) { return u.x * u.x + u.y * u.y; }
+        function rank() {
+            var d = det();
+            if (Math.abs(d) > 0.06) return 2;
+            var r1 = norm2({ x: M.a, y: M.b }) > 1e-8 || norm2({ x: M.c, y: M.d }) > 1e-8;
+            if (r1) return 1;
+            return 0;
+        }
+        function Ax(p) {
+            return { x: M.a * p.x + M.b * p.y, y: M.c * p.x + M.d * p.y };
+        }
+        function nullDir() {
+            var r = rank();
+            if (r !== 1) return null;
+            var ax = M.a, ay = M.b, bx = M.c, by = M.d;
+            if (norm2({ x: ax, y: ay }) > 1e-8) return { x: -ay, y: ax };
+            return { x: -by, y: bx };
+        }
+        function imgDir() {
+            var r = rank();
+            if (r !== 1) return null;
+            var c1 = norm2({ x: M.a, y: M.c });
+            if (c1 > 1e-8) return { x: M.a, y: M.c };
+            return { x: M.b, y: M.d };
+        }
+        function buildGrids() {
+            function addGrid(gEl, ox) {
+                var frag = document.createDocumentFragment();
+                for (var g = -5; g <= 5; g++) {
+                    if (g === 0) continue;
+                    var p1 = toXY(ox, g, -5), p2 = toXY(ox, g, 5);
+                    var L = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                    L.setAttribute('stroke', '#f0f0f0'); L.setAttribute('x1', p1.x); L.setAttribute('y1', p1.y); L.setAttribute('x2', p2.x); L.setAttribute('y2', p2.y);
+                    frag.appendChild(L);
+                    p1 = toXY(ox, -5, g); p2 = toXY(ox, 5, g);
+                    L = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                    L.setAttribute('stroke', '#f0f0f0'); L.setAttribute('x1', p1.x); L.setAttribute('y1', p1.y); L.setAttribute('x2', p2.x); L.setAttribute('y2', p2.y);
+                    frag.appendChild(L);
+                }
+                gEl.innerHTML = '';
+                gEl.appendChild(frag);
+            }
+            addGrid(gl, oxL);
+            addGrid(gr, oxR);
+            var x0 = toXY(oxL, -5, 0), x1 = toXY(oxL, 5, 0);
+            axLx.setAttribute('x1', x0.x); axLx.setAttribute('y1', x0.y); axLx.setAttribute('x2', x1.x); axLx.setAttribute('y2', x1.y);
+            var y0 = toXY(oxL, 0, -5), y1 = toXY(oxL, 0, 5);
+            axLy.setAttribute('x1', y0.x); axLy.setAttribute('y1', y0.y); axLy.setAttribute('x2', y1.x); axLy.setAttribute('y2', y1.y);
+            x0 = toXY(oxR, -5, 0); x1 = toXY(oxR, 5, 0);
+            axRx.setAttribute('x1', x0.x); axRx.setAttribute('y1', x0.y); axRx.setAttribute('x2', x1.x); axRx.setAttribute('y2', x1.y);
+            y0 = toXY(oxR, 0, -5); y1 = toXY(oxR, 0, 5);
+            axRy.setAttribute('x1', y0.x); axRy.setAttribute('y1', y0.y); axRy.setAttribute('x2', y1.x); axRy.setAttribute('y2', y1.y);
+        }
+        function setSeg(line, ox, wx1, wy1, wx2, wy2) {
+            var a = toXY(ox, wx1, wy1), b = toXY(ox, wx2, wy2);
+            line.setAttribute('x1', a.x); line.setAttribute('y1', a.y);
+            line.setAttribute('x2', b.x); line.setAttribute('y2', b.y);
+        }
+        function drawInfLine(line, ox, dir, opacity, width) {
+            if (!dir || opacity <= 0) {
+                line.setAttribute('opacity', '0');
+                return;
+            }
+            var Ln = Math.hypot(dir.x, dir.y);
+            if (Ln < 1e-8) { line.setAttribute('opacity', '0'); return; }
+            var ux = dir.x / Ln, uy = dir.y / Ln;
+            setSeg(line, ox, -ux * 8, -uy * 8, ux * 8, uy * 8);
+            line.setAttribute('opacity', String(opacity));
+            line.setAttribute('stroke-width', width || 5);
+        }
+        function fmt(n) {
+            var s = n.toFixed(2);
+            return s.indexOf('.') >= 0 ? s.replace(/\.?0+$/, '') : s;
+        }
+        function draw() {
+            var y = Ax(xv);
+            var r = rank();
+            var d = det();
+            setSeg(lineX, oxL, 0, 0, xv.x, xv.y);
+            var px = toXY(oxL, xv.x, xv.y);
+            hx.setAttribute('cx', px.x); hx.setAttribute('cy', px.y);
+            var axLen = Math.hypot(y.x, y.y);
+            var yd;
+            if (axLen < 1e-9) {
+                yd = { x: 0, y: 0 };
+            } else if (axLen > 4.2) {
+                var s = 4.2 / axLen;
+                yd = { x: y.x * s, y: y.y * s };
+            } else if (axLen < 0.18 && r > 0) {
+                var t = 0.38 / axLen;
+                yd = { x: y.x * t, y: y.y * t };
+            } else {
+                yd = { x: y.x, y: y.y };
+            }
+            if (axLen < 1e-9) {
+                lineAx.setAttribute('opacity', '0');
+            } else {
+                lineAx.setAttribute('opacity', '1');
+                setSeg(lineAx, oxR, 0, 0, yd.x, yd.y);
+            }
+            var pa = toXY(oxR, yd.x, yd.y);
+            dotAx.setAttribute('cx', pa.x); dotAx.setAttribute('cy', pa.y);
+            if (r === 2) {
+                nLine.setAttribute('opacity', '0');
+                iLine.setAttribute('opacity', '0');
+                nFill.setAttribute('opacity', '0');
+                nFill.style.pointerEvents = 'none';
+            } else if (r === 1) {
+                nFill.setAttribute('opacity', '0');
+                nFill.style.pointerEvents = 'none';
+                drawInfLine(nLine, oxL, nullDir(), 0.45, 6);
+                drawInfLine(iLine, oxR, imgDir(), 0.45, 6);
+            } else {
+                nLine.setAttribute('opacity', '0');
+                iLine.setAttribute('opacity', '0');
+                nFill.setAttribute('opacity', '1');
+                nFill.style.pointerEvents = 'auto';
+            }
+            var inNull = axLen < 0.12;
+            read.innerHTML =
+                '<strong>A</strong> = [[' + fmt(M.a) + ', ' + fmt(M.b) + '], [' + fmt(M.c) + ', ' + fmt(M.d) + ']] &nbsp; det = ' + fmt(d) + '<br>' +
+                '<strong>x</strong> = (' + fmt(xv.x) + ', ' + fmt(xv.y) + ') &nbsp;→&nbsp; <strong>Ax</strong> = (' + fmt(y.x) + ', ' + fmt(y.y) + ')<br>' +
+                'rank = ' + r + ' &nbsp;|&nbsp; nullity = ' + (r === 2 ? 0 : r === 1 ? 1 : 2) + '<br>' +
+                (inNull ? '<span style="color:#e65100;font-weight:600">Ax ≈ 0 — x lies in (or very near) the null space.</span>'
+                    : r === 1 ? '<span style="color:#333">Move x along the orange line on the left to stay in the null space.</span>'
+                    : r === 0 ? '<span style="color:#333">Zero matrix: every x maps to 0.</span>'
+                    : '<span style="color:#2e7d32">Full rank: only x = 0 maps to 0.</span>');
+        }
+        function ptr(ev) {
+            var rect = svg.getBoundingClientRect();
+            return {
+                px: ((ev.clientX - rect.left) / rect.width) * W,
+                py: ((ev.clientY - rect.top) / rect.height) * H
+            };
+        }
+        function onDown(ev, origEv) {
+            origEv = origEv || ev;
+            var p = ptr(ev);
+            if (p.px >= mid) return;
+            origEv.preventDefault();
+            origEv.stopPropagation();
+            drag = true;
+            hx.style.cursor = 'grabbing';
+            moveFrom(p);
+        }
+        function moveFrom(p) {
+            var w = toWorld(oxL, p.px, p.py);
+            xv.x = clamp(w.x, -4.3, 4.3);
+            xv.y = clamp(w.y, -4.3, 4.3);
+            draw();
+        }
+        function onMove(ev) {
+            if (!drag) return;
+            ev.preventDefault();
+            moveFrom(ptr(ev));
+        }
+        function onUp() {
+            if (drag) hx.style.cursor = 'grab';
+            drag = false;
+        }
+        hx.addEventListener('mousedown', function (e) { onDown(e, e); });
+        window.addEventListener('mousemove', onMove);
+        window.addEventListener('mouseup', onUp);
+        hx.addEventListener('touchstart', function (e) { if (e.touches[0]) onDown(e.touches[0], e); }, { passive: false });
+        window.addEventListener('touchmove', function (e) { if (drag && e.touches[0]) onMove(e.touches[0]); }, { passive: false });
+        window.addEventListener('touchend', onUp);
+        svg.addEventListener('mousedown', function (e) {
+            if (e.target === hx) return;
+            var p = ptr(e);
+            if (p.px >= mid) return;
+            drag = true;
+            hx.style.cursor = 'grabbing';
+            moveFrom(p);
+        });
+        document.querySelectorAll('[data-ni-preset]').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                var k = btn.getAttribute('data-ni-preset');
+                if (k === 'inv') M = { a: 1, b: 0.35, c: -0.25, d: 1 };
+                else if (k === 'r1') M = { a: 1, b: 2, c: 2, d: 4 };
+                else if (k === 'shear') M = { a: 1, b: 0.85, c: 0, d: 1 };
+                else M = { a: 0, b: 0, c: 0, d: 0 };
+                draw();
+            });
+        });
+        buildGrids();
+        draw();
+     })();
+     </script>
+     <p>
+        The <b>image space</b> is the subspace that describes all possible outputs from the function. 
+     </p>
+
+     <p>
+        There are more precise definitions of each. But for a <b>square</b> matrix \(A\) to be invertible, the null space must contain only the zero vector!
+        Why? Well, imagine a bunch of vectors got sent to \(0\). Then, to invert it, how will you map \(0\) back to a bunch of different vectors?
+        You cannot—you lost information in your null-space black hole. In a slightly fancier way of saying it, the dimension of the null space 
+        needs to be zero. 
+     </p>
+     <p>
+        Matrices like these, with a <b>nontrivial</b> null space (more than just the zero vector), cannot be inverted on that domain—they are not “one-to-one,”
+        so different inputs can produce the same output and information is lost.
+     </p>
+     <p>
+        Furthermore, for a square matrix to be invertible, its outputs must fill the entire output space: the image 
+        must be all of the codomain. If there were a direction in the output space that nothing maps to, how would you 
+        invert and go in the other direction? It would be undefined! Precisely, the dimension of the image space 
+        must equal the dimension of the domain (for a square matrix, this is the same as being full rank with trivial null space).
+     </p>
+     <p>
+        <b>Rank</b> of a matrix is the dimension of its image (column) space.
+     </p>
+     <p>
+        <b>Full rank</b> means the rank is as large as it can be for that matrix shape: the null space is as small as possible and the image is as large as possible (for an \(n\times n\) matrix, that means rank \(n\)).
+     </p>
+     <p>
+        A standard two-sided inverse exists only for <b>square</b> matrices, and among those, only when the matrix is full rank (equivalently, the null space is just \(\{0\}\)). Not every square matrix is invertible!
+     </p>
+     <p>
+        This leads us to the conclusion that <b>invertible matrices are exactly the square, full-rank ones</b> (in the usual setting where \(A^{-1}A = AA^{-1} = I\)).
+     </p>
+     <p>
+        <b>
+            So how do we actually compute a matrix inverse?
+        </b>
+     </p>
+     <p>
+        There is the hard way of doing it. I will not explain this in detail, but it involves using Gaussian elimination:
+         you attach an identity matrix to the right of your original matrix to create an augmented matrix, 
+         and then apply standard algebraic row operations (like adding or scaling rows) 
+         until the left side transforms into a pure identity matrix;
+        whatever matrix is left on the right side is your computed inverse.
+     </p>
+     <p style="color:blue">
+        <b>
+            Ask ChatGPT: what is Gaussian elimination? Why is it useful in inverting a matrix? Can you give me a super simple example?
+        </b>
+    </p>
+     <p>
+        You can also compute it via the <b>adjugate method</b>.  
+        For a simple \(2 \times 2\)
+         matrix \[A = \begin{bmatrix} a & b \\ c & d \end{bmatrix}\], 
+         this adjugate process simplifies into a very fast shortcut: 
+         swap the positions of \(a\) and \(d\), flip the signs of \(b\) and \(c\), 
+        and multiply the entire resulting matrix by \(\frac{1}{ad - bc}\) (assuming \(ad-bc\neq 0\)). <b>However, this only works for \(2\times 2\) matrices and 
+            does not generalize!
+        </b>
+     </p>
+     <p>
+        \[\begin{equation}
+\begin{aligned}
+A &= \begin{bmatrix} 4 & 7 \\ 2 & 6 \end{bmatrix} \\[1em]
+\text{det}(A) &= (4)(6) - (7)(2) = 24 - 14 = 10 \\[1em]
+A^{-1} &= \frac{1}{\text{det}(A)} \begin{bmatrix} d & -b \\ -c & a \end{bmatrix} \\
+&= \frac{1}{10} \begin{bmatrix} 6 & -7 \\ -2 & 4 \end{bmatrix} \\
+&= \begin{bmatrix} \frac{6}{10} & -\frac{7}{10} \\[0.5em] -\frac{2}{10} & \frac{4}{10} \end{bmatrix} \\
+&= \begin{bmatrix} 0.6 & -0.7 \\ -0.2 & 0.4 \end{bmatrix}
+\end{aligned}
+\end{equation}\]
+     </p>
+     <p>
+        Solving linear systems shows up everywhere! In practice you rarely form \(A^{-1}\) explicitly—numerical libraries usually use factorizations (LU, Cholesky, QR) because they are faster and more stable—but the <em>concept</em> of an inverse is the right mental model. This appears when balancing chemical reactions, in control and optimization loops, and in 
+        ML and scientific computing wherever linear solves and decompositions appear (including algorithms built on eigenvalues and decompositions).
+     </p>
+     
+     <h1 id="applications">
+        Eigenvalues and Eigenvectors
+     </h1>
+     <p>
+        <b>Eigenvalues and eigenvectors.</b>
+        Most of the time, when you multiply a matrix \(A\) by a vector \(v\), the arrow \(Av\) points in a <i>new</i> direction.
+        Eigenvectors are the rare directions where \(Av\) stays on the <i>same</i> line as \(v\); the eigenvalue \(\lambda\) tells you how much \(Av\) stretches or flips along that line.
+        Formally, an eigenvector \(v\) and eigenvalue \(\lambda\) satisfy
+         \[Av = \lambda v\]
+     </p>
+     <p>
+        This should be confusing... You apply a matrix to a vector and the result is...?? The same vector, but stretched by some 
+        scalar \(\lambda\)? Exactly. This is what makes it strange. How do we find such exotic things? We can try 
+        to solve:
+     
+     \[Av = \lambda v\]
+     \[Av - \lambda v = 0\]
+     \[(A - \lambda\mathbb{I}) v = 0 , \quad \mathbb{I} \text{ is the identity matrix}\]
+        We can then break open the matrix and write it all out as 
+        \[\begin{equation}
+        \begin{aligned}
+        A - \lambda \mathbb{I} &= 
+        \begin{bmatrix}
+        a_{11} & a_{12} & a_{13} \\
+        a_{21} & a_{22} & a_{23} \\
+        a_{31} & a_{32} & a_{33}
+        \end{bmatrix}
+        - \lambda
+        \begin{bmatrix}
+        1 & 0 & 0 \\
+        0 & 1 & 0 \\
+        0 & 0 & 1
+        \end{bmatrix} \\[1em]
+        &= 
+        \begin{bmatrix}
+        a_{11} & a_{12} & a_{13} \\
+        a_{21} & a_{22} & a_{23} \\
+        a_{31} & a_{32} & a_{33}
+        \end{bmatrix}
+        -
+        \begin{bmatrix}
+        \lambda & 0 & 0 \\
+        0 & \lambda & 0 \\
+        0 & 0 & \lambda
+        \end{bmatrix} \\[1em]
+        &= 
+        \begin{bmatrix}
+        a_{11} - \lambda & a_{12} & a_{13} \\
+        a_{21} & a_{22} - \lambda & a_{23} \\
+        a_{31} & a_{32} & a_{33} - \lambda
+        \end{bmatrix}
+        \end{aligned}
+        \end{equation}\]
+        A number \(\lambda\) is an eigenvalue exactly when there is a <b>nonzero</b> vector \(v\) with \((A-\lambda\mathbb{I})v=0\).
+        Equivalently, the matrix \(A-\lambda\mathbb{I}\) is <b>not invertible</b>, which is the same as \(\det(A-\lambda\mathbb{I})=0\).
+        Solve that equation for \(\lambda\) first, then find \(v\) in the null space of \(A-\lambda\mathbb{I}\). This gives the eigenvalue–eigenvector pairs!
+    </p>
+    <p>
+        <b>Why care?</b>
+        Eigenvectors are special directions where the matrix acts like a simple rescaling by \(\lambda\). That makes long-run behavior of discrete updates,
+        vibrations, and many ML constructions easier to read. They are “fixed directions” of the map. They often capture
+        long-time behavior: in many dynamical systems, modes aligned with eigenvectors decay or grow according to their eigenvalues. 
+        In quantum mechanics, eigenvectors of operators give bases for quantities such as energy and momentum. 
+        In machine learning, eigenvectors show up as principal directions in data (for example, in PCA).
+        They come up everywhere. 
+    </p>
+    <p>
+        So how do we find these things? Let me work through an example!
+    </p>
+    
+    <p>
+        Let's use the matrix \(A = \begin{bmatrix} 2 & 1 \\ 1 & 2 \end{bmatrix}\).
+    </p>
+    <p>
+        <strong>1. Find the Eigenvalues (\(\lambda\))</strong><br>
+        We start with the characteristic equation: \(\det(A - \lambda \mathbb{I}) = 0\).
+        \[\begin{equation}
+        \begin{aligned}
+        \det \begin{bmatrix} 2 - \lambda & 1 \\ 1 & 2 - \lambda \end{bmatrix} &= 0 \\[1em]
+        (2 - \lambda)(2 - \lambda) - (1)(1) &= 0 \\
+        4 - 4\lambda + \lambda^2 - 1 &= 0 \\
+        \lambda^2 - 4\lambda + 3 &= 0 \\
+        (\lambda - 3)(\lambda - 1) &= 0
+        \end{aligned}
+        \end{equation}\]
+        Our two eigenvalues are \(\lambda_1 = 3\) and \(\lambda_2 = 1\).
+    </p>
+    <p>
+        <strong>2. Find the Eigenvector (\(v\)) for \(\lambda_1 = 3\)</strong><br>
+        Now we plug \(\lambda = 3\) back into the equation \((A - \lambda \mathbb{I})v = 0\) to find its corresponding eigenvector.
+        \[\begin{equation}
+        \begin{aligned}
+        \begin{bmatrix} 2 - 3 & 1 \\ 1 & 2 - 3 \end{bmatrix} \begin{bmatrix} x \\ y \end{bmatrix} &= \begin{bmatrix} 0 \\ 0 \end{bmatrix} \\[1em]
+        \begin{bmatrix} -1 & 1 \\ 1 & -1 \end{bmatrix} \begin{bmatrix} x \\ y \end{bmatrix} &= \begin{bmatrix} 0 \\ 0 \end{bmatrix}
+        \end{aligned}
+        \end{equation}\]
+        This gives us a system of equations where both rows effectively tell us the same thing:
+        \[-1x + 1y = 0 \implies x = y\]
+    </p>
+    <p>
+        Since \(x\) must equal \(y\), we can pick any non-zero value for \(x\). The simplest choice is \(x = 1\), which means \(y = 1\). Therefore, our first eigenvector is:
+        \[v_1 = \begin{bmatrix} 1 \\ 1 \end{bmatrix}\]
+    </p>
+    <p>
+        <em>(You would repeat this exact same process with \(\lambda_2 = 1\) to find the second eigenvector, which turns out to be \(v_2 = \begin{bmatrix} -1 \\ 1 \end{bmatrix}\).)</em>
+    </p>
+
+
+    <h1 id="applications">
+        Diagonalization (EVD)
+    </h1>
+    <p>
+        It turns out that some matrices are especially nice: they have as many linearly independent 
+        eigenvectors as the dimension of the space! 
+        This is critical because we can break apart complex relationships and convert matrices of this kind 
+        into a much, much simpler form. (This is also called eigenvalue decomposition, or EVD.)
+    </p>
+    <p>
+        It turns out that for a matrix whose eigenvectors span the entire space 
+        (meaning you have a full set of linearly independent eigenvectors),
+        it can be written as a product of three matrices:
+        \[A = PDP^{-1}\]
+        where \(D\) is a diagonal matrix whose diagonal entries are the eigenvalues (matching the order of eigenvectors in \(P\)). 
+    </p>
+    <p>
+        Here is an example of this:
+
+    </p>
+    <p>
+        <b>How to compute:</b> First find all the eigenvectors and eigenvalues, as explained before. Then \(P\) is formed by stacking the eigenvectors as columns (in the same order as the eigenvalues on the diagonal of \(D\)). The factor \(P^{-1}\) is the matrix inverse we described earlier (and exists exactly when \(A\) is diagonalizable with a full eigenvector basis). 
+    </p>
+    <p>
+        <b>For more advanced readers, \(P\) is interpreted as a change of basis into the eigenbasis!</b>
+    </p>
+    <p style="color:blue">
+        <b>
+            Ask ChatGPT: give me examples of why diagonalization is important and useful.
+        </b>
+    </p>
+    <h1 id="applications">
+    Singular Value Decomposition
+    </h1>
+    <p>
+        Singular value decomposition is what you use when you want something like diagonalization, but it is not possible in the same way—for example, 
+        when the matrix is not square (\(N\times M\) instead of \(N \times N\)). 
+    </p>
+    <p>
+        Singular value decomposition is critical in classical machine learning and is one of the most powerful use cases of linear 
+        algebra. So what is it?
+    </p>
+    <p>
+        Remember that matrices represent linear maps. The SVD says that any linear map (between real inner-product spaces, after identifying them with \(\mathbb{R}^m,\mathbb{R}^n\)) can be decomposed into an orthogonal map, axis-aligned scaling along coordinate directions, then another orthogonal map:
+        \[A = U\Sigma V^T\]
+        Here \(U\) and \(V\) are orthogonal matrices (rotations and reflections, possibly with padding if you use the “full” SVD), and \(\Sigma\) has the same shape as \(A\) with singular values on the main diagonal and zeros elsewhere. 
+    </p>
+    <p>
+        How do you compute these matrices?
+    </p>
+    <p>
+        To compute these matrices, we rely on a clever trick using eigenvalues. Even though our original matrix \(A\) might not be square, the products \(A^T A\) and \(A A^T\) are guaranteed to be square and perfectly symmetric. 
+    </p>
+    <p>
+        Here is the step-by-step process (for an \(m\times n\) matrix \(A\), vectors in \(\mathbb{R}^n\) are multiplied on the right: \(x \mapsto Ax = U\Sigma V^T x\)):
+    </p>
+    <ol>
+        <li>
+            <strong>Find the Right Singular Vectors (\(V\)):</strong> 
+            First, compute the square matrix \(A^T A\). Find its eigenvalues and eigenvectors. Sort the eigenvectors in descending order based on the size of their corresponding eigenvalues. Make sure they are normalized (length of 1). These eigenvectors form the columns of your \(V\) matrix.
+        </li>
+        <li>
+            <strong>Find the Singular Values (\(\Sigma\)):</strong>
+            The eigenvalues of \(A^TA\) are always nonnegative. Their square roots \(\sigma_i = \sqrt{\lambda_i}\) (including \(\sigma_i=0\) when \(\lambda_i=0\)) are the singular values. Build \(\Sigma\) with the same dimensions as \(A\), place these \(\sigma_i\) along the main diagonal in descending order, and fill the rest with zeros.
+        </li>
+        <li>
+            <strong>Find the Left Singular Vectors (\(U\)):</strong>
+            There are two ways to find \(U\). You can compute \(AA^T\) and take normalized eigenvectors (as in step 1), or, when \(\sigma_i>0\), use \(u_i = \frac{1}{\sigma_i} A v_i\) and then extend to an orthonormal basis if needed when some \(\sigma_i\) are zero. These vectors become the columns of your \(U\) matrix.
+        </li>
+    </ol>
+    <p>
+        By computing these three pieces, you have successfully isolated the stretching factor of your transformation from its rotational factors!
+    </p>
+    <h1 id="applications">
+    QR Factorization (Extra)
+    </h1>
+    <p>
+        QR factorization is fundamentally about straightening out skewed vectors. If you have a matrix \(A\), its columns can be thought of as a set of messy, skewed arrows in space. QR factorization decomposes this into two parts: an orthogonal matrix \(Q\) (perfectly perpendicular, length-1 vectors) and an upper triangular matrix \(R\) (the instruction manual for mixing \(Q\) to rebuild \(A\)).
+    </p>
+    <p>
+        The most intuitive way to compute this by hand is the <strong>Gram-Schmidt process</strong>. The goal is to take the columns of \(A\) one by one, project them onto the vectors we've already straightened out, and subtract that projection to find the pure, perpendicular "new" direction.
+    </p>
+    <p>
+        Let's say your matrix \(A\) has columns \(a_1, a_2, a_3, \dots\). We want to build the columns of \(Q\) (\(q_1, q_2, q_3, \dots\)) and the entries of \(R\).
+    </p>
+    <ol>
+        <li>
+            <strong>The First Vector (\(q_1\)):</strong> 
+            Take the first column of \(A\) and normalize it so its length is exactly 1. Calculate the length \(r_{11} = \|a_1\|\), then the vector is \(q_1 = \frac{a_1}{r_{11}}\).
+        </li>
+        <li>
+            <strong>The Second Vector (\(q_2\)):</strong>
+            Take the second column \(a_2\) and strip away any part that points in the \(q_1\) direction. Find the projection \(r_{12} = q_1 \cdot a_2\). Subtract it to get a perpendicular vector: \(u_2 = a_2 - r_{12}q_1\). Finally, normalize it: \(r_{22} = \|u_2\|\) and \(q_2 = \frac{u_2}{r_{22}}\).
+        </li>
+        <li>
+            <strong>The Third Vector (\(q_3\) and beyond):</strong>
+            For the third column \(a_3\), strip away its projections onto <em>both</em> \(q_1\) and \(q_2\). Calculate \(r_{13} = q_1 \cdot a_3\) and \(r_{23} = q_2 \cdot a_3\). Subtract both: \(u_3 = a_3 - r_{13}q_1 - r_{23}q_2\). Then normalize: \(r_{33} = \|u_3\|\) and \(q_3 = \frac{u_3}{r_{33}}\).
+        </li>
+    </ol>
+    <p>
+        <strong>Constructing the Matrices:</strong> Once all columns are processed, \(Q\) is formed by placing \(q_1, q_2, q_3 \dots\) side-by-side as columns. \(R\) is formed by placing the calculated \(r\) values into an upper triangular matrix (with zeros below the main diagonal).
+    </p>
+    <h1 id="applications">
+    LU Factorization (Extra)
+    </h1>
+    <p>
+        LU decomposition is essentially a way of recording the steps of Gaussian elimination. It factors a square matrix \(A\) into the product of two matrices: a lower triangular matrix \(L\) (which captures the elimination steps) and an upper triangular matrix \(U\) (which is the resulting echelon form), such that \(A = LU\).
+    </p>
+    <p>
+        This decomposition is highly useful in machine learning and computational linear algebra. Once \(A\) is factored, solving systems of equations like \(Ax = b\) becomes significantly faster. You can solve it in two quick steps using forward and backward substitution, bypassing the need to compute an expensive and unstable matrix inverse.
+    </p>
+    <p>
+    <b>Forward substitution:</b> First solve \(Ly = b\) for \(y\), working from top to bottom (because \(L\) is lower triangular). 
+    <b>Backward substitution:</b> Then solve \(Ux = y\) for \(x\), working from bottom to top (because \(U\) is upper triangular).
+    </p>
+    <p>
+        Here is the step-by-step process for computing it (specifically using Doolittle's algorithm, 
+        which assumes 1s on the diagonal of \(L\)). This is basically the same as doing Gaussian elimination:
+    </p>
+    <ol>
+        <li>
+            <strong>Initialize the Matrices:</strong> 
+            Start by setting \(U\) equal to your original matrix \(A\). Set \(L\) as the identity matrix (1s on the main diagonal, 0s everywhere else).
+        </li>
+        <li>
+            <strong>Find the Multipliers (Iterating by Column):</strong>
+            Look at the first column. Your goal is to turn all elements below the main diagonal (the "pivot") into 0s in your \(U\) matrix. For each row below the pivot, calculate the multiplier by dividing the element you want to eliminate by the pivot element directly above it.
+        </li>
+        <li>
+            <strong>Update \(L\) and \(U\):</strong>
+            Take that multiplier and record it in the corresponding position in your \(L\) matrix. Then, update the \(U\) matrix by subtracting the multiplier times the pivot's row from the current row. This creates the required 0 in the \(U\) matrix.
+        </li>
+        <li>
+            <strong>Repeat:</strong>
+            Move diagonally to the next pivot in the second column and repeat the process to eliminate the entries below it. Continue this until all entries below the main diagonal in \(U\) are 0.
+        </li>
+    </ol>
+    <p>
+        <em>Note: If a pivot element is exactly 0, the algorithm breaks down because you cannot divide by zero. Modern solvers fix this using <strong>Partial Pivoting</strong> (\(PA = LU\)), which dynamically swaps rows to bring the largest absolute value to the pivot position before eliminating.</em>
+    </p>
+    <h1 id="applications">
+    Cholesky Factorization (Extra)
+    </h1>
+
+    <p>
+        Cholesky factorization is a highly optimized decomposition used specifically for <strong>Symmetric Positive Definite (SPD)</strong> matrices—such as well-conditioned covariance matrices, or \(X^TX\) in least squares when \(X\) has full column rank (so \(X^TX\) is strictly SPD). It acts like finding the "square root" of a matrix, decomposing \(A\) into a lower triangular matrix \(L\) and its transpose \(L^T\), giving us \(A = LL^T\).
+    </p>
+    <p>
+        If you know your matrix is SPD, Cholesky is the gold standard. Because it only needs to compute one triangular matrix instead of two, it requires exactly <strong>half the memory and half the computational time</strong> of LU decomposition. It is also backward stable in idealized analysis and is normally used <strong>without</strong> pivoting; extremely ill-conditioned problems can still lose accuracy in floating point, like any method.
+    </p>
+    <p>
+        Here is the step-by-step logic for how it is computed (often called the Cholesky-Banachiewicz algorithm). You compute the entries of \(L\) row by row, from left to right:
+    </p>
+    <ol>
+        <li>
+            <strong>Check the Diagonal Element:</strong> 
+            To find a diagonal entry \(L_{jj}\), take the original matrix entry \(A_{jj}\). Subtract the sum of the squares of all previously computed elements in that same row of \(L\). Finally, take the square root of that result. <em>(Note: If this value is ever negative, the algorithm fails, proving the original matrix was not positive definite.)</em>
+        </li>
+        <li>
+            <strong>Compute the Off-Diagonal Elements:</strong>
+            To find an entry below the diagonal \(L_{ij}\) (where \(i > j\)), start with the original entry \(A_{ij}\). Subtract the dot product of the previously computed elements in row \(i\) and row \(j\). Finally, divide that result by the diagonal element \(L_{jj}\) you just found in step 1.
+        </li>
+        <li>
+            <strong>Repeat:</strong>
+            Move to the next element in the row, or start the next row down, repeating steps 1 and 2 until the entire lower triangle \(L\) is filled.
+        </li>
+    </ol>
+    <h1 id="applications">
+       Matrix factorization comparison
+        </h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Algorithm</th>
+                <th>Required Matrix Shape</th>
+                <th>Primary Use Cases (When to Use)</th>
+                <th>The Main Advantage</th>
+                <th>The Main Limitation</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>SVD</strong><br>\(A = U \Sigma V^T\)</td>
+                <td><strong>Any Matrix</strong><br>(Square, rectangular, singular, or broken)</td>
+                <td>
+                    <ul>
+                        <li>Dimensionality reduction (PCA)</li>
+                        <li>Data compression (Images)</li>
+                        <li>Finding the pseudoinverse (\(A^+\))</li>
+                        <li>Extracting null space &amp; range</li>
+                    </ul>
+                </td>
+                <td><strong>Unbreakable.</strong> It extracts the deepest analytical truth of any dataset, even if the math is messy or missing.</td>
+                <td><strong>Slow.</strong> It is computationally the most expensive of the four.</td>
+            </tr>
+            <tr>
+                <td><strong>QR</strong><br>\(A = QR\)</td>
+                <td><strong>Any Matrix</strong><br>(Best if full-rank)</td>
+                <td>
+                    <ul>
+                        <li>Solving large Least Squares problems (\(Ax \approx b\))</li>
+                        <li>Building orthogonal bases on the fly</li>
+                        <li>The engine for computing eigenvalues</li>
+                    </ul>
+                </td>
+                <td><strong>Stable &amp; Fast.</strong> Faster than SVD, and avoids the extreme instability of computing \(A^T A\).</td>
+                <td>Cannot handle rank-deficient (collinear) matrices as elegantly as SVD.</td>
+            </tr>
+            <tr>
+                <td><strong>LU</strong><br>\(PA = LU\)</td>
+                <td><strong>Square Matrix</strong><br>(General purpose)</td>
+                <td>
+                    <ul>
+                        <li>Solving \(Ax = b\) repeatedly for the same \(A\) but different \(b\) vectors</li>
+                        <li>Fast computation of determinants</li>
+                    </ul>
+                </td>
+                <td><strong>Efficient Reusability.</strong> Pay \(O(N^3)\) once to factor, then each new right-hand side solves in \(O(N^2)\) with forward/back substitution.</td>
+                <td>Susceptible to floating-point errors; requires row swapping (pivoting) to remain stable.</td>
+            </tr>
+            <tr>
+                <td><strong>Cholesky</strong><br>\(A = LL^T\)</td>
+                <td><strong>Square &amp; SPD Only</strong><br>(Symmetric Positive Definite)</td>
+                <td>
+                    <ul>
+                        <li>Covariance matrices (Gaussian Processes)</li>
+                        <li>Normal equations (\(X^T X\))</li>
+                        <li>High-performance statistics</li>
+                    </ul>
+                </td>
+                <td><strong>Raw Speed.</strong> Requires exactly half the memory and half the compute time of LU, with guaranteed stability.</td>
+                <td><strong>Highly Restrictive.</strong> The matrix must be perfectly symmetric and positive definite, or it instantly fails.</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="la-callouts-row la-callouts-row--end">
+    <div class="la-feedback-box" role="region" aria-label="Student feedback at end of notes">
+        <strong class="la-feedback-title">Have feedback on these notes?</strong>
+        <p>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSfdo5te4lW666UeFEny7sRF2zErTOV_Um6ZRPh8O_xgdXqFOA/viewform?usp=publish-editor" target="_blank" rel="noopener noreferrer">Open the feedback form</a>
+            (new tab). I use responses to improve this module for new students. If your comments are about this page, choose <b>Linear Algebra</b> in the first question.
+        </p>
+    </div>
+    <div class="la-worksheet-box" role="region" aria-label="Worksheet Colab notebook at end of notes">
+        <strong class="la-worksheet-title">Worksheet (Google Colab)</strong>
+        <p>
+            <a href="https://colab.research.google.com/drive/1xtT1yZFuekQwlg7B0nQBS95alf1GD_Qe?usp=sharing" target="_blank" rel="noopener noreferrer">Open the Colab worksheet</a> (new tab) to practice alongside these notes.
+        </p>
+    </div>
+    </div>
+<footer style="text-align: center;">
+    <p>
+        Made by <a href="https://twitter.com/peterma02" >
+        @peterma02 </a>- <script>document.write(new Date().getFullYear())</script> ©
+    </p>
+</footer>
+
+</div>
+
+
+</body>
+
+</html>
