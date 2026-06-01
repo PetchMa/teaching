@@ -15,7 +15,6 @@
     gtag('config', 'UA-157223762-1');
 </script>
 
-<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 <link rel="stylesheet" href="../css/style.css">
 <style>
     .la-feedback-box {
@@ -63,14 +62,78 @@
         font-weight: 600;
         color: #0d47a1;
     }
-    /* Feedback + worksheet: two columns on wide screens, stacked on narrow */
+    .la-next-chapter-box {
+        margin: 2rem 0 1.5rem;
+        padding: 1.15rem 1.35rem 1.25rem;
+        background: #f3faf4;
+        border: 2px solid #2e7d32;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(46, 125, 50, 0.12);
+        max-width: 42rem;
+    }
+    .la-next-chapter-box .la-next-chapter-title {
+        display: block;
+        font-size: 1.08rem;
+        color: #1b5e20;
+        margin-bottom: 0.45rem;
+        letter-spacing: 0.02em;
+    }
+    .la-next-chapter-box p {
+        margin: 0 0 0.85rem;
+        line-height: 1.5;
+        color: #2e7d32;
+    }
+    .la-next-chapter-btn {
+        display: inline-block;
+        padding: 0.55rem 1rem;
+        background: #2e7d32;
+        border: 2px solid #1b5e20;
+        border-radius: 6px;
+        color: #fff !important;
+        font-weight: 600;
+        text-decoration: none;
+    }
+    .la-next-chapter-btn:hover,
+    .la-next-chapter-btn:focus {
+        background: #1b5e20;
+        border-color: #104315;
+        color: #fff !important;
+        text-decoration: none;
+    }
+    .la-ai-prompt {
+        margin: 1rem auto 1.25rem;
+        padding: 0.75rem 1.1rem 0.85rem;
+        background: #f5f9ff;
+        border: 2px solid #1565c0;
+        border-radius: 8px;
+        border-left: 5px solid #1565c0;
+        box-shadow: 0 2px 8px rgba(21, 101, 192, 0.1);
+        max-width: 42rem;
+        line-height: 1.5;
+        color: #0d47a1;
+        text-align: center;
+    }
+    .la-ai-prompt .la-ai-prompt-label {
+        display: block;
+        margin: 0 auto 0.45rem;
+        width: fit-content;
+        padding: 0.12rem 0.45rem;
+        background: #1565c0;
+        color: #fff;
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        border-radius: 4px;
+    }
+    /* Feedback + worksheet: side by side on desktop, stacked on narrow screens */
     .la-callouts-row {
         display: flex;
-        flex-wrap: wrap;
+        flex-direction: column;
         gap: 1rem 1.25rem;
         align-items: stretch;
         width: 100%;
-        max-width: 52rem;
+        max-width: 100%;
         margin: 1rem 0 1.35rem;
     }
     .la-callouts-row--end {
@@ -79,21 +142,21 @@
     }
     .la-callouts-row .la-feedback-box,
     .la-callouts-row .la-worksheet-box {
-        flex: 1 1 280px;
+        flex: 1 1 auto;
         min-width: 0;
         margin: 0;
         max-width: none;
+        width: 100%;
     }
-    @media (max-width: 700px) {
+    @media (min-width: 768px) {
         .la-callouts-row {
-            flex-direction: column;
-            max-width: 42rem;
+            flex-direction: row;
+            flex-wrap: nowrap;
         }
         .la-callouts-row .la-feedback-box,
         .la-callouts-row .la-worksheet-box {
-            flex: 1 1 auto;
-            width: 100%;
-            max-width: 42rem;
+            flex: 1 1 0;
+            width: auto;
         }
     }
 </style>
@@ -131,10 +194,25 @@
 </head>
 <body>
 <nav class="lecture-nav" aria-label="Jump to section">
-    <a href="#applications">Applications</a>
-    <a href="#isothermal-atmosphere">Isothermal Atmosphere</a>
-    <a href="#spherical-star">Spherical Star</a>
-    <a href="#bernoullis-principle">Bernoulli's Principle</a>
+    <div class="lecture-nav-block">
+        <a class="lecture-nav-video" href="https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab" target="_blank" rel="noopener noreferrer">Essence of linear algebra</a>
+    </div>
+    <div class="lecture-nav-block"><a href="#la-why">Why</a></div>
+    <div class="lecture-nav-block"><a href="#la-notation">Notation</a></div>
+    <div class="lecture-nav-block"><a href="#la-intro">Introduction</a></div>
+    <div class="lecture-nav-block"><a href="#la-vectors">Vectors</a></div>
+    <div class="lecture-nav-block"><a href="#dot-product-norm">Dot product</a></div>
+    <div class="lecture-nav-block"><a href="#la-linear-combination-span">Span</a></div>
+    <div class="lecture-nav-block"><a href="#la-linear-maps">Linear maps</a></div>
+    <div class="lecture-nav-block"><a href="#la-matrix-mult-why">Matrix mult</a></div>
+    <div class="lecture-nav-block"><a href="#la-null-image">Null / image</a></div>
+    <div class="lecture-nav-block"><a href="#la-eigenvalues">Eigenvalues</a></div>
+    <div class="lecture-nav-block"><a href="#la-diagonalization">Diagonalization</a></div>
+    <div class="lecture-nav-block"><a href="#la-svd">SVD</a></div>
+    <div class="lecture-nav-block"><a href="#la-qr">QR</a></div>
+    <div class="lecture-nav-block"><a href="#la-lu">LU</a></div>
+    <div class="lecture-nav-block"><a href="#la-cholesky">Cholesky</a></div>
+    <div class="lecture-nav-block"><a href="#la-factorization-comparison">Factorizations</a></div>
 </nav>
 <div style="transform: scale(0.9); transform-origin: 50% 0%;">
 <div class="page_setup">
@@ -146,11 +224,6 @@
         <h4>
             Peter Ma | May 9th 2026
         </h4>
-        <p style="margin-bottom: 1rem; max-width: 52rem;">
-            For animated intuition on the same topics, Grant Sanderson’s
-            <a href="https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab" target="_blank" rel="noopener noreferrer"><i>Essence of linear algebra</i> playlist</a>
-            on YouTube (opens in a new tab).
-        </p>
         <div class="la-callouts-row">
         <div class="la-feedback-box" role="region" aria-label="Student feedback">
             <strong class="la-feedback-title">Have feedback on these notes?</strong>
@@ -184,13 +257,13 @@
         </p>
         <p style="color:blue">
             <b>
-                Blue \(=\) ask ChatGPT or AI
+                Blue \(=\) centered boxes tagged <span class="la-ai-prompt-label">Ask AI</span> placed near new ideas; paste the prompt into ChatGPT or another tool for a second explanation.
             </b>
         </p>
         <p>
         <a href="../index.html"><< Back</a>
         </p>
-        <h1 id="applications">
+        <h1 id="la-why">
             Why Linear Algebra?
          </h1>
          <p>
@@ -211,7 +284,11 @@
             at 12:00 PM between Powell St. and Market St. on the 13th floor, you are giving four pieces of information at once (time and space)—
             that is four-dimensional data in the same sense we will use the word here.
          </p>
-         <h1>
+         <p class="la-ai-prompt" role="note">
+            <span class="la-ai-prompt-label">Ask AI</span>
+            Why does linear algebra show up so often in machine learning and physics papers? Give me three concrete examples where matrices or vectors are the natural language.
+         </p>
+         <h1 id="la-notation">
             Some notations
          </h1>
          <p>
@@ -236,7 +313,7 @@
                 </li>
             </ul>
          </p>
-        <h1 id="applications">
+        <h1 id="la-intro">
            Introduction
         </h1>
         <p>
@@ -267,6 +344,10 @@
                     Thus we have shown that it is a linear function!
                 </b>
             </p>
+        <p class="la-ai-prompt" role="note">
+            <span class="la-ai-prompt-label">Ask AI</span>
+            Explain the difference between a calculus-style line \(f(x)=mx+b\) and a function that is <i>linear</i> in the linear-algebra sense. Show algebraically why \(mx+b\) fails unless \(b=0\).
+        </p>
         <p>
             <p style="color:#b80707">
                 <b>
@@ -277,7 +358,7 @@
         <p>
             So far we only wiggled a single input \(x\) on the number line. The fun starts when one object carries several numbers at once—we package those as <b>vectors</b> next.
         </p>
-        <h1 id="applications">
+        <h1 id="la-vectors">
             Vector Space, Vectors, and Subspaces
         </h1>
         <p>
@@ -288,6 +369,10 @@
             and scaling them by numbers, is the standard example of a <b>vector space</b> called \(\mathbb{R}^2\). Add a third coordinate and you get \(\mathbb{R}^3\)
             (think “\(x,y,z\) space” in physics). The symbol \(\mathbb{R}^n\) just means “lists of \(n\) real numbers,” even when \(n\) is too big to draw—
             we keep the same addition and scaling rules on paper.
+        </p>
+        <p class="la-ai-prompt" role="note">
+            <span class="la-ai-prompt-label">Ask AI</span>
+            Why did mathematicians define a vector space with those eight axioms? Explain the idea in plain English without making me memorize the full list.
         </p>
         <p>
             <b>Vectors</b> are the objects living inside a vector space: ordered lists of numbers you can add and scale, like \((3,-1,2)\) in \(\mathbb{R}^3\).
@@ -314,11 +399,6 @@
             <li>Distributivity of scalar multiplication with respect to vector addition: \(a(u + v) = au + av\)</li>
             <li>Distributivity of scalar multiplication with respect to field addition: \((a + b)v = av + bv\)</li>
         </ol>
-        <p style="color:blue">
-            <b>
-                Ask ChatGPT: why did mathematicians define a vector space with these 8 axioms this way?
-            </b>
-        </p>
        <p>
         <b>What does this have to do with multidimensional things?</b>
        </p>
@@ -574,14 +654,13 @@
         it is a “smaller world” sitting inside the bigger space. Vectors in that smaller world can be added and scaled, and they never “leak out”
         of the smaller world—as long as the smaller world passes through \(\mathbf{0}\).
     </p>
+    <p class="la-ai-prompt" role="note">
+        <span class="la-ai-prompt-label">Ask AI</span>
+        Explain what a subspace is and give me an everyday analogy. Then tell me why a line that does not pass through the origin is not a subspace.
+    </p>
     <p>
         Formally, a subspace must be closed under addition and scalar multiplication: combine two vectors from the subspace (or scale one),
         and you always stay inside the same subspace.
-    </p>
-    <p style="color:blue">
-        <b>
-            Ask ChatGPT: explain to me what a subspace is. Give me an analogy. 
-        </b>
     </p>
     <p>
         <b>Example:</b> Consider the horizontal line (the \(x\)-axis) in 2-D space \(\mathbb{R}^2\). This is a subspace! Why?
@@ -613,6 +692,10 @@
         \]
         You multiply matching coordinates and add—like a weighted score across categories. Other books write \(\langle u, v\rangle\) or \(u^\top v\)
         (thinking of column vectors); in this primer we stick to \(u\cdot v\).
+    </p>
+    <p class="la-ai-prompt" role="note">
+        <span class="la-ai-prompt-label">Ask AI</span>
+        Explain dot product, vector norm, and orthogonality in \(\mathbb{R}^2\). Then compute \(\|(3,-4)\|\) and find when \((1,t)\) is orthogonal to \((2,-4)\).
     </p>
     <p>
         <b>Euclidean norm (length).</b>
@@ -649,7 +732,7 @@
             For what value of \(t\) is \((1,t)\) orthogonal to \((2,-4)\)?
         </b>
     </p>
-    <h1 id="applications">
+    <h1 id="la-linear-combination-span">
         Linear Combination, Linear independence, Basis, Dimensions and Span
     </h1>
     <p>
@@ -657,6 +740,10 @@
         Pick a few “building block” vectors, scale each one by a number you choose, then add the pieces together. The result is a <b>linear combination</b>.
         For example, if \(u,v,w \in \mathbb{R}^3\) and \(a,b,c\in \mathbb{R}\) are scalars, then
         \(au + bv+ cw\) is a linear combination of \(u,v,w\) with coefficients \(a,b,c\). You are mixing recipes: “\(a\) scoops of \(u\), \(b\) scoops of \(v\), …”
+    </p>
+    <p class="la-ai-prompt" role="note">
+        <span class="la-ai-prompt-label">Ask AI</span>
+        Explain linear combinations, span, basis, and dimension with a \(\mathbb{R}^2\) example. Show why \((1,1)\) and \((0,1)\) can form a basis even though they are not the usual coordinate axes.
     </p>
     <p>
         We say that vectors are <b>linearly independent</b> when the <i>only</i> way to combine them and get the zero vector
@@ -894,7 +981,7 @@
             Question: can you give me a basis for \(\mathbb{R}^4\)?
         </b>
     </p>
-    <h1 id="applications">
+    <h1 id="la-linear-maps">
         Generalized Linear Functions
      </h1>
      <p>
@@ -906,6 +993,10 @@
         You might first guess “just reuse \(f(x)=mx+b\) but let \(x\) be a vector.” We can write that down:
         \[f(x) = Mx+b, \quad x \in \mathbb{R}^n,\; b \in \mathbb{R}^m,\; M \in \mathbb{R}^{m\times n}\]
         (Here \(M\) can mix coordinates—rotate, shear, scale different directions by different amounts; the old one-variable story \(f(x)=mx\) is the tiny case where \(n=m=1\).)
+     </p>
+     <p class="la-ai-prompt" role="note">
+        <span class="la-ai-prompt-label">Ask AI</span>
+        What is a linear map in plain English? Show how a \(2\times 2\) matrix transforms the unit square in \(\mathbb{R}^2\).
      </p>
      <p>
         If \(M\) is only a multiple of the identity, \(M=mI\), then the map only scales every coordinate by the same factor \(m\) and then adds \(b\).
@@ -1012,7 +1103,7 @@
         Matrix 
         multiplication is one of the most important operations we do in the modern world... besides adding and subtracting, etc.
      </p>
-     <h1 id="applications">
+     <h1 id="la-matrix-mult-why">
         Why Is Matrix Multiplication Defined This Way?
      </h1>
      <p>
@@ -1029,6 +1120,10 @@
         match <b>composing</b> the two maps: do one transformation, then the other. The row-by-column multiplication rule is the bookkeeping that makes
         “composition of maps” and “product of matrices” line up.
      </p>
+     <p class="la-ai-prompt" role="note">
+        <span class="la-ai-prompt-label">Ask AI</span>
+        Why is matrix multiplication defined as row-by-column products? Explain it as composing two linear maps, and write down the \(2\times 2\) identity matrix.
+     </p>
      <p style="color:#b80707">
         <b>
             Question: I keep saying that matrix multiplication defines a linear map. Can you check that this definition 
@@ -1043,7 +1138,7 @@
         </b>
     </p>
 
-     <h1 id="applications">
+     <h1 id="la-null-image">
         Null Space, Image Space, Rank, and Inverses
      </h1>
      <p>
@@ -1061,6 +1156,10 @@
      <p>
         You can think of the <b>null space</b> as the subspace of all inputs that acts like a black hole.... 
         It is the subspace of all input vectors that get sent to zero! Let's see an example.
+     </p>
+     <p class="la-ai-prompt" role="note">
+        <span class="la-ai-prompt-label">Ask AI</span>
+        Explain null space, column space (image), and rank with a small matrix example. When does a matrix fail to have an inverse, and what does that mean geometrically?
      </p>
      <p>
      \[\begin{aligned}
@@ -1387,11 +1486,10 @@
          until the left side transforms into a pure identity matrix;
         whatever matrix is left on the right side is your computed inverse.
      </p>
-     <p style="color:blue">
-        <b>
-            Ask ChatGPT: what is Gaussian elimination? Why is it useful in inverting a matrix? Can you give me a super simple example?
-        </b>
-    </p>
+     <p class="la-ai-prompt" role="note">
+        <span class="la-ai-prompt-label">Ask AI</span>
+        What is Gaussian elimination? Why is it useful for inverting a matrix or solving \(Ax=b\)? Walk through one tiny \(2\times 2\) example by hand.
+     </p>
      <p>
         You can also compute it via the <b>adjugate method</b>.  
         For a simple \(2 \times 2\)
@@ -1419,7 +1517,7 @@ A^{-1} &= \frac{1}{\text{det}(A)} \begin{bmatrix} d & -b \\ -c & a \end{bmatrix}
         ML and scientific computing wherever linear solves and decompositions appear (including algorithms built on eigenvalues and decompositions).
      </p>
      
-     <h1 id="applications">
+     <h1 id="la-eigenvalues">
         Eigenvalues and Eigenvectors
      </h1>
      <p>
@@ -1428,6 +1526,10 @@ A^{-1} &= \frac{1}{\text{det}(A)} \begin{bmatrix} d & -b \\ -c & a \end{bmatrix}
         Eigenvectors are the rare directions where \(Av\) stays on the <i>same</i> line as \(v\); the eigenvalue \(\lambda\) tells you how much \(Av\) stretches or flips along that line.
         Formally, an eigenvector \(v\) and eigenvalue \(\lambda\) satisfy
          \[Av = \lambda v\]
+     </p>
+     <p class="la-ai-prompt" role="note">
+        <span class="la-ai-prompt-label">Ask AI</span>
+        What are eigenvalues and eigenvectors, intuitively? Walk through finding them for a \(2\times 2\) matrix and explain what an eigenvector direction means for a linear transformation.
      </p>
      <p>
         This should be confusing... You apply a matrix to a vector and the result is...?? The same vector, but stretched by some 
@@ -1527,7 +1629,7 @@ A^{-1} &= \frac{1}{\text{det}(A)} \begin{bmatrix} d & -b \\ -c & a \end{bmatrix}
     </p>
 
 
-    <h1 id="applications">
+    <h1 id="la-diagonalization">
         Diagonalization (EVD)
     </h1>
     <p>
@@ -1543,6 +1645,10 @@ A^{-1} &= \frac{1}{\text{det}(A)} \begin{bmatrix} d & -b \\ -c & a \end{bmatrix}
         \[A = PDP^{-1}\]
         where \(D\) is a diagonal matrix whose diagonal entries are the eigenvalues (matching the order of eigenvectors in \(P\)). 
     </p>
+    <p class="la-ai-prompt" role="note">
+        <span class="la-ai-prompt-label">Ask AI</span>
+        Give me real examples of why diagonalization is useful. Explain what \(A = PDP^{-1}\) means as a change of basis into eigenvector directions.
+    </p>
     <p>
         Here is an example of this:
 
@@ -1553,12 +1659,7 @@ A^{-1} &= \frac{1}{\text{det}(A)} \begin{bmatrix} d & -b \\ -c & a \end{bmatrix}
     <p>
         <b>For more advanced readers, \(P\) is interpreted as a change of basis into the eigenbasis!</b>
     </p>
-    <p style="color:blue">
-        <b>
-            Ask ChatGPT: give me examples of why diagonalization is important and useful.
-        </b>
-    </p>
-    <h1 id="applications">
+    <h1 id="la-svd">
     Singular Value Decomposition
     </h1>
     <p>
@@ -1573,6 +1674,10 @@ A^{-1} &= \frac{1}{\text{det}(A)} \begin{bmatrix} d & -b \\ -c & a \end{bmatrix}
         Remember that matrices represent linear maps. The SVD says that any linear map (between real inner-product spaces, after identifying them with \(\mathbb{R}^m,\mathbb{R}^n\)) can be decomposed into an orthogonal map, axis-aligned scaling along coordinate directions, then another orthogonal map:
         \[A = U\Sigma V^T\]
         Here \(U\) and \(V\) are orthogonal matrices (rotations and reflections, possibly with padding if you use the “full” SVD), and \(\Sigma\) has the same shape as \(A\) with singular values on the main diagonal and zeros elsewhere. 
+    </p>
+    <p class="la-ai-prompt" role="note">
+        <span class="la-ai-prompt-label">Ask AI</span>
+        Explain the SVD \(A = U\Sigma V^T\) in plain English. Why is it useful for compression, least squares, and understanding rank?
     </p>
     <p>
         How do you compute these matrices?
@@ -1600,11 +1705,15 @@ A^{-1} &= \frac{1}{\text{det}(A)} \begin{bmatrix} d & -b \\ -c & a \end{bmatrix}
     <p>
         By computing these three pieces, you have successfully isolated the stretching factor of your transformation from its rotational factors!
     </p>
-    <h1 id="applications">
+    <h1 id="la-qr">
     QR Factorization (Extra)
     </h1>
     <p>
-        QR factorization is fundamentally about straightening out skewed vectors. If you have a matrix \(A\), its columns can be thought of as a set of messy, skewed arrows in space. QR factorization decomposes this into two parts: an orthogonal matrix \(Q\) (perfectly perpendicular, length-1 vectors) and an upper triangular matrix \(R\) (the instruction manual for mixing \(Q\) to rebuild \(A\)).
+        QR factorization is fundamentally about straightening out skewed vectors. If you have a matrix \(A\), its columns can be thought of as a set of messy, skewed arrows in space.         QR factorization decomposes this into two parts: an orthogonal matrix \(Q\) (perfectly perpendicular, length-1 vectors) and an upper triangular matrix \(R\) (the instruction manual for mixing \(Q\) to rebuild \(A\)).
+    </p>
+    <p class="la-ai-prompt" role="note">
+        <span class="la-ai-prompt-label">Ask AI</span>
+        Explain QR factorization and the Gram-Schmidt idea in simple terms. Why is an orthogonal matrix \(Q\) nice to work with?
     </p>
     <p>
         The most intuitive way to compute this by hand is the <strong>Gram-Schmidt process</strong>. The goal is to take the columns of \(A\) one by one, project them onto the vectors we've already straightened out, and subtract that projection to find the pure, perpendicular "new" direction.
@@ -1629,11 +1738,15 @@ A^{-1} &= \frac{1}{\text{det}(A)} \begin{bmatrix} d & -b \\ -c & a \end{bmatrix}
     <p>
         <strong>Constructing the Matrices:</strong> Once all columns are processed, \(Q\) is formed by placing \(q_1, q_2, q_3 \dots\) side-by-side as columns. \(R\) is formed by placing the calculated \(r\) values into an upper triangular matrix (with zeros below the main diagonal).
     </p>
-    <h1 id="applications">
+    <h1 id="la-lu">
     LU Factorization (Extra)
     </h1>
     <p>
         LU decomposition is essentially a way of recording the steps of Gaussian elimination. It factors a square matrix \(A\) into the product of two matrices: a lower triangular matrix \(L\) (which captures the elimination steps) and an upper triangular matrix \(U\) (which is the resulting echelon form), such that \(A = LU\).
+    </p>
+    <p class="la-ai-prompt" role="note">
+        <span class="la-ai-prompt-label">Ask AI</span>
+        Explain LU factorization as "recording Gaussian elimination." Why is solving \(Ax=b\) with \(LU\) faster than computing \(A^{-1}\) directly?
     </p>
     <p>
         This decomposition is highly useful in machine learning and computational linear algebra. Once \(A\) is factored, solving systems of equations like \(Ax = b\) becomes significantly faster. You can solve it in two quick steps using forward and backward substitution, bypassing the need to compute an expensive and unstable matrix inverse.
@@ -1667,12 +1780,16 @@ A^{-1} &= \frac{1}{\text{det}(A)} \begin{bmatrix} d & -b \\ -c & a \end{bmatrix}
     <p>
         <em>Note: If a pivot element is exactly 0, the algorithm breaks down because you cannot divide by zero. Modern solvers fix this using <strong>Partial Pivoting</strong> (\(PA = LU\)), which dynamically swaps rows to bring the largest absolute value to the pivot position before eliminating.</em>
     </p>
-    <h1 id="applications">
+    <h1 id="la-cholesky">
     Cholesky Factorization (Extra)
     </h1>
 
     <p>
         Cholesky factorization is a highly optimized decomposition used specifically for <strong>Symmetric Positive Definite (SPD)</strong> matrices—such as well-conditioned covariance matrices, or \(X^TX\) in least squares when \(X\) has full column rank (so \(X^TX\) is strictly SPD). It acts like finding the "square root" of a matrix, decomposing \(A\) into a lower triangular matrix \(L\) and its transpose \(L^T\), giving us \(A = LL^T\).
+    </p>
+    <p class="la-ai-prompt" role="note">
+        <span class="la-ai-prompt-label">Ask AI</span>
+        What is a symmetric positive definite matrix? Explain why Cholesky factorization \(A=LL^T\) is faster than LU when it applies.
     </p>
     <p>
         If you know your matrix is SPD, Cholesky is the gold standard. Because it only needs to compute one triangular matrix instead of two, it requires exactly <strong>half the memory and half the computational time</strong> of LU decomposition. It is also backward stable in idealized analysis and is normally used <strong>without</strong> pivoting; extremely ill-conditioned problems can still lose accuracy in floating point, like any method.
@@ -1694,9 +1811,13 @@ A^{-1} &= \frac{1}{\text{det}(A)} \begin{bmatrix} d & -b \\ -c & a \end{bmatrix}
             Move to the next element in the row, or start the next row down, repeating steps 1 and 2 until the entire lower triangle \(L\) is filled.
         </li>
     </ol>
-    <h1 id="applications">
+    <h1 id="la-factorization-comparison">
        Matrix factorization comparison
         </h1>
+    <p class="la-ai-prompt" role="note">
+        <span class="la-ai-prompt-label">Ask AI</span>
+        I have a matrix problem in machine learning. Help me choose between SVD, QR, LU, and Cholesky: ask me about the matrix shape and what I am trying to compute, then recommend one.
+    </p>
     <table>
         <thead>
             <tr>
@@ -1777,6 +1898,13 @@ A^{-1} &= \frac{1}{\text{det}(A)} \begin{bmatrix} d & -b \\ -c & a \end{bmatrix}
         </p>
     </div>
     </div>
+    <div class="la-next-chapter-box" role="navigation" aria-label="Next chapter">
+        <strong class="la-next-chapter-title">Continue to the next chapter</strong>
+        <p>
+            Finished the linear algebra primer? The next stop is multivariable calculus: partial derivatives, the gradient, Jacobians, Hessians, and the chain rule—with explicit ties back to the matrix ideas you just saw.
+        </p>
+        <a class="la-next-chapter-btn" href="multivar_calc.html">Open multivariable calculus notes →</a>
+    </div>
 <footer style="text-align: center;">
     <p>
         Made by <a href="https://twitter.com/peterma02" >
@@ -1786,6 +1914,40 @@ A^{-1} &= \frac{1}{\text{det}(A)} \begin{bmatrix} d & -b \\ -c & a \end{bmatrix}
 
 </div>
 
+
+<script>
+(function(){
+  var n=document.querySelector('.lecture-nav');
+  var intro=document.querySelector('h1');
+  if(!n)return;
+  if(intro){
+    var o=new IntersectionObserver(function(e){
+      e.forEach(function(x){n.classList.toggle('visible',!x.isIntersecting);});
+    },{threshold:0});
+    o.observe(intro);
+  }
+  var links=Array.from(n.querySelectorAll('a[href^="#"]'));
+  var sections=links.map(function(l){
+    var s=document.getElementById(l.getAttribute('href').slice(1));
+    return s?{link:l,section:s}:null;
+  }).filter(Boolean);
+  var ticking=false;
+  function updateActive(){
+    var readingLine=120;
+    var active=sections[0]||null;
+    sections.forEach(function(p){
+      if(p.section.getBoundingClientRect().top<=readingLine){active=p;}
+    });
+    sections.forEach(function(p){p.link.classList.remove('active');});
+    if(active){active.link.classList.add('active');}
+    ticking=false;
+  }
+  window.addEventListener('scroll',function(){
+    if(!ticking){requestAnimationFrame(updateActive);ticking=true;}
+  },{passive:true});
+  updateActive();
+})();
+</script>
 
 </body>
 

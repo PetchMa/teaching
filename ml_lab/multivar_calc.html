@@ -1,0 +1,1260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="shortcut icon" type="image/jpg" href="../img/favicon.ico"/>
+<title>Multivariable calculus primer (ML onboarding) | Peter Ma</title>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-157223762-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-157223762-1');
+</script>
+
+<link rel="stylesheet" href="../css/style.css">
+<style>
+    .la-feedback-box {
+        margin: 1rem 0 1.35rem;
+        padding: 1rem 1.35rem 1.15rem;
+        background: #fff8f8;
+        border: 2px solid #b80707;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(184, 7, 7, 0.12);
+        max-width: 42rem;
+    }
+    .la-feedback-box .la-feedback-title {
+        display: block;
+        font-size: 1.08rem;
+        color: #b80707;
+        margin-bottom: 0.45rem;
+        letter-spacing: 0.02em;
+    }
+    .la-feedback-box p {
+        margin: 0;
+        line-height: 1.5;
+    }
+    .la-worksheet-box {
+        margin: 1rem 0 1.35rem;
+        padding: 1rem 1.35rem 1.15rem;
+        background: #f5f9ff;
+        border: 2px solid #1565c0;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(21, 101, 192, 0.12);
+        max-width: 42rem;
+    }
+    .la-worksheet-box .la-worksheet-title {
+        display: block;
+        font-size: 1.08rem;
+        color: #0d47a1;
+        margin-bottom: 0.45rem;
+        letter-spacing: 0.02em;
+    }
+    .la-worksheet-box p {
+        margin: 0;
+        line-height: 1.5;
+        color: #1565c0;
+    }
+    .la-worksheet-box a {
+        font-weight: 600;
+        color: #0d47a1;
+    }
+    .la-video-box {
+        margin: 1rem auto 1.35rem;
+        padding: 1rem 1.35rem 1.15rem;
+        background: #fff8f5;
+        border: 2px solid #c62828;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(198, 40, 40, 0.12);
+        max-width: 42rem;
+        text-align: center;
+    }
+    .la-video-box .la-video-title {
+        display: block;
+        font-size: 1.08rem;
+        color: #b71c1c;
+        margin-bottom: 0.45rem;
+        letter-spacing: 0.02em;
+    }
+    .la-video-box p {
+        margin: 0;
+        line-height: 1.5;
+        color: #4e342e;
+    }
+    .la-video-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 0.65rem;
+        justify-content: center;
+    }
+    .la-video-btn {
+        display: inline-block;
+        padding: 0.45rem 0.85rem;
+        background: #c62828;
+        border: 2px solid #b71c1c;
+        border-radius: 6px;
+        color: #fff !important;
+        font-weight: 600;
+        text-decoration: none;
+    }
+    .la-video-btn:hover,
+    .la-video-btn:focus {
+        background: #b71c1c;
+        border-color: #8e0000;
+        color: #fff !important;
+        text-decoration: none;
+    }
+    a.la-xlink {
+        font-weight: 600;
+        color: #0d47a1;
+    }
+    .la-ai-prompt {
+        margin: 1rem auto 1.25rem;
+        padding: 0.75rem 1.1rem 0.85rem;
+        background: #f5f9ff;
+        border: 2px solid #1565c0;
+        border-radius: 8px;
+        border-left: 5px solid #1565c0;
+        box-shadow: 0 2px 8px rgba(21, 101, 192, 0.1);
+        max-width: 42rem;
+        line-height: 1.5;
+        color: #0d47a1;
+        text-align: center;
+    }
+    .la-ai-prompt .la-ai-prompt-label {
+        display: block;
+        margin: 0 auto 0.45rem;
+        width: fit-content;
+        padding: 0.12rem 0.45rem;
+        background: #1565c0;
+        color: #fff;
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        border-radius: 4px;
+    }
+    /* Feedback + worksheet: side by side on desktop, stacked on narrow screens */
+    .la-callouts-row {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem 1.25rem;
+        align-items: stretch;
+        width: 100%;
+        max-width: 100%;
+        margin: 1rem 0 1.35rem;
+    }
+    .la-callouts-row--end {
+        margin-top: 2.5rem;
+        margin-bottom: 0;
+    }
+    .la-callouts-row .la-feedback-box,
+    .la-callouts-row .la-worksheet-box {
+        flex: 1 1 auto;
+        min-width: 0;
+        margin: 0;
+        max-width: none;
+        width: 100%;
+    }
+    @media (min-width: 768px) {
+        .la-callouts-row {
+            flex-direction: row;
+            flex-wrap: nowrap;
+        }
+        .la-callouts-row .la-feedback-box,
+        .la-callouts-row .la-worksheet-box {
+            flex: 1 1 0;
+            width: auto;
+        }
+    }
+</style>
+<script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<!-- <script src="https://cdn.plot.ly/plotly-1.42.5.min.js"></script> -->
+<script src='js/d3.min.js'> </script>
+<script src="https://d3js.org/d3.v4.js"></script>
+<!-- <script src="js/plotly-latest.min.js"></script> -->
+<!-- Latest compiled and minified plotly.js JavaScript -->
+<script src="https://cdn.plot.ly/plotly-latest.min.js" charset="utf-8"></script>
+
+<!-- OR use a specific plotly.js release (e.g. version 1.52.3) -->
+<script src="https://cdn.plot.ly/plotly-1.52.3.min.js" charset="utf-8"></script>
+
+<!-- OR an un-minified version is also available -->
+
+
+<script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
+
+<!-- for testing with local version of cytoscape.js -->
+<!--<script src="../cytoscape.js/build/cytoscape.js"></script>-->
+
+<script src="https://unpkg.com/webcola/WebCola/cola.min.js"></script>
+
+</head>
+<body>
+<nav class="lecture-nav" aria-label="Jump to section">
+    <div class="lecture-nav-block"><a href="#mc-why">Why</a></div>
+    <div class="lecture-nav-block">
+        <a href="#mc-limits">Limits</a>
+        <a class="lecture-nav-video" href="https://www.youtube.com/watch?v=hxrnjxth8sA" target="_blank" rel="noopener noreferrer">Strange limits</a>
+        <a class="lecture-nav-video" href="https://www.youtube.com/watch?v=kfF40MiS7zA" target="_blank" rel="noopener noreferrer">Delta-epsilon (1-D)</a>
+        <a class="lecture-nav-video" href="https://www.youtube.com/watch?v=PEgjh5YAN5k" target="_blank" rel="noopener noreferrer">Delta-epsilon (multi)</a>
+    </div>
+    <div class="lecture-nav-block">
+        <a href="#mc-gradient">Gradient</a>
+        <a class="lecture-nav-video" href="https://www.youtube.com/watch?v=AXH9Xm6Rbfc" target="_blank" rel="noopener noreferrer">Gradient video</a>
+    </div>
+    <div class="lecture-nav-block">
+        <a href="#mc-divergence">Divergence</a>
+        <a class="lecture-nav-video" href="https://www.youtube.com/watch?v=rB83DpBJQsE&amp;t=135s" target="_blank" rel="noopener noreferrer">Divergence [→4:32]</a>
+    </div>
+    <div class="lecture-nav-block">
+        <a href="#mc-curl">Curl</a>
+        <a class="lecture-nav-video" href="https://www.youtube.com/watch?v=rB83DpBJQsE&amp;t=135s" target="_blank" rel="noopener noreferrer">Curl [4:32 to 5:48]</a>
+    </div>
+    <div class="lecture-nav-block">
+        <a href="#mc-jacobian">Jacobian</a>
+        <a class="lecture-nav-video" href="https://www.youtube.com/watch?v=6FesMicc844&amp;t=109s" target="_blank" rel="noopener noreferrer">Jacobian video</a>
+    </div>
+    <div class="lecture-nav-block">
+        <a href="#mc-hessian">Hessian</a>
+        <a class="lecture-nav-video" href="https://www.youtube.com/watch?v=LbBcuZukCAw" target="_blank" rel="noopener noreferrer">Hessian video</a>
+    </div>
+    <div class="lecture-nav-block">
+        <a href="#chain-rule-product-rule">Chain rule</a>
+        <a class="lecture-nav-video" href="https://www.youtube.com/watch?v=NO3AqAaAE6o" target="_blank" rel="noopener noreferrer">Chain rule video</a>
+    </div>
+    <div class="lecture-nav-block">
+        <a href="#taylor-approximation">Taylor</a>
+        <a class="lecture-nav-video" href="https://www.youtube.com/watch?v=oOtUVd9ic20" target="_blank" rel="noopener noreferrer">Taylor video</a>
+    </div>
+    <div class="lecture-nav-block"><a href="#mc-integrals">Integrals</a></div>
+    <div class="lecture-nav-block">
+        <a href="#mc-line-integrals">Line integrals</a>
+        <a class="lecture-nav-video" href="https://www.youtube.com/watch?v=WA5_a3C2iqY" target="_blank" rel="noopener noreferrer">Scalar line integrals</a>
+        <a class="lecture-nav-video" href="https://www.youtube.com/watch?v=059LjQ2oLBM" target="_blank" rel="noopener noreferrer">Vector line integrals</a>
+    </div>
+    <div class="lecture-nav-block">
+        <a href="#mc-surface-integrals">Surface</a>
+        <a class="lecture-nav-video" href="https://www.khanacademy.org/math/multivariable-calculus/integrating-multivariable-functions/surface-integrals-introduction/v/surface-integral-example-part-1-parameterizing-the-unit-sphere" target="_blank" rel="noopener noreferrer">Unit sphere (Khan)</a>
+    </div>
+    <div class="lecture-nav-block">
+        <a href="#mc-volume-integrals">Volume</a>
+        <a class="lecture-nav-video" href="https://www.khanacademy.org/math/multivariable-calculus/integrating-multivariable-functions/triple-integrals-topic/v/triple-integrals-1" target="_blank" rel="noopener noreferrer">Triple integrals (Khan)</a>
+    </div>
+</nav>
+<div style="transform: scale(0.9); transform-origin: 50% 0%;">
+<div class="page_setup">
+<div class="container">
+    <div class="row "  style="padding-top:2%!important ; padding-left: 10%; padding-right: 5%;">
+        <span class="peterma" style="color: #b80707; font-size: 300%;">
+            Multivariable Calculus
+        </span>
+        <h4>
+            Peter Ma | May 30th 2026
+        </h4>
+  
+        <div class="la-callouts-row">
+        <div class="la-feedback-box" role="region" aria-label="Student feedback">
+            <strong class="la-feedback-title">Have feedback on these notes?</strong>
+            <p>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSfdo5te4lW666UeFEny7sRF2zErTOV_Um6ZRPh8O_xgdXqFOA/viewform?usp=publish-editor" target="_blank" rel="noopener noreferrer">Open the feedback form</a>
+                (new tab). I use responses to improve this module for new students. If your comments are about this page, choose <b>Multivariable Calculus</b> in the first question.
+            </p>
+        </div>
+        <div class="la-worksheet-box" role="region" aria-label="Worksheet Colab notebook">
+            <strong class="la-worksheet-title">Worksheet (Google Colab)</strong>
+            <p>
+                Work through this companion notebook while you read: <a href="https://colab.research.google.com/drive/1xtT1yZFuekQwlg7B0nQBS95alf1GD_Qe?usp=sharing" target="_blank" rel="noopener noreferrer">open the Colab worksheet</a> (new tab). Sign in with a Google account if Colab asks; then use <b>File → Save a copy in Drive</b> if you want your own editable version.
+            </p>
+        </div>
+        </div>
+        <p>
+            <b>Who these notes are for.</b>
+            If you have taken something like <b>AP Calculus</b> (or an equivalent first-year calculus course), you already bring a lot to the table:
+            you are comfortable with functions, graphs, slopes, and solving equations. You do <i>not</i> need to have seen a full college multivariable calculus course.
+            This page is meant to onboard you into the vocabulary ML and physics papers use: partial derivatives, gradients, <a class="la-xlink" href="linear_algebra.html#la-linear-maps">Jacobians</a>, and <a class="la-xlink" href="linear_algebra.html#la-eigenvalues">Hessians</a>, so the rest of the lab feels less like alphabet soup.
+            It builds on the companion <a class="la-xlink" href="linear_algebra.html">linear algebra primer</a>; wherever you see a blue link like this in the text, it jumps to the matching section there.
+        </p>
+        <p>
+            <b>How to read it.</b>
+            Go at your own pace. When a paragraph feels heavy, try the colored questions (red) on paper, peek at a picture or interactive widget, or ask a tool (blue) for a second explanation in different words.
+            This is <i>not</i> a substitute for a real multivariable calculus course; it is a friendly on-ramp so you can read code and papers and ask sharper questions.
+        </p>
+        <p style="color:#b80707">
+            <b>
+                Red \(=\) stop and think / work on question
+            </b>
+        </p>
+        <p style="color:blue">
+            <b>
+                Blue \(=\) centered boxes tagged <span class="la-ai-prompt-label">Ask AI</span> placed near new ideas; paste the prompt into ChatGPT or another tool for a second explanation.
+            </b>
+        </p>
+        <p>
+        <a href="../index.html"><< Back</a>
+        </p>
+        <h1 id="mc-why">
+            Why Multivariable Calculus?
+        </h1>
+         <p>
+            Multivariable calculus is the generalization of ordinary calculus to multiple variables.
+            Why do we care about multiple variables? Many real-world quantities depend on more than one input at once.
+         </p>
+         <p class="la-ai-prompt" role="note">
+            <span class="la-ai-prompt-label">Ask AI</span>
+            Give me three concrete examples from machine learning or physics where a quantity depends on more than one input at once. Explain each in plain English.
+         </p>
+         <h1 id="mc-limits">
+            Limits
+        </h1>
+        <p>
+            As you probably remember, calculus is the study of making something infinitely divisible and studying how things change.
+            At its core is the idea of a limit. The limit is what defines differentiation and then integration.
+            The idea of the limit that you are most likely familiar with is approaching a function from both sides.
+            \[\lim_{x\to 0^-}x^2 = \lim_{x\to 0^+} x^2 = 0  \Rightarrow \lim_{x\to 0} x^2 = 0 \]
+            The tricky part is... how do we make sense of this left-and-right scenario in higher dimensions? Here is where we need to upgrade
+            our definition of the limit to the true grown-up definition of the limit,
+            called the delta-epsilon limit definition.
+        </p>
+        <div class="la-video-box" role="complementary" aria-label="Recommended video on multidimensional limits">
+            <strong class="la-video-title">Recommended video: strange limits in higher dimensions</strong>
+            <p>To get a feel for how odd limits can behave once you leave the 1-D left/right picture, watch this short visual walkthrough.</p>
+            <div class="la-video-links">
+                <a class="la-video-btn" href="https://www.youtube.com/watch?v=hxrnjxth8sA" target="_blank" rel="noopener noreferrer">Watch on YouTube →</a>
+            </div>
+        </div>
+        <p>
+            First let us translate the 1-D idea of a limit into the new definition, which states
+            \[\lim_{x\to a} f(x) \text{ exists if and only if } \exists \delta :
+            \forall \epsilon > 0, |x-a|<\delta \Rightarrow |L-f(a)|< \epsilon \] where \(L\) is the limit.
+        </p>
+        <p>
+            This looks confusing... what does this mean? The analogy I like to give is to imagine playing a game against a computer. In this game, you have the function
+            \(x^2\), and the computer asks, "Can you find me a \(\delta\) value that guarantees that for any \(x\) between
+            \(x-\delta\) and \(x+\delta\), the function \(x^2\) will not deviate from the limit \(L\) by more than \(\epsilon\)?"
+        </p>
+        <p>
+            Let's play a turn of this game. Let's say the place where we want to find the limit is at \(x \to 0\). Okay, and the computer hands us
+            \(\epsilon = 2\). That's easy! If we pick a \(\delta < 1\), then we can easily win, right? Because \(|f(0-1)-f(0)|< \epsilon \) and
+            \(|f(0+1)-f(0)|< \epsilon \). That's just one turn. What the true definition of the limit is really saying is that no matter what
+            \(\epsilon\) the computer hands you, if you can always win against the computer by picking a winning \(\delta\), then
+            the limit exists!
+        </p>
+        <p>
+            Here is an example where the limit breaks! \(f(x) =\frac{1}{x}\) at \(0\). We know from the old definition
+            that one side goes to \(\infty\) while the other side goes to \(-\infty\), and thus the limit doesn't exist.
+            What we see is that for any \(\epsilon\) the game hands us, things are infinitely far apart around \(0\)! That's really bad.
+            That means we cannot win this game and thus we lose, and the limit is undefined.
+        </p>
+        <p>
+            Now why is this definition useful for multidimensional stuff? Well, this \(\delta\), instead of
+            determining what is effectively an interval range,
+            determines a <i>ball</i>. Let me explain what I mean. So in <a class="la-xlink" href="linear_algebra.html#la-vectors">\(\mathbb{R}^3\)</a>, for example,
+            the definition of a limit becomes: if you can always find a ball (sphere) of radius \(\delta\) around
+            some point \(x\) such that it guarantees you win this delta-epsilon game within that ball, then you have a
+            limit! If not, then the limit does not exist.
+        </p>
+        <p class="la-ai-prompt" role="note">
+            <span class="la-ai-prompt-label">Ask AI</span>
+            Explain the delta-epsilon definition of a limit using the "ball in \(\mathbb{R}^3\)" picture instead of left/right limits. Then give one example of a function whose limit fails in 2D because two paths disagree.
+        </p>
+        <p>
+            Do you see what we've done here? In high school calculus, you were told to approach from the left or from the right. In higher dimensions,
+            you can approach from any direction you please. And the definition of the limit that we've formulated neatly describes that idea:
+            if you approach the value from 360 degrees in any direction, then the values must agree with one another.
+        </p>
+        <div class="la-video-box" role="complementary" aria-label="Recommended videos on the delta-epsilon definition">
+            <strong class="la-video-title">Recommended videos: delta epsilon limits</strong>
+            <p>For further review of the formal limit definition, start with the 1-D explanation, then see the multidimensional example.</p>
+            <div class="la-video-links">
+                <a class="la-video-btn" href="https://www.youtube.com/watch?v=kfF40MiS7zA" target="_blank" rel="noopener noreferrer">1-D limit [start @ 4:58] →</a>
+                <a class="la-video-btn" href="https://www.youtube.com/watch?v=PEgjh5YAN5k" target="_blank" rel="noopener noreferrer">Multivariable example →</a>
+            </div>
+        </div>
+        <p>
+            <b>Why do we care?</b> This new definition of the limit is what allows us to define derivatives.
+        </p>
+        <h1 id="mc-gradient">
+            Partial Derivatives and the Gradient (The New Derivative)
+        </h1>
+        <p>
+            Okay, now look at the derivative. Famously, the derivative is the rate of change, and we defined the derivative via the limit
+            \[\frac{df}{dx} = \lim_{h\to 0 } \frac{f(x+h)- f(x)}{h}\]
+            We face the same problem as before: in the world of multiple dimensions, how do we define rate of change... and in what direction?
+            This is where the idea of a gradient comes in.
+        </p>
+        <p>
+            Let's say we have a simple function that takes a <a class="la-xlink" href="linear_algebra.html#la-vectors">vector</a> (a bundle of numbers in each coordinate) \((x,y,z)\) and gives you a number
+            \(f(x,y,z) = x\cdot y\cdot z \) as an example. We can pick a direction to find the derivative in. The direction we
+            pick is along one of the variables. Let's say along the \(x\)-axis.
+            Then we write \(\frac{\partial f}{\partial x} \). This is
+            called a <b>partial derivative</b>, and it is formally defined as
+            \[\frac{\partial f}{\partial x} = \lim_{h\to 0 } \frac{f(x+h, y, z)- f(x, y,z)}{h}\]
+
+        </p>
+        <p>
+            A partial derivative is just like a normal derivative, except you treat all the other variables as constants.
+            In the example I gave, \(\frac{\partial f}{\partial x} = \frac{\partial }{\partial x} (xyz) = yz \). Think about why this is.
+            I just treat \(x\) as the variable and the others as constant, and since \(x\)
+            is linear we get \(yz\) as the answer.
+        </p>
+        <p>
+            Great, but we haven't addressed the elephant in the room: which direction do we approach from? We take partial derivatives
+            in the direction of each coordinate axis! We introduce the fancy \(\nabla\) operation called the gradient. It is a <a class="la-xlink" href="linear_algebra.html#la-vectors">vector</a>, and it is very simple.
+            \[\nabla f = \left[\frac{\partial f}{\partial x}, \frac{\partial f}{\partial y}, \frac{\partial f}{\partial z}\right].\]
+            This definition can be made precise as well, where \(h = (h_x,h_y, h_z)\) is a vector and \(|h|\) is the <a class="la-xlink" href="linear_algebra.html#dot-product-norm">norm</a> of that
+            vector:
+            \[\nabla f = \lim_{h\to (0,0,0) } \frac{f(x+h_x, y+h_y, z+ h_z)- f(x,y,z)}{|h|}\]
+            <b>Note:</b> this definition only really makes sense using our delta-epsilon definition of a limit, where we approach
+            the point via a ball in all directions!
+        </p>
+        <p class="la-ai-prompt" role="note">
+            <span class="la-ai-prompt-label">Ask AI</span>
+            Explain why the gradient points in the direction of steepest increase, and how gradient descent uses the <i>opposite</i> direction to minimize a loss function. Use a simple 2D bowl-shaped example.
+        </p>
+        <p>
+            What this is now saying is that you are measuring how much change is occurring in each direction, along the x-axis, the y-axis, the z-axis, and so on...
+            Together, this gives you the direction the function is trending toward overall! Let's see this in action.
+            \[\nabla (xyz) = [yz, xz, xy]\]
+            Simple!
+        </p>
+        <p>
+            What is super unique about the gradient is that it is always pointing in the direction where \(f\) is immediately increasing.
+            That is the same idea as a <a class="la-xlink" href="linear_algebra.html#dot-product-norm">dot product</a>: the rate of change in unit direction \(\mathbf{u}\) is \(\nabla f \cdot \mathbf{u}\), and that is largest when \(\mathbf{u}\) lines up with \(\nabla f\).
+            This is super important in machine learning, because this simple fact is what allows us to make machines <i>learn</i> to begin with.
+        </p>
+        <div class="la-video-box" role="complementary" aria-label="Recommended video on the gradient">
+            <strong class="la-video-title">Recommended video: the gradient</strong>
+            <p>Watch this for a more in-depth explanation of why the gradient points in the direction of steepest increase.</p>
+            <div class="la-video-links">
+                <a class="la-video-btn" href="https://www.youtube.com/watch?v=AXH9Xm6Rbfc" target="_blank" rel="noopener noreferrer">Watch on YouTube →</a>
+            </div>
+        </div>
+        <h1 id="mc-divergence">
+            Divergence
+        </h1>
+        <p>
+            Let's take this up a notch. The gradient is special. What you notice is that at each point \((x,y,z)\),
+            we can compute the gradient and get out a vector. This means each point has a vector. This special property
+            is called a <b>vector field</b>. The vector field produced by the gradient operation gives us a sense of how the
+            landscape is changing and in which direction things are changing. (Review <a class="la-xlink" href="linear_algebra.html#la-vectors">vectors in \(\mathbb{R}^n\)</a> if that language still feels new.)
+        </p>
+        <p>
+            More broadly, when every point in space has a <a class="la-xlink" href="linear_algebra.html#la-vectors">vector</a> attached to it, we call that a vector field. Vector fields have special properties like sinks and sources!
+            What do I mean by this?
+            Think about a whirlpool. The fluid has some velocity as it is swirling around, and that velocity points
+            in various directions. Remember, this is what we call a <b>vector field</b>
+            (at every point in space there is some vector associated with it).
+            The velocity of a fluid is a vector field
+            (each part of the fluid has a velocity vector telling it where it is headed)!
+            But at the center of the whirlpool, all the vectors point toward the same place: the sink where the whirlpool flows in. Divergence
+            is a tool to identify those sinks!
+        </p>
+        <p>
+            Likewise, if there is a source, say water flowing out of a single location, the divergence also tells you where that is!
+        </p>
+        <p>
+            Specifically, the divergence adds up all of the partial derivatives:
+            \[\nabla \cdot f(x) = \frac{\partial f}{\partial x} + \frac{\partial f}{\partial y} +
+            \frac{\partial f}{\partial z}\]
+            The \(\nabla \cdot\) symbol is a <a class="la-xlink" href="linear_algebra.html#dot-product-norm">dot product</a> between the gradient operator and the vector field, just like curl uses a cross product.
+        </p>
+        <p class="la-ai-prompt" role="note">
+            <span class="la-ai-prompt-label">Ask AI</span>
+            What is divergence measuring in a vector field? Give me a fluid-flow analogy for a source, a sink, and a region with zero divergence.
+        </p>
+        <p>
+            The divergence tells you how much stuff is "diverging" from each other, kind of like measuring how things are
+            splitting away.
+        </p>
+        <div class="la-video-box" role="complementary" aria-label="Recommended video on divergence">
+            <strong class="la-video-title">Recommended video: divergence</strong>
+            <p>A good visual introduction to what divergence measures in a vector field.</p>
+            <div class="la-video-links">
+                <a class="la-video-btn" href="https://www.youtube.com/watch?v=rB83DpBJQsE&t=135s" target="_blank" rel="noopener noreferrer">Watch [stop at 4:32] →</a>
+            </div>
+        </div>
+        <h1 id="mc-curl">
+            Curl
+        </h1>
+        <p>
+            On the other hand, curl tells you something similar to divergence. 
+            Divergence measures whether vectors are spreading out from a point or collapsing into it.
+            Curl measures whether the field is locally <i>spinning</i>.
+        </p>
+        <p>
+            Go back to the whirlpool analogy. Divergence helped us spot the sink at the center, 
+            where everything gets sucked in.
+            But most of the whirlpool is not a pure sink. It is fluid circling around.
+            If you put a tiny paddle wheel in the water and it starts rotating, that is exactly what curl is detecting.
+            If the whirlpool did not have fluid flowing straight in and was just spinning in circles, curl would tell you how strong that rotation is and which way it turns.
+        </p>
+        <p>
+            So if divergence is about sources and sinks, curl is about <b>rotation</b>.
+            A field with zero curl everywhere is sometimes called <b>irrotational</b>, meaning locally nothing is spinning.
+            A field with zero divergence everywhere is <b>solenoidal</b>, meaning locally nothing is being created or destroyed.
+            Real fluid flows often have both effects happening at once!
+        </p>
+        <p>
+            Like divergence, curl is built from partial derivatives, but now we are differentiating a <a class="la-xlink" href="linear_algebra.html#la-vectors">vector field</a> instead of adding derivatives of one scalar function.
+            If
+            \[\mathbf{F}(x,y,z) = \begin{bmatrix} F_x \\ F_y \\ F_z \end{bmatrix},\]
+            then the curl is written with the same \(\nabla\) operator, but using a <a class="la-xlink" href="linear_algebra.html#dot-product-norm">cross product</a> this time:
+            \[\nabla \times \mathbf{F}.\]
+            In 3D, you can write this as a <a class="la-xlink" href="linear_algebra.html#la-null-image">determinant</a>:
+        </p>
+        <p class="la-ai-prompt" role="note">
+            <span class="la-ai-prompt-label">Ask AI</span>
+            Compare divergence and curl in plain language. When would a vector field have high curl but zero divergence, or the other way around?
+        </p>
+        <p>
+            \[
+            \nabla \times \mathbf{F}
+            =
+            \begin{vmatrix}
+            \mathbf{i} & \mathbf{j} & \mathbf{k} \\[0.3em]
+            \frac{\partial}{\partial x} & \frac{\partial}{\partial y} & \frac{\partial}{\partial z} \\[0.3em]
+            F_x & F_y & F_z
+            \end{vmatrix}.
+            \]
+            If you expand that determinant, you get
+            \[
+            \nabla \times \mathbf{F}
+            =
+            \begin{bmatrix}
+            \dfrac{\partial F_z}{\partial y} - \dfrac{\partial F_y}{\partial z} \\[0.6em]
+            \dfrac{\partial F_x}{\partial z} - \dfrac{\partial F_z}{\partial x} \\[0.6em]
+            \dfrac{\partial F_y}{\partial x} - \dfrac{\partial F_x}{\partial y}
+            \end{bmatrix}.
+            \]
+            Do not worry about memorizing this on day one. The important idea is the pattern: each component compares how one component of the field changes in a <i>different</i> direction.
+            That mismatch is what creates rotation.
+        </p>
+        <p>
+            <b>Linear algebra connection:</b> look at the symbol again: \(\nabla \times \mathbf{F}\).
+            The curl is literally a <a class="la-xlink" href="linear_algebra.html#dot-product-norm">cross product</a> between the gradient operator and the vector field.
+            Cross products measure spinning and <a class="la-xlink" href="linear_algebra.html#dot-product-norm">perpendicular</a> directions in 3D space, so it makes sense that the cross product shows up here.
+            If the output curl vector points along the \(z\) axis, your local rotation is happening mostly in the \(xy\) plane, and the right hand rule tells you which way things are turning.
+        </p>
+        <p>
+            Here is a simple example. Suppose
+            \[\mathbf{F}(x,y,z) = \begin{bmatrix} -y \\ x \\ 0 \end{bmatrix}.\]
+            This field says: at point \((x,y)\), move in the direction \((-y,x,0)\).
+            That is exactly the kind of pattern you see when things rotate counterclockwise around the origin in the \(xy\) plane.
+            If you compute the curl, you get
+            \[\nabla \times \mathbf{F} = \begin{bmatrix} 0 \\ 0 \\ 2 \end{bmatrix},\]
+            a constant vector pointing straight up along the \(z\) axis.
+            So the field is spinning, and the curl captures that rotation cleanly in one vector.
+        </p>
+        <p>
+            <b>Why do we care?</b> In physics and engineering, curl shows up in fluid flow, electromagnetism, and vorticity.
+            In machine learning, you will not compute curl as often as gradients or Jacobians, but the same vector calculus language keeps appearing whenever a model outputs a vector at every point in space.
+            Understanding curl helps you read those fields without guessing what the arrows mean.
+        </p>
+        <p style="color:#b80707">
+            <b>
+                Red = stop and think: If a vector field is constant everywhere, like \(\mathbf{F}(x,y,z) = [1,0,0]\), what should the curl be? Does that match your intuition that nothing is spinning?
+            </b>
+        </p>
+        <div class="la-video-box" role="complementary" aria-label="Recommended video on curl">
+            <strong class="la-video-title">Recommended video: curl</strong>
+            <p>Same video as above, but jump to the section on rotation and curl in a vector field.</p>
+            <div class="la-video-links">
+                <a class="la-video-btn" href="https://www.youtube.com/watch?v=rB83DpBJQsE&t=135s" target="_blank" rel="noopener noreferrer">Watch [4:32 to 5:48] →</a>
+            </div>
+        </div>
+        <h1 id="mc-jacobian">
+            Jacobians (Upgrade the Gradient)
+        </h1>
+        <p>
+            Okay, we need to upgrade the gradient yet again. The problem is that our gradient idea only works for
+            \(f(x,y,z)\) where the output is a single number. What if the output is a vector as well?
+            \[f(x,y,z) = [xyz, y^2,z^3]\]
+            How does one even make sense of the derivative here? Here is where we introduce the Jacobian. Here
+            is where you will need some of your <a class="la-xlink" href="linear_algebra.html#la-linear-maps">linear algebra</a> skills.
+        </p>
+        <p>
+            The Jacobian is defined as the following <a class="la-xlink" href="linear_algebra.html#la-linear-maps">matrix</a>:
+            \[\mathbf{J} = \begin{bmatrix} \frac{\partial f_1}{\partial x_1} & \frac{\partial f_1}{\partial x_2} & \cdots & \frac{\partial f_1}{\partial x_n} \\ \frac{\partial f_2}{\partial x_1} & \frac{\partial f_2}{\partial x_2} & \cdots & \frac{\partial f_2}{\partial x_n} \\ \vdots & \vdots & \ddots & \vdots \\ \frac{\partial f_m}{\partial x_1} & \frac{\partial f_m}{\partial x_2} & \cdots & \frac{\partial f_m}{\partial x_n} \end{bmatrix} \]
+        </p>
+        <p class="la-ai-prompt" role="note">
+            <span class="la-ai-prompt-label">Ask AI</span>
+            Explain what the Jacobian matrix represents geometrically as a local linear approximation of a nonlinear map. Work through a small 2D-to-2D example numerically.
+        </p>
+        <p>
+            Notice what we did? We basically took multiple gradients and <a class="la-xlink" href="linear_algebra.html#la-linear-combination-span">stacked them together</a>! So we looked at the first entry of the function,
+            computed the partial derivatives and got a vector, then looked at the second entry, computed the gradient, and repeated! Let's look at this concrete example:
+            \[ f_1 = xyz,\quad f_2 = y^2, \quad f_3 = z^3\]
+            We compute their gradients:
+            \[\frac{\partial f_1}{\partial x} = yz, \quad \frac{\partial f_1}{\partial y} = xz, \quad \frac{\partial f_1}{\partial z} = xy\]
+            \[\frac{\partial f_2}{\partial x} = 0, \quad \frac{\partial f_2}{\partial y} = 2y, \quad \frac{\partial f_2}{\partial z} = 0\]
+            \[\frac{\partial f_3}{\partial x} = 0, \quad \frac{\partial f_3}{\partial y} = 0, \quad \frac{\partial f_3}{\partial z} = 3z^2\]
+            So the Jacobian is
+            \[\mathbf{J} = \begin{bmatrix} yz & xz & xy \\ 0 & 2y & 0 \\ 0 & 0 & 3z^2 \end{bmatrix}\]
+
+        </p>
+        <p>
+            Hold on. You are a sharp student. You see a matrix. If you remember from <a class="la-xlink" href="linear_algebra.html#la-linear-maps">linear algebra</a>, that means
+            this Jacobian is a <a class="la-xlink" href="linear_algebra.html#la-linear-maps">linear map</a>?! You are exactly correct! Here is where the deep connection comes into play.
+            The Jacobian (the linear map) defines a <a class="la-xlink" href="linear_algebra.html#la-linear-combination-span">subspace</a> of possible vectors that is tangential to the surface!
+
+        </p>
+        <p>
+            More concretely, remember calculus is just the process of pretending that non-linear
+            things are linear if you zoom in close enough (think Taylor series approximations).
+            If you take a wildly curving, non-linear function
+            and zoom in infinitely close to one specific point,
+            the transformation will look flat and linear. Because it looks linear at that microscopic level,
+            it can be represented by a matrix. That matrix is the Jacobian evaluated at a point.
+            <a class="la-xlink" href="linear_algebra.html#la-linear-maps">Linear algebra</a> gives us the tools to handle flat, uniform transformations using matrices.
+            The Jacobian is the matrix that tells linear algebra exactly which flat <a class="la-xlink" href="linear_algebra.html#la-linear-maps">linear transformation</a>
+            best approximates the curved calculus problem at a specific microscopic location.
+            This linear transformation
+            is the Jacobian!
+        </p>
+        <p>
+            Jacobians are the bread and butter of gradient-based optimizers, and they are what allow these machine learning algorithms to learn.
+        </p>
+        <div class="la-video-box" role="complementary" aria-label="Recommended video on Jacobians">
+            <strong class="la-video-title">Recommended video: Jacobians</strong>
+            <p>A clear walkthrough of what the Jacobian matrix represents geometrically.</p>
+            <div class="la-video-links">
+                <a class="la-video-btn" href="https://www.youtube.com/watch?v=6FesMicc844&t=109s" target="_blank" rel="noopener noreferrer">Watch on YouTube →</a>
+            </div>
+        </div>
+        <h1 id="mc-hessian">
+            Hessians (Second-Order Derivatives?)
+        </h1>
+        <p>
+            Remember back in calculus, there is the second derivative, and that told us when functions are curving up or curving down.
+            We can generalize this to multiple dimensions as well! This is called the Hessian. The Hessian is the <a class="la-xlink" href="linear_algebra.html#la-linear-maps">matrix</a> that perfectly describes the local curvature of a multivariable landscape.
+            So how do you compute it?
+        </p>
+        <p>
+            \[\mathbf{H} = \begin{bmatrix} \frac{\partial^2 f}{\partial x^2} & \frac{\partial^2 f}{\partial x \partial y} \\ \frac{\partial^2 f}{\partial y \partial x} & \frac{\partial^2 f}{\partial y^2} \end{bmatrix} = \begin{bmatrix} f_{xx} & f_{xy} \\ f_{yx} & f_{yy} \end{bmatrix}\]
+        </p>
+        <p class="la-ai-prompt" role="note">
+            <span class="la-ai-prompt-label">Ask AI</span>
+            How do the eigenvalues of the Hessian tell you whether a critical point is a minimum, maximum, or saddle? Give a 2D example with a symmetric Hessian matrix.
+        </p>
+        <p>
+            Now you might be wondering, well... how do we actually determine the curvature? The curvature is determined by finding
+            the <a class="la-xlink" href="linear_algebra.html#la-eigenvalues">eigenvalues</a> of the Hessian matrix and multiplying them together!
+        </p>
+        <p>
+            If the product is positive, the surface curves upward; if it is negative, it curves downward. This can
+            also easily be uncovered via the <a class="la-xlink" href="linear_algebra.html#la-null-image">determinant</a> of the Hessian!
+        </p>
+        <p>
+            You might be wondering, what then do the <a class="la-xlink" href="linear_algebra.html#la-eigenvalues">eigenvectors</a> do? The eigenvectors point along the direction of that measured curvature.
+            Some also say the eigenvectors of the Hessian tell you the principal axes of curvature.
+            Imagine standing on the side of a sloping, twisting hill. The eigenvectors point in the very specific,
+            magic directions where the "twisting" completely vanishes.
+            If you walk strictly along an eigenvector line, the landscape curves
+            perfectly straight up or straight down in front of you; the mixed partial derivatives
+            in this custom coordinate system are effectively zero.
+
+            By finding the eigenvectors, you are <a class="la-xlink" href="linear_algebra.html#la-diagonalization">rotating your coordinate system</a> so that the axes
+            align perfectly with the natural grain of the landscape's curvature!
+        </p>
+        <div class="la-video-box" role="complementary" aria-label="Recommended video on the Hessian">
+            <strong class="la-video-title">Recommended video: the Hessian</strong>
+            <p>Another good visual explanation of second-order curvature and the Hessian matrix.</p>
+            <div class="la-video-links">
+                <a class="la-video-btn" href="https://www.youtube.com/watch?v=LbBcuZukCAw" target="_blank" rel="noopener noreferrer">Watch on YouTube →</a>
+            </div>
+        </div>
+        <h1 id="chain-rule-product-rule">
+            Chain Rule / Product Rule
+        </h1>
+        <p>
+            In single-variable calculus, the product rule and chain rule are your two best friends 
+            for untangling messy equations. When we upgrade to multiple dimensions, 
+            these rules survive, but they get some <a class="la-xlink" href="linear_algebra.html">linear algebra</a> upgrades!
+        </p>
+        <p>
+            Let's start with the <b>Product Rule</b>. In 1D, if you have two functions multiplying each other, the derivative is:
+            \[ \frac{d}{dx}[f(x)g(x)] = f'(x)g(x) + f(x)g'(x) \]
+            In higher dimensions, let's say \(f(x,y,z)\) and \(g(x,y,z)\) are both scalar functions (they take in a vector, spit out a single number). What happens if we take the gradient of their product? The structure is exactly the same, but our 1D derivatives upgrade to gradient vectors!
+            \[ \nabla(f \cdot g) = g \nabla f + f \nabla g \]
+        </p>
+        <p>
+            <b>Linear Algebra Connection:</b> Look closely at the right side of that equation. \(g\) and \(f\) are just scalar numbers, while \(\nabla f\) and \(\nabla g\) are vectors. This means the multivariable product rule is fundamentally just a <a class="la-xlink" href="linear_algebra.html#la-linear-combination-span">linear combination</a> of two gradient vectors!
+        </p>
+        <p style="color:#b80707">
+            <b>
+                Red = stop and think: If \(f(x)\) and \(g(x)\) both have a gradient of zero at a specific coordinate, what is the gradient of their product at that coordinate?
+            </b>
+        </p>
+        <p>
+            Now, for the main event: The <b>Chain Rule</b>. This is arguably the single most important calculus concept in all of Machine Learning, because it is the mathematical engine behind <b>Backpropagation</b>.
+        </p>
+        <p>
+            In 1D, the chain rule handles nested functions:
+            \[ \frac{d}{dx}f(g(x)) = f'(g(x))g'(x) \]
+            But what happens if you have a multivariable function \(f(x, y)\), and both \(x\) and \(y\) are themselves functions of time, \(t\)? So, \(x(t)\) and \(y(t)\). If you want to know how \(f\) changes as time moves forward, you have to track the changes through all possible paths and add them up:
+            \[ \frac{df}{dt} = \frac{\partial f}{\partial x}\frac{dx}{dt} + \frac{\partial f}{\partial y}\frac{dy}{dt} \]
+        </p>
+        
+        <p>
+            Do you see the hidden linear algebra here? That sum of products is exactly how you compute a <a class="la-xlink" href="linear_algebra.html#dot-product-norm">dot product</a>! We can rewrite the multivariable chain rule beautifully as the dot product of the gradient vector of \(f\) and the velocity vector of your path:
+            \[ \frac{df}{dt} = \nabla f \cdot \begin{bmatrix} \frac{dx}{dt} \\ \frac{dy}{dt} \end{bmatrix} \]
+        </p>
+        <p>
+            <b>The Ultimate Upgrade: Matrix Multiplication</b><br>
+            Let's take it to the extreme. What if we have a vector-valued function feeding into another vector-valued function? Let's say \(\mathbf{y} = G(\mathbf{x})\) and \(\mathbf{z} = F(\mathbf{y})\). To find the derivative of the whole nested system with respect to \(\mathbf{x}\), we don't just multiply numbers, and we don't just take a dot product. We multiply their <a class="la-xlink" href="linear_algebra.html#la-linear-maps">Jacobian matrices</a>!
+            \[ \mathbf{J}_{F(G(\mathbf{x}))} = \mathbf{J}_F(G(\mathbf{x})) \mathbf{J}_G(\mathbf{x}) \]
+        </p>
+        <p>
+            This is the biggest "Aha!" moment bridging these two subjects. <a class="la-xlink" href="linear_algebra.html#la-matrix-mult-why"><b>Matrix multiplication was literally invented to track the composition of linear maps.</b></a> Because derivatives (Jacobians) are just local linear approximations, tracking the derivative of nested multivariable functions is exactly the same as multiplying their Jacobian matrices together!
+        </p>
+        <p class="la-ai-prompt" role="note">
+            <span class="la-ai-prompt-label">Ask AI</span>
+            Explain how multiplying Jacobian matrices is the same idea as backpropagation in a neural network. Walk through a tiny network with two layers and name each Jacobian.
+        </p>
+        <div class="la-video-box" role="complementary" aria-label="Recommended video on the chain rule">
+            <strong class="la-video-title">Recommended video: the chain rule</strong>
+            <p>A good follow-up on how the multivariable chain rule connects to backpropagation.</p>
+            <div class="la-video-links">
+                <a class="la-video-btn" href="https://www.youtube.com/watch?v=NO3AqAaAE6o" target="_blank" rel="noopener noreferrer">Watch on YouTube →</a>
+            </div>
+        </div>
+        <h1 id="taylor-approximation">
+            Taylor Approximation (Multi-dimensional)
+        </h1>
+        <p>
+            If you want to understand how optimization algorithms (like Newton's Method in machine learning) actually "see" a loss landscape, you have to understand the multi-dimensional Taylor series.
+        </p>
+        <p>
+            Back in 1D calculus, the Taylor series allowed us to approximate a crazy, impossible-to-compute curve by stacking simple polynomials (lines, parabolas, cubics) on top of each other. In multiple dimensions, we do the exact same thing, but instead of fitting lines and parabolas to a curve, we fit <b>flat planes and 3D bowls</b> to a messy, curved landscape!
+        </p>
+        <p>
+            Let's say we have a scalar function \(f(\mathbf{x})\) where \(\mathbf{x}\) is a <a class="la-xlink" href="linear_algebra.html#la-vectors">vector</a> of inputs (like \(x, y\)). We want to approximate the landscape near a specific starting point, \(\mathbf{a}\). Here is how the approximation is built step-by-step:
+        </p>
+        <p>
+            <b>0th Order (The Flat Guess):</b><br>
+            If we know absolutely nothing about the slope, our best guess for the surrounding area is just a completely flat horizontal plane set exactly at our current elevation.
+            \[ f(\mathbf{x}) \approx f(\mathbf{a}) \]
+        </p>
+        <p>
+            <b>1st Order (The Linear Approximation):</b><br>
+            Now we bring in the <b>Gradient</b> (\(\nabla f\)). The gradient tells us the exact tilt of the landscape. By taking the <a class="la-xlink" href="linear_algebra.html#dot-product-norm">dot product</a> of the gradient and our step vector \((\mathbf{x} - \mathbf{a})\), we create a tilted <b>tangent plane</b> that perfectly hugs the slope at point \(\mathbf{a}\).
+            \[ f(\mathbf{x}) \approx f(\mathbf{a}) + \nabla f(\mathbf{a}) \cdot (\mathbf{x} - \mathbf{a}) \]
+        </p>
+        <p>
+            <b>2nd Order (The Quadratic Approximation):</b><br>
+            A flat, tilted plane is a terrible approximation if the landscape curves sharply right in front of you. To capture the curve, we bring in the <a class="la-xlink" href="linear_algebra.html#la-linear-maps">Hessian matrix</a> (\(\mathbf{H}\)). This adds a "bowl" or "saddle" shape to our approximation, bending our flat tangent plane so it perfectly matches the true curvature of the landscape.
+            \[ f(\mathbf{x}) \approx f(\mathbf{a}) + \nabla f(\mathbf{a})^T (\mathbf{x} - \mathbf{a}) + \frac{1}{2} (\mathbf{x} - \mathbf{a})^T \mathbf{H}(\mathbf{a}) (\mathbf{x} - \mathbf{a}) \]
+        </p>
+        <p class="la-ai-prompt" role="note">
+            <span class="la-ai-prompt-label">Ask AI</span>
+            Explain the multivariable Taylor approximation at 1st and 2nd order. How does Newton's method use the Hessian to take smarter optimization steps than plain gradient descent?
+        </p>
+        <p>
+            <b>The Linear Algebra Connection:</b> Look closely at that 2nd-order term: \( (\mathbf{x} - \mathbf{a})^T \mathbf{H} (\mathbf{x} - \mathbf{a}) \). This is a famous structure called a <b>Quadratic Form</b>. You are taking a <a class="la-xlink" href="linear_algebra.html#la-linear-maps">matrix</a> (\(\mathbf{H}\)) and "sandwiching" it between a vector and its <a class="la-xlink" href="linear_algebra.html#dot-product-norm">transpose</a> (the same idea as \(u^\top v\) in the dot product notes). This specific <a class="la-xlink" href="linear_algebra.html#la-matrix-mult-why">matrix multiplication</a> is the mathematical mechanism that generates bowl and saddle shapes in higher dimensions! The <a class="la-xlink" href="linear_algebra.html#la-eigenvalues">eigenvalues of \(\mathbf{H}\)</a> then tell you whether you are looking at a bowl, a saddle, or something flatter.
+        </p>
+        <p style="color:#b80707">
+            <b>
+                Red = stop and think: If the Hessian matrix at point \(\mathbf{a}\) is completely full of zeros, what does the 2nd-order approximation look like?
+            </b>
+        </p>
+        <div class="la-video-box" role="complementary" aria-label="Recommended video on Taylor series">
+            <strong class="la-video-title">Recommended video: Taylor series</strong>
+            <p>A good intro to Taylor approximations before extending them to multiple dimensions.</p>
+            <div class="la-video-links">
+                <a class="la-video-btn" href="https://www.youtube.com/watch?v=oOtUVd9ic20" target="_blank" rel="noopener noreferrer">Watch on YouTube →</a>
+            </div>
+        </div>
+        <h1 id="mc-integrals">
+            Integrals 
+        </h1>
+        <!-- <p>
+            Note: this section is extra! This is only relevant if you want a much more precise definition of integration 
+            that you are typically only exposed to in an analysis class. 
+        </p> -->
+        <p>
+            Integration should also be something you are familiar with back in AP-calculus courses. But that definition isn't very percise. 
+            We are taught that we want to divide up a function into smaller areas and sum them up. We take the limit as the width of 
+            the rectangle gets small so \(dx\) and then multiply by the height \(f(x)\) and add that up in infinitely small ways. 
+            This is not precise. How do we know if something is even integrable to begin with?  
+        </p>
+        <p>
+            The classical way integration is defined is via Riemann sums. 
+            Specifically with upper and lower sums using slices of rectangles. But this is limiting. What are rectangles even in say 
+            4-d or 5-d or <a class="la-xlink" href="linear_algebra.html#la-vectors">\(\mathbb{R}^n\)</a>? We need to be more general. Here is the slightly more formal definition, using what we call 
+            <b>partitions</b>.  
+        </p>
+        <p class="la-ai-prompt" role="note">
+            <span class="la-ai-prompt-label">Ask AI</span>
+            Explain upper and lower Riemann sums and why an integral exists only when those sums can be squeezed together. Why is this definition easier to generalize beyond rectangles?
+        </p>
+        <p>
+            We define an upper sum \(U\) on some function \(f\) given some set of partitions
+            \(P\) (a partition can be anything for intuition just think of it as a collection of patches,
+             in the case of riemann sums 
+            that define the rectangles/3d rectangles that we are adding up)
+            \[U(f,P) = \sum_{p \in P} M(f(p))\cdot v(p), \quad M(p) = \max(p), \quad v(p) \text{ is the volume of the set}\]
+            This makes some sense right? We have divided up a grid into multiple rectangles patches \(p\).
+            We evaluate and find the max point (because this is the upper sum) in that rectangle (the height)
+            and then we add it up! Each term is a height times a patch volume, so the whole upper sum is one big
+            <a class="la-xlink" href="linear_algebra.html#la-linear-combination-span">weighted sum</a> over the partition.
+        </p>
+        <p>
+            We also have a lower sum \(L\) and its exactly what you think it is... 
+            \[L(f,P) = \sum_{p \in P} M(f(p))\cdot v(p), \quad M(p) = \min(p), \quad v(p) \text{ is the volume of the set}\]
+            Same thing except we take the smallest value hence the lower sum.
+        </p>
+        <p>
+            It should be clear to see that 
+            \[L(f,P) \leq U(f,P)\]
+        </p>
+        <p>
+            To define integration, it is something that sits in between these two 
+            \[L(f,P)  \leq \int f dp \leq U(f,P)\]
+            more specifically we say that the integration EXISTS if there \(\exists P\) some partition such that
+            \[L(f,P) = \int f dp = U(f,P)\]
+ 
+        </p>
+        <p>
+            Woah what does that mean? This is exactly like the definition of the limit! An integral exists, if you approach adding the 
+            function values below it equals to adding the function from values above it! More specifically: 
+            \[\int f dp \text{ exists if } \quad \exists P : \forall \epsilon > 0, |U(f,P) - L(f,P)| \leq \epsilon\]
+            Which is just saying, for every tight bound we want to get, we can always find a partition that satisfies this constraint that its smaller than 
+            \(\epsilon\).
+        </p>
+        <p>
+            Why might you add, is this good for generalization to higher dimensions? Because patches can be anything and volume function 
+            \(v(p)\) can then be more percisely defined. No longer are we bound to integrating using rectangles, we can define things however we want!
+
+        </p>
+        <p>
+            Lets see some examples of real integrations you may come across in life sometimes.
+        </p>
+        <h1 id="mc-line-integrals">
+            Line/Path Integrals
+        </h1>
+        <p>
+            The line integral is famous. Imagine in 2-d space you wish to integrate along some path. 
+            This is on some function 
+            \(f(x,y)\) which outputs a scalar value (single value not a vector). Lets say the path you wish to integrate on is some curve \(S\). We write the path integral as 
+            \[\int_S f(l) dl\]
+        </p>
+        <p class="la-ai-prompt" role="note">
+            <span class="la-ai-prompt-label">Ask AI</span>
+            Explain how a scalar line integral works: what does \(dl\) mean, and why do we substitute a path parametrization \(r(t)\) before integrating?
+        </p>
+        <p>
+            Hold on.. what is all of this? Where did my \(x,y\) coordinates go? Well lets read this equation, \(dl\) here 
+            means one small chunk of your path. Remember we are no longer integrating in a straight line but now in some custom path. 
+
+        </p>
+        <p>
+            What this means is that you need to plug in the values for your path! Okay so lets say your path is a line 
+            \(r(t) = [2t, 3t]\), a <a class="la-xlink" href="linear_algebra.html#la-vectors">vector-valued</a> parametrization of the curve. This is just a straight line where you move \(2t\) in the \(x\) direction and \(3t\) in the \(y\)
+            direction. Great! Now \(dl\) is a small change or stepsize in your path.. so that means \(dl = |r'(t)|\), the <a class="la-xlink" href="linear_algebra.html#dot-product-norm">norm</a> of the tangent vector. This is the distance 
+            of that small chunk on the path (note that r'(t) is the derivative in respect to the \(t\)).  Since we are on the path 
+            \(l\) we replace \(f(l) = f(r(t))\)! Now we can integrate.  Lets look at this lets say your custom path goes from 
+            \(0\to 1\)
+            \[\int_S f(l) dl = \int_0^1 f(r(t))|r'(t)|dt\]
+            Dropping in the values for \(r(t) = [2t, 3t]\)
+            \[\int_S f(l) dl = \int_0^1 f(2t, 3t)|[2,3]|dt\]
+            \[\int_S f(l) dl = \int_0^1 f(2t, 3t)\sqrt{2^2+3^2}dt\]
+            \[\int_S f(l) dl = \int_0^1 f(2t, 3t)\sqrt{13}dt\]
+            if we say we have some function \(f(x,y) = xy\)
+            \[\int_S f(l) dl = \int_0^1 2t\cdot 3t\sqrt{13}dt\]
+            \[\int_S f(l) dl = 6 \sqrt{13}\int_0^1 t^2dt\]
+
+            Wow this now becomes something you are exactly familiar with. Easy peasy! 
+        </p>
+        <div class="la-video-box" role="complementary" aria-label="Recommended video on scalar line integrals">
+            <strong class="la-video-title">Recommended video: scalar line integrals</strong>
+            <p>In-depth discussion and examples of integrating a scalar function along a curve.</p>
+            <div class="la-video-links">
+                <a class="la-video-btn" href="https://www.youtube.com/watch?v=WA5_a3C2iqY" target="_blank" rel="noopener noreferrer">Watch on YouTube →</a>
+            </div>
+        </div>
+        <p>
+            We can actually take this one step further! What happens if \(f\) the function is not just a single value? What happens 
+            if the function returns multiple values and is a vector function? Then we have the following line integral.
+            \[\int_S f(l) \cdot dl\]
+            Where now the line integral requires a <a class="la-xlink" href="linear_algebra.html#dot-product-norm">dot product</a>!
+        </p>
+        <p class="la-ai-prompt" role="note">
+            <span class="la-ai-prompt-label">Ask AI</span>
+            Explain the vector line integral \(\int \mathbf{F}\cdot d\mathbf{l}\). Give a physics example where it represents work done by a force along a path.
+        </p>
+        <p>
+            Here now the \(dl\) is a vector 
+            \(dl = r'(t)dt\) remember \(r'(t)\) is a vector before \(|r'(t)|\) only looked at the length of that vector. 
+            And then rinse and repeat!
+            \[\int_S f(l) \cdot dl = \int_0^1 f(r(t)) \cdot r'(t)  dt\]
+            if the function was like this \(f(x,y) = [x^2,y^3]\)
+            \[ \int_0^1 f(2t, 3t) \cdot [2,3]  dt\]
+            \[ \int_0^1 [4t^2, 27t^3] \cdot [2,3]  dt\]
+            \[ \int_0^1 8t^2+ 81t^3  dt\]
+            Now this looks easy :)
+        </p>
+        <p>
+            <b>Linear algebra connection:</b> a vector line integral is a path integral of a <a class="la-xlink" href="linear_algebra.html#dot-product-norm">dot product</a> at each tiny step.
+            That is why work integrals look like \(\int \mathbf{F} \cdot d\mathbf{l}\): you are adding up how much of the field points along the motion.
+        </p>
+        <div class="la-video-box" role="complementary" aria-label="Recommended video on vector line integrals">
+            <strong class="la-video-title">Recommended video: vector line integrals (work integrals)</strong>
+            <p>More intuition for integrating a vector field along a path using a dot product.</p>
+            <div class="la-video-links">
+                <a class="la-video-btn" href="https://www.youtube.com/watch?v=059LjQ2oLBM" target="_blank" rel="noopener noreferrer">Watch on YouTube →</a>
+            </div>
+        </div>
+        <h1 id="mc-surface-integrals">
+            Surface Integrals (Extra)
+        </h1>
+        <p>
+            Now that you know how to integrate along any path you like. What about integrating on a surface?
+            To do so, you need to first define a surface....
+        </p>
+        <p>
+            Let's define the surface as a sphere in <a class="la-xlink" href="linear_algebra.html#la-vectors">\(\mathbb{R}^3\)</a>:
+            \[\Omega = \{(x,y,z) : x^2+y^2+z^2 = 1\}.\]
+            This is the set of all points whose distance from the origin is exactly \(1\).
+        </p>
+        <p>
+            Now let us define the function \(f\) as some value it takes on that sphere, \(f(x,y,z) = xyz\), let's just say.
+            Then the surface integral is
+            \[\int_\Omega f \, dA\]
+            Hold on... what is \(dA\)? It is one small patch of area on the surface of \(\Omega\), not volume and not length along a curve.
+        </p>
+        <p>
+            This is the same big idea as the line integral. On a path, we replaced \(dl\) with \(|r'(t)|\,dt\) after plugging in a parametrization \(r(t)\).
+            On a surface, we replace \(dA\) with something built from a <b>surface parametrization</b> \(r(u,v)\).
+            Think of \(u\) and \(v\) as two coordinates that tell you where you are on the surface, the way \(t\) told you where you were on the curve.
+        </p>
+        <p>
+            For the unit sphere, spherical coordinates are a natural choice. Let
+            \[
+            r(\theta,\phi) =
+            \begin{bmatrix}
+            \sin\theta\cos\phi \\
+            \sin\theta\sin\phi \\
+            \cos\theta
+            \end{bmatrix},
+            \qquad 0 \leq \theta \leq \pi,\quad 0 \leq \phi \leq 2\pi.
+            \]
+            Every pair \((\theta,\phi)\) picks out one point on the sphere, and as \(\theta\) and \(\phi\) vary, you sweep out the whole surface.
+        </p>
+        <p>
+            Now take tiny steps \(d\theta\) and \(d\phi\). The vectors
+            \(r_\theta = \frac{\partial r}{\partial \theta}\) and
+            \(r_\phi = \frac{\partial r}{\partial \phi}\)
+            span a little parallelogram tangent to the surface.
+            Its area is the length of their <a class="la-xlink" href="linear_algebra.html#dot-product-norm">cross product</a>:
+            \[
+            dA = |r_\theta \times r_\phi|\, d\theta\, d\phi.
+            \]
+            For this unit sphere parametrization, a calculation (or a trusted table) gives \(|r_\theta \times r_\phi| = \sin\theta\), so
+            \[
+            dA = \sin\theta\, d\theta\, d\phi.
+            \]
+            That \(\sin\theta\) factor is doing real work: it says patches near the equator are bigger than patches near the north pole, which matches the picture on a globe.
+        </p>
+        <p class="la-ai-prompt" role="note">
+            <span class="la-ai-prompt-label">Ask AI</span>
+            Explain where \(|r_\theta \times r_\phi|\) comes from in a surface integral, and what flux \(\iint \mathbf{F}\cdot d\mathbf{A}\) measures on a surface.
+        </p>
+        <p>
+            Putting it together, a scalar surface integral becomes an ordinary double integral:
+            \[
+            \int_\Omega f \, dA
+            =
+            \int_0^{2\pi}\int_0^{\pi} f(r(\theta,\phi))\,\sin\theta\, d\theta\, d\phi.
+            \]
+            We evaluate \(f\) on the surface by substituting the parametrization, exactly like we replaced \(f(l)\) with \(f(r(t))\) on a path.
+        </p>
+        <p>
+            <b>Warm-up example: surface area.</b>
+            Take \(f(x,y,z) = 1\). Then the integral just adds up area:
+            \[
+            \int_\Omega 1\, dA
+            =
+            \int_0^{2\pi}\int_0^{\pi} \sin\theta\, d\theta\, d\phi
+            =
+            2\pi\left[-\cos\theta\right]_0^{\pi}
+            =
+            4\pi.
+            \]
+            That is the surface area of a unit sphere, which is a good sanity check that the \(dA\) formula is reasonable.
+        </p>
+        <p>
+            <b>Back to \(f(x,y,z) = xyz\) on the sphere.</b>
+            On the surface,
+            \[
+            f(r(\theta,\phi))
+            =
+            (\sin\theta\cos\phi)(\sin\theta\sin\phi)(\cos\theta)
+            =
+            \sin^2\theta\cos\theta\sin\phi\cos\phi.
+            \]
+            So
+            \[
+            \int_\Omega xyz\, dA
+            =
+            \int_0^{2\pi}\int_0^{\pi}
+            \sin^2\theta\cos\theta\sin\phi\cos\phi\,\sin\theta\, d\theta\, d\phi.
+            \]
+            You <i>could</i> grind this out with trig integrals. But there is a faster observation: \(xyz\) is positive in some octants of the sphere and equally negative in others, and the sphere is symmetric. So the integral is
+            \[
+            \int_\Omega xyz\, dA = 0.
+            \]
+            That is a common pattern: odd functions over symmetric surfaces often integrate to zero.
+        </p>
+        <p>
+            <b>Vector surface integrals (flux).</b>
+            Just like the line integral upgraded from \(\int f\,dl\) to \(\int \mathbf{F}\cdot d\mathbf{l}\), surfaces have a vector version too.
+            If \(\mathbf{F}(x,y,z)\) is a vector field, the flux of \(\mathbf{F}\) through \(\Omega\) is
+            \[
+            \iint_\Omega \mathbf{F}\cdot d\mathbf{A}.
+            \]
+            Here \(d\mathbf{A}\) is a tiny area vector pointing perpendicular to the surface (outward, if we choose the outward normal).
+            In parametrization form,
+            \[
+            \iint_\Omega \mathbf{F}\cdot d\mathbf{A}
+            =
+            \int \int \mathbf{F}(r(u,v)) \cdot \big(r_u \times r_v\big)\, du\, dv.
+            \]
+            Notice the pattern from line integrals: scalar case uses <b>length</b> \(|r'(t)|\), vector case uses the <b>vector</b> \(r'(t)\).
+            On a surface, scalar case uses <b>area</b> \(|r_u \times r_v|\), vector case uses the <b>area vector</b> \(r_u \times r_v\).
+        </p>
+        <p>
+            <b>Linear algebra connection:</b> the cross product \(r_u \times r_v\) is built from partial derivatives, so it is really a <a class="la-xlink" href="linear_algebra.html#la-linear-maps">Jacobian</a> story in disguise.
+            The tangent plane at a point is spanned by \(r_u\) and \(r_v\), and the cross product packages that 2D patch of directions into one perpendicular vector whose length is the patch area.
+            The flux integral then uses a <a class="la-xlink" href="linear_algebra.html#dot-product-norm">dot product</a> to measure how much of the field points through that patch.
+        </p>
+        <p>
+            <b>Why do we care?</b> Surface integrals show up whenever you integrate over a curved boundary instead of a flat region: flux through a membrane, heat flow through a surface, electric field through a closed surface, and (later) the divergence theorem, which connects flux to what happens inside a volume.
+        </p>
+        <p style="color:#b80707">
+            <b>
+                Red = stop and think: For the unit sphere, why does \(f=1\) give total area \(4\pi\), but \(f=xyz\) gives \(0\)? What would you guess for \(f=x^2+y^2+z^2\)?
+            </b>
+        </p>
+        <div class="la-video-box" role="complementary" aria-label="Recommended video on surface integrals">
+            <strong class="la-video-title">Recommended video: surface integrals</strong>
+            <p>A visual walkthrough of parametrizing a surface and setting up \(dA\).</p>
+            <div class="la-video-links">
+                <a class="la-video-btn" href="https://www.khanacademy.org/math/multivariable-calculus/integrating-multivariable-functions/surface-integrals-introduction/v/surface-integral-example-part-1-parameterizing-the-unit-sphere" target="_blank" rel="noopener noreferrer">Parameterizing the unit sphere (Khan Academy) →</a>
+            </div>
+        </div>
+        <h1 id="mc-volume-integrals">
+            Volume Integrals (Extra)
+        </h1>
+        <p>
+            We have climbed one dimension at a time. A line integral adds up values along a <b>curve</b>.
+            A surface integral adds up values on a <b>surface</b>.
+            A volume integral adds up values through a solid region in space.
+        </p>
+        <p>
+            If \(V\) is a region in <a class="la-xlink" href="linear_algebra.html#la-vectors">\(\mathbb{R}^3\)</a> and \(f(x,y,z)\) is a scalar function, we write
+            \[
+            \iiint_V f \, dV.
+            \]
+            Here \(dV\) is one tiny chunk of volume, the 3D analogue of \(dl\) and \(dA\).
+            In ordinary \(xyz\) coordinates, the most familiar form is
+            \[
+            dV = dx\, dy\, dz.
+            \]
+        </p>
+        <p class="la-ai-prompt" role="note">
+            <span class="la-ai-prompt-label">Ask AI</span>
+            Explain what a volume integral \(\iiint_V f\, dV\) is adding up, and how it is the same partition idea as line and surface integrals, just in 3D.
+        </p>
+        <p>
+            Hold on... how is this different from the partition definition at the top of this section?
+            It is the same idea! You chop space into small patches, multiply each patch volume by a function value, and add.
+            The reason we write \(\iiint\) is that we are integrating over a <b>3D region</b>, not a line or a surface.
+        </p>
+        <p>
+            <b>Example 1: the unit cube.</b>
+            Let
+            \[
+            V = \{(x,y,z) : 0 \leq x \leq 1,\; 0 \leq y \leq 1,\; 0 \leq z \leq 1\},
+            \]
+            and take \(f(x,y,z) = xyz\).
+            Because the region is a box, we can integrate one variable at a time:
+            \[
+            \iiint_V xyz\, dV
+            =
+            \int_0^1 \int_0^1 \int_0^1 xyz\, dx\, dy\, dz.
+            \]
+            The \(x\) integral is easy because \(y\) and \(z\) act like constants:
+            \[
+            \int_0^1 xyz\, dx = yz \int_0^1 x\, dx = \frac{yz}{2}.
+            \]
+            Then
+            \[
+            \int_0^1 \frac{yz}{2}\, dy = \frac{z}{2}\int_0^1 y\, dy = \frac{z}{4},
+            \]
+            and finally
+            \[
+            \int_0^1 \frac{z}{4}\, dz = \frac{1}{8}.
+            \]
+            So
+            \[
+            \iiint_V xyz\, dV = \frac{1}{8}.
+            \]
+            That is exactly the kind of calculation you already know from AP calculus, just repeated three times.
+        </p>
+        <p>
+            <b>Example 2: a ball instead of a box.</b>
+            Now let
+            \[
+            V = \{(x,y,z) \in \mathbb{R}^3 : x^2+y^2+z^2 \leq 1\},
+            \]
+            the solid unit ball (the <i>inside</i> of the sphere from the surface integral section, not just its skin).
+            Boxes are nice in \(xyz\) coordinates. Balls are nicer in <b>spherical coordinates</b>:
+            \[
+            x = \rho\sin\theta\cos\phi,\qquad
+            y = \rho\sin\theta\sin\phi,\qquad
+            z = \rho\cos\theta,
+            \]
+            with \(\rho \geq 0\), \(0 \leq \theta \leq \pi\), and \(0 \leq \phi \leq 2\pi\).
+        </p>
+        <p>
+            The volume element becomes
+            \[
+            dV = \rho^2\sin\theta\, d\rho\, d\theta\, d\phi.
+            \]
+            Where did \(\rho^2\sin\theta\) come from? It is the 3D version of the same story as \(|r'(t)|\) and \(|r_u\times r_v|\):
+            when you change coordinates, the little volume patch gets stretched, and that stretch factor is a <a class="la-xlink" href="linear_algebra.html#la-linear-maps">Jacobian determinant</a>.
+            For spherical coordinates, that determinant is \(\rho^2\sin\theta\).
+        </p>
+        <p>
+            <b>Warm-up: volume of the unit ball.</b>
+            Take \(f(x,y,z)=1\). Then the integral just adds up volume:
+            \[
+            \iiint_V 1\, dV
+            =
+            \int_0^{2\pi}\int_0^{\pi}\int_0^1 \rho^2\sin\theta\, d\rho\, d\theta\, d\phi.
+            \]
+            The \(\rho\) integral gives \(\frac{1}{3}\), the \(\theta\) integral gives \(2\), and the \(\phi\) integral gives \(2\pi\), so
+            \[
+            \iiint_V 1\, dV = \frac{4\pi}{3}.
+            \]
+            That is the volume of a unit ball, a formula worth remembering.
+        </p>
+        <p>
+            <b>A nontrivial density on the ball.</b>
+            Suppose \(f(x,y,z) = x^2+y^2+z^2\) on the same unit ball.
+            In spherical coordinates, on the ball we have \(x^2+y^2+z^2 = \rho^2\), so
+            \[
+            \iiint_V (x^2+y^2+z^2)\, dV
+            =
+            \int_0^{2\pi}\int_0^{\pi}\int_0^1 \rho^2 \cdot \rho^2\sin\theta\, d\rho\, d\theta\, d\phi
+            =
+            \int_0^{2\pi}\int_0^{\pi}\int_0^1 \rho^4\sin\theta\, d\rho\, d\theta\, d\phi.
+            \]
+            Compute step by step:
+            \[
+            \int_0^1 \rho^4\, d\rho = \frac{1}{5},
+            \qquad
+            \int_0^{\pi}\sin\theta\, d\theta = 2,
+            \qquad
+            \int_0^{2\pi} d\phi = 2\pi,
+            \]
+            so
+            \[
+            \iiint_V (x^2+y^2+z^2)\, dV = \frac{4\pi}{5}.
+            \]
+        </p>
+        <p>
+            <b>Change of variables in general.</b>
+            If you reparametrize a volume with a smooth map \( \mathbf{r}(u,v,w)\), then
+            \[
+            dV = \left|\det \mathbf{J}\right|\, du\, dv\, dw,
+            \]
+            where \(\mathbf{J}\) is the Jacobian of the coordinate change (the matrix of all partial derivatives).
+            Spherical coordinates, cylindrical coordinates, and any other coordinate system you meet in physics are all special cases of this one rule.
+        </p>
+        <p class="la-ai-prompt" role="note">
+            <span class="la-ai-prompt-label">Ask AI</span>
+            Explain why a change of variables in a volume integral picks up a Jacobian determinant. Set up \(\iiint_V 1\, dV\) for the unit ball in spherical coordinates and show you get \(\frac{4\pi}{3}\).
+        </p>
+        <p>
+            <b>Linear algebra connection:</b> a volume integral is where the Jacobian stops being a matrix you multiply by a vector and becomes a <b>determinant</b> that tells you how volume scales.
+            That is the same object behind <a class="la-xlink" href="linear_algebra.html#la-null-image">determinants and invertibility</a> in the linear algebra notes, now measuring how a curved coordinate change distorts little 3D boxes.
+        </p>
+        <p>
+            <b>Why do we care?</b> Volume integrals let you compute total mass from a density, average values over a 3D region, probabilities in 3D, and (with the divergence theorem) connect what happens <i>inside</i> a region to flux through its boundary surface.
+        </p>
+        <p style="color:#b80707">
+            <b>
+                Red = stop and think: On the unit ball, why does \(f=1\) give volume \(\frac{4\pi}{3}\), while on the unit cube \([0,1]^3\) it gives volume \(1\)? What is \(\iiint_V xyz\, dV\) on the unit ball by symmetry?
+            </b>
+        </p>
+        <div class="la-video-box" role="complementary" aria-label="Recommended video on volume integrals">
+            <strong class="la-video-title">Recommended video: triple integrals</strong>
+            <p>A gentle introduction to setting up and evaluating volume integrals.</p>
+            <div class="la-video-links">
+                <a class="la-video-btn" href="https://www.khanacademy.org/math/multivariable-calculus/integrating-multivariable-functions/triple-integrals-topic/v/triple-integrals-1" target="_blank" rel="noopener noreferrer">Triple integrals intro (Khan Academy) →</a>
+            </div>
+        </div>
+
+<footer style="text-align: center;">
+    <p>
+        Made by <a href="https://twitter.com/peterma02" >
+        @peterma02 </a>- <script>document.write(new Date().getFullYear())</script> ©
+    </p>
+</footer>
+
+</div>
+
+
+<script>
+(function(){
+  var n=document.querySelector('.lecture-nav');
+  var intro=document.querySelector('h1');
+  if(!n)return;
+  if(intro){
+    var o=new IntersectionObserver(function(e){
+      e.forEach(function(x){n.classList.toggle('visible',!x.isIntersecting);});
+    },{threshold:0});
+    o.observe(intro);
+  }
+  var links=Array.from(n.querySelectorAll('a[href^="#"]'));
+  var sections=links.map(function(l){
+    var s=document.getElementById(l.getAttribute('href').slice(1));
+    return s?{link:l,section:s}:null;
+  }).filter(Boolean);
+  var ticking=false;
+  function updateActive(){
+    var readingLine=120;
+    var active=sections[0]||null;
+    sections.forEach(function(p){
+      if(p.section.getBoundingClientRect().top<=readingLine){active=p;}
+    });
+    sections.forEach(function(p){p.link.classList.remove('active');});
+    if(active){active.link.classList.add('active');}
+    ticking=false;
+  }
+  window.addEventListener('scroll',function(){
+    if(!ticking){requestAnimationFrame(updateActive);ticking=true;}
+  },{passive:true});
+  updateActive();
+})();
+</script>
+
+</body>
+
+</html>
