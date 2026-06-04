@@ -342,12 +342,18 @@
             \forall \epsilon > 0, |x-a|<\delta \Rightarrow |L-f(a)|< \epsilon \] where \(L\) is the limit.
         </p>
         <p>
-            This looks confusing... what does this mean? The analogy I like to give is to imagine playing a game against a computer. In this game, you have the function
+            Hold on. What does this mean in english? You will come across this notation in more "advanced" math classes but to put simply 
+            this is saying "there exists (\(\exists\)) a \(\delta\) such that (\(:\)) for all (\(\forall\)) \(\epsilon\) greater than 
+            \(0\), where \(|x-a|<\delta\) that that implies (\(\Rightarrow\)) \(|L-f(a)| < \epsilon\)"
+        </p>
+        <p>
+            This looks and sounds confusing... what does this mean? The analogy I like to give is to imagine playing a game against a computer.
+            In this game, you have the function
             \(x^2\), and the computer asks, "Can you find me a \(\delta\) value that guarantees that for any \(x\) between
             \(x-\delta\) and \(x+\delta\), the function \(x^2\) will not deviate from the limit \(L\) by more than \(\epsilon\)?"
         </p>
         <p>
-            Let's play a turn of this game. Let's say the place where we want to find the limit is at \(x \to 0\). Okay, and the computer hands us
+            Let's play a 1 round of this game! Let's say the place where we want to find the limit is at \(x \to 0\). Okay, and the computer hands us
             \(\epsilon = 2\). That's easy! If we pick a \(\delta < 1\), then we can easily win, right? Because \(|f(0-1)-f(0)|< \epsilon \) and
             \(|f(0+1)-f(0)|< \epsilon \). That's just one turn. What the true definition of the limit is really saying is that no matter what
             \(\epsilon\) the computer hands you, if you can always win against the computer by picking a winning \(\delta\), then
