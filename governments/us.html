@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="shortcut icon" type="image/jpg" href="../img/favicon.ico"/>
+<title>Presidential System (US Govt.) | Peter Ma</title>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-157223762-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-157223762-1');
+</script>
+
+<link rel="stylesheet" href="../css/style.css">
+<style>
+    .la-feedback-box {
+        margin: 1rem 0 1.35rem;
+        padding: 1rem 1.35rem 1.15rem;
+        background: #fff8f8;
+        border: 2px solid #b80707;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(184, 7, 7, 0.12);
+        max-width: 42rem;
+    }
+    .la-feedback-box .la-feedback-title {
+        display: block;
+        font-size: 1.08rem;
+        color: #b80707;
+        margin-bottom: 0.45rem;
+        letter-spacing: 0.02em;
+    }
+    .la-feedback-box p {
+        margin: 0;
+        line-height: 1.5;
+    }
+    .la-worksheet-box {
+        margin: 1rem 0 1.35rem;
+        padding: 1rem 1.35rem 1.15rem;
+        background: #f5f9ff;
+        border: 2px solid #1565c0;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(21, 101, 192, 0.12);
+        max-width: 42rem;
+    }
+    .la-worksheet-box .la-worksheet-title {
+        display: block;
+        font-size: 1.08rem;
+        color: #0d47a1;
+        margin-bottom: 0.45rem;
+        letter-spacing: 0.02em;
+    }
+    .la-worksheet-box p {
+        margin: 0;
+        line-height: 1.5;
+        color: #1565c0;
+    }
+    .la-worksheet-box a {
+        font-weight: 600;
+        color: #0d47a1;
+    }
+    .la-next-chapter-box {
+        margin: 2rem 0 1.5rem;
+        padding: 1.15rem 1.35rem 1.25rem;
+        background: #f3faf4;
+        border: 2px solid #2e7d32;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(46, 125, 50, 0.12);
+        max-width: 42rem;
+    }
+    .la-next-chapter-box .la-next-chapter-title {
+        display: block;
+        font-size: 1.08rem;
+        color: #1b5e20;
+        margin-bottom: 0.45rem;
+        letter-spacing: 0.02em;
+    }
+    .la-next-chapter-box p {
+        margin: 0 0 0.85rem;
+        line-height: 1.5;
+        color: #2e7d32;
+    }
+    .la-next-chapter-btn {
+        display: inline-block;
+        padding: 0.55rem 1rem;
+        background: #2e7d32;
+        border: 2px solid #1b5e20;
+        border-radius: 6px;
+        color: #fff !important;
+        font-weight: 600;
+        text-decoration: none;
+    }
+    .la-next-chapter-btn:hover,
+    .la-next-chapter-btn:focus {
+        background: #1b5e20;
+        border-color: #104315;
+        color: #fff !important;
+        text-decoration: none;
+    }
+    .la-ai-prompt {
+        margin: 1rem auto 1.25rem;
+        padding: 0.75rem 1.1rem 0.85rem;
+        background: #f5f9ff;
+        border: 2px solid #1565c0;
+        border-radius: 8px;
+        border-left: 5px solid #1565c0;
+        box-shadow: 0 2px 8px rgba(21, 101, 192, 0.1);
+        max-width: 42rem;
+        line-height: 1.5;
+        color: #0d47a1;
+        text-align: center;
+    }
+    .la-ai-prompt .la-ai-prompt-label {
+        display: block;
+        margin: 0 auto 0.45rem;
+        width: fit-content;
+        padding: 0.12rem 0.45rem;
+        background: #1565c0;
+        color: #fff;
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        border-radius: 4px;
+    }
+    /* Feedback + worksheet: side by side on desktop, stacked on narrow screens */
+    .la-callouts-row {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem 1.25rem;
+        align-items: stretch;
+        width: 100%;
+        max-width: 100%;
+        margin: 1rem 0 1.35rem;
+    }
+    .la-callouts-row--end {
+        margin-top: 2.5rem;
+        margin-bottom: 0;
+    }
+    .la-callouts-row .la-feedback-box,
+    .la-callouts-row .la-worksheet-box {
+        flex: 1 1 auto;
+        min-width: 0;
+        margin: 0;
+        max-width: none;
+        width: 100%;
+    }
+    @media (min-width: 768px) {
+        .la-callouts-row {
+            flex-direction: row;
+            flex-wrap: nowrap;
+        }
+        .la-callouts-row .la-feedback-box,
+        .la-callouts-row .la-worksheet-box {
+            flex: 1 1 0;
+            width: auto;
+        }
+    }
+</style>
+<script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<!-- <script src="https://cdn.plot.ly/plotly-1.42.5.min.js"></script> -->
+<script src='js/d3.min.js'> </script>
+<script src="https://d3js.org/d3.v4.js"></script>
+<!-- <script src="js/plotly-latest.min.js"></script> -->
+<!-- Latest compiled and minified plotly.js JavaScript -->
+<script src="https://cdn.plot.ly/plotly-latest.min.js" charset="utf-8"></script>
+
+<!-- OR use a specific plotly.js release (e.g. version 1.52.3) -->
+<script src="https://cdn.plot.ly/plotly-1.52.3.min.js" charset="utf-8"></script>
+
+<!-- OR an un-minified version is also available -->
+
+
+<script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
+
+<!-- for testing with local version of cytoscape.js -->
+<!--<script src="../cytoscape.js/build/cytoscape.js"></script>-->
+
+<script src="https://unpkg.com/webcola/WebCola/cola.min.js"></script>
+
+</head>
+<body>
+<nav class="lecture-nav" aria-label="Jump to section">
+    <div class="lecture-nav-block">
+        <a class="lecture-nav-video" href="https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab" target="_blank" rel="noopener noreferrer">Essence of linear algebra</a>
+    </div>
+    <div class="lecture-nav-block"><a href="#la-why">Why</a></div>
+    <div class="lecture-nav-block"><a href="#la-notation">Notation</a></div>
+    <div class="lecture-nav-block"><a href="#la-intro">Introduction</a></div>
+    <div class="lecture-nav-block"><a href="#la-vectors">Vectors</a></div>
+    <div class="lecture-nav-block"><a href="#dot-product-norm">Dot product</a></div>
+    <div class="lecture-nav-block"><a href="#la-linear-combination-span">Span</a></div>
+    <div class="lecture-nav-block"><a href="#la-linear-maps">Linear maps</a></div>
+    <div class="lecture-nav-block"><a href="#la-matrix-mult-why">Matrix mult</a></div>
+    <div class="lecture-nav-block"><a href="#la-null-image">Null / image</a></div>
+    <div class="lecture-nav-block"><a href="#la-eigenvalues">Eigenvalues</a></div>
+    <div class="lecture-nav-block"><a href="#la-diagonalization">Diagonalization</a></div>
+    <div class="lecture-nav-block"><a href="#la-svd">SVD</a></div>
+    <div class="lecture-nav-block"><a href="#la-qr">QR</a></div>
+    <div class="lecture-nav-block"><a href="#la-lu">LU</a></div>
+    <div class="lecture-nav-block"><a href="#la-cholesky">Cholesky</a></div>
+    <div class="lecture-nav-block"><a href="#la-factorization-comparison">Factorizations</a></div>
+</nav>
+<div style="transform: scale(0.9); transform-origin: 50% 0%;">
+<div class="page_setup">
+<div class="container">
+    <div class="row "  style="padding-top:2%!important ; padding-left: 10%; padding-right: 5%;">
+        <span class="peterma" style="color: #b80707; font-size: 300%;">
+            The Presidential System (US Government)
+        </span>
+        <h4>
+            Peter Ma | July 1st 2026
+        </h4>
+        <p>
+        <a href="../index.html"><< Back</a>
+        </p>
+        
+        <h1 id="la-why">
+            Why do we care?
+        </h1>
+        <p>
+            Understanding, to some degree, how government institutions work is important, in my opinion.
+            Generally, the public sector
+            holds a unique position in solving certain kinds of problems that other sectors cannot.
+        </p>
+        <p>
+            I like to think that there are broadly three main engines that society has set up to drive progress on
+            various kinds of "problems" deemed "important" by us.
+        </p>
+        <p>
+            Industry addresses problems that require speed and scale, achieved by leveraging economic
+            market competition. The constraint here is that it typically requires something
+            to be profitable on a near-term horizon. This naturally requires something concrete.
+        </p>
+        <p>
+            Academia is the opposite. It gives freedom to tackle problems that are not concrete,
+            to take risks where profitability is not the primary incentive structure (or at least not explicitly).
+        </p>
+        <p>
+            And then there is the public sector, whose role today, in my opinion,
+            is to solve tragedy-of-the-commons-like problems: problems that plague everyone but cannot be or
+            should not be made explicitly profitable. This list is debatable, but common examples include roads, health care,
+            and defense.
+        </p>
+        <p>
+            However, in the modern world, these lines are very rarely clearly drawn. To solve problems today,
+            one often has to leverage all sectors in order to drive progress effectively.
+            For example, academia is funded by governments,
+            whose discoveries can be made publicly available via industry.
+            Playing the game well requires us to be agile
+            in maneuvering across these three sectors.
+            Many of us spend almost no time in any sector besides our own, and I think that makes us less capable.
+        </p>
+        <p>
+            The first institution I want to study is the United States presidential system. As supposedly the most
+            powerful nation on Earth, how do these institutions function, and what do they morally stand for?
+        </p>
+        <!-- <p>
+            Broken down simply, deomocracy, as a form of 
+            governence primairly has 2 forms, Parlimentary and Presidential (and also Semi Presidential). And these governence structures 
+            in the end determine the rules of "the game". They establish laws, regulations to protect rights and freedoms 
+            and has a means of updating and adapting these laws to respond to change. With that comes a great amount of power for change and 
+            progress. 
+        </p>
+        <p>
+            I wanted to give myself some kind of mental recoverable primer as to how these public bodies 
+            work and interact with both everyday life and the broader world around us. 
+            And more fundamentally why things 
+            are the way they are and what could better look like.  
+        </p>
+        <p>
+            As a Canadian, the US government structure is different and I have very minimal understanding of how things
+             works in the US so this was definitely all new for me.
+
+        </p> -->
+        
+        <h1>
+           Introduction
+        </h1>
+        <p>
+            A famous catalyst for the founding of the nation was the Boston Tea Party. At the time, in the 1700s, those living in
+            what is now the US felt that the British government was imposing tyrannical rule. A major grievance was the monopoly on, and taxation of, 
+            tea. Importantly, there was taxation, but there was no <i>representation</i> in Parliament.
+            And so there began a huge revolution in an attempt to overthrow the control of
+            the British monarchy
+            over the 13 colonies. This was made clear in their intentions via the
+             <b>Declaration of Independence</b>. The goal was to
+            start a brand-new project: a new government. They wanted a system based on the "consent of the governed," as
+            opposed to a distant monarch or a few elites controlling the power.
+        </p>
+        <p>
+            Before answering "what" this new government is, you may be wondering "why" even have a government
+            to begin with. After all, is not the most
+            effective way of escaping tyrannical control in the future to have no government at all?
+            Why not just straight-up anarchy?
+        </p>
+        <!-- <p>
+            But you may be wondering. Why a government? Why do we even want to establish a government to begin 
+            with? </p> -->
+        <h1>
+            Why a Government?
+        </h1>
+        <p>
+            Political philosophy is vast, and I am too poorly read on the subject to say much of
+            anything intelligent here. But it feels like the government's job is to protect people's
+            rights and to serve the public.
+        </p>
+        <p>
+            Mostly, the protection of rights comes from the law, where people surrender certain freedoms
+            to help protect other, more important rights. For example, without laws, we might go and hurt others and be
+            free to do so. However, that comes at the cost of people's rights to safety and security.
+            We as a society have agreed
+            that safety and security is far more important than hurting one another (of course),
+            and so we surrendered that
+            aspect of our freedom. This decision is what one might call a <b>Social Contract</b>
+            (coined by Hobbes, <i>Leviathan</i>), and these specific rights that are deemed worthy of protecting are called
+             <b>Natural Rights</b>
+            (John Locke or some other white dude). This idea was the dominant mode of thinking during the Enlightenment era.
+        </p>
+        <p>
+            Implicit in this idea, I believe, is the understanding that governments are set up to address problems that
+            do not naturally emerge from individual behavior.
+        </p>
+        <p>
+            For example, public institutions provide solutions to problems
+            that require everyone to
+            contribute but are not immediately enjoyed by everyone. This is not natural.
+
+            For example, taxes going to fund highways
+            may not make sense to me as someone without a car, but collectively we agreed that highways should be a
+            public good because freedom of navigation is important to us. Without a government, nobody will pave this road
+            unless there are economic incentives; however, that would mean not everyone can use it, which limits your rights of mobility.
+
+        </p>
+        <p>
+            The goal of these revolutionaries was to use the function of a government
+             as a means to enshrine and protect certain ideals in how
+            they believed life would be better lived. Those ideals should be determined by the people, for the people.
+        </p>
+        <h1>
+            Democratic Ideals
+        </h1>
+        <p>
+            This idea that "the people" can decide their fate in a government system is broadly <b>democracy</b>.
+            The goal is to have the people decide what these fundamental rights are and what rights to give up
+            in something called <b>Popular Sovereignty</b>. To
+            decide on this, there are various means of achieving that.
+        </p>
+        <p>
+            <b>Participatory Democracy:</b> everyone votes on everything. Good: it is fair. Bad: it is slow and hard to implement.
+        </p>
+        <p>
+            <b>Pluralist Democracy:</b> elected representatives from parties vote on your behalf. Good: easier to implement while remaining fairly representative.
+            Bad: it can create gridlock.
+        </p>
+        <p>
+            <b>Elite Democracy:</b> a few people vote without your involvement. Good: it is fast. Bad: it is not very fair representation and can have misalignments.
+        </p>
+        <p>
+            Fundamentally, the founding fathers were interested in a mix of these ideas,
+            which we will see play out below
+            (for instance, in the Connecticut Compromise, also known as the Great Compromise). Long story short, however, the United States is a <b>limited democracy/pluralist</b>
+            system and is thus more of a <b>republic</b> than a pure direct democracy.
+        </p>
+        <h1>
+            Founding Documents
+        </h1>
+        <p>
+            The founding documents make <i>material</i> what was once only in theory. 
+        </p>
+        <h4>
+            Declaration of Independence
+        </h4>
+        <p>
+            The Declaration of Independence was written first, during the early stages of the revolution,
+            "declaring" that the 13 colonies would behave as sovereign states separate from the British Empire. In it you see these ideas of
+            <b>Natural Rights</b> and <b>Popular Sovereignty</b> being played out in the first few sentences:
+
+        </p>
+        <p>
+        <i>
+            "We hold these truths to be self-evident, that all men are created equal, that they are endowed by their Creator with certain unalienable Rights, that among these are Life, Liberty and the pursuit of Happiness."
+            
+        </i>
+        Natural Rights!
+    </p>
+        <p>
+        <i>
+            "Governments are instituted among Men, deriving their just powers from the consent of the governed." — Popular Sovereignty
+        </i>
+    </p>
+        <p>
+            What is also interesting is that the Declaration also morally justifies the revolution by stating:
+            <i>"whenever any Form of Government becomes destructive of these ends, it is the Right of
+                the People to alter or to abolish it, and to institute new Government"</i>.
+            Many revolutions, good or bad, have justifications like these to sometimes appease the
+            masses. For example, in ancient China the <i>Mandate of Heaven</i> often also stated that if an emperor
+            exploits its people too much, then it is respectable to overthrow the dynasty.
+        </p>
+        <p>
+            The Declaration then continues to give a huge list complaining about what the King has done to them
+            and reasons they should overthrow the current British rule.
+        </p>
+        <p>
+            TL;DR: the colonies said they wanted out. 
+        </p>
+        <h4>
+            Articles of Confederation
+        </h4>
+        <p>
+            The Articles of Confederation (AoC) are the first resemblance of a "government." They basically said that each state
+            should behave as separate countries (like the EU!). They allow for free trade between the states and also a defense
+            pact that triggers when one state gets attacked and all respond (kind of like NATO?).
+            There is no centralized government!
+        </p>
+        <p>
+            The AoC also outlines how states can join (they also offered Canada as well??) and what duties are asked of these states.
+
+        </p>
+        <p>
+            The first version of the AoC made things hard, unfortunately. Why? Because they had just fought a big war.
+            This war pushed many states to the economic edge and left them with debts. Because the weak national government had no real mechanism to raise revenue,
+            state governments (like Massachusetts) imposed heavy property taxes to pay off their own war debts.
+        </p>
+        <p>
+            This squeezed farmers and war veterans, many of whom hadn't even received their back pay for fighting in the Continental Army.
+            Facing foreclosures and debtors' prison, these farmers took up arms. This armed uprising was known as
+            Shays' Rebellion.
+        </p>
+        <p>
+            <b>The only way out to pay for these debts is to form a centralized government: the federal government.</b>
+            By replacing a system of voluntary state contributions with a system of compulsory, independent national revenue.
+            There was a serious debate about this. On one side: we do not want to introduce more centralization. On the other side,
+            the states were drowning in debt and needed a solution.
+        </p>
+        <h4>
+            Federalist and Brutus Papers
+        </h4>
+        <p>
+            The <b>Federalist Papers</b> were a series of articles advocating for the formation of a federal government, beyond
+            just resolving the debt problem. For example, they argued in Paper #10 that a federal government can:
+            <ol>
+                <li>
+                    Protect against factions (a grand unified sphere forces different groups to compromise)
+                </li>
+                <li>
+                    Protect minority interests (specifically preventing a "tyranny of the majority" from oppressing smaller groups, especially regarding property)
+                </li>
+                <li>
+                    Participatory/direct democracy is dangerous (prone to mob rule and instability)
+                </li>
+                <li>
+                    Pluralist government is a good middle ground
+                </li>
+                <li>
+                    A large society benefits from different parties and ideas.
+                </li>
+            </ol>
+        In the Federalist Papers, many ideas became part of the Constitution. For example, the separation of powers
+        with checks and balances in Paper #51, or the need for an agile central executive government,
+        an independent judiciary, and dual sovereignty between state and federal government.
+
+        </p>
+        <p>
+            The <b>Brutus Papers</b> (named after the man who killed Caesar) argue for pretty much the exact opposite. They wanted
+            to prevent tyranny. Creating any single entity would ruin this. They also believed that
+            a nation as large as the US would not succeed under such a large centralized power.
+            As a result, he favored placing most key powers in the governments closest to the people:
+            their state and local governments. This was fueled by their experience with the distant king, like Britain, which
+            could not hear the needs of the people. They did not want to return to the same situation again.
+        </p>
+        <p>
+            These fears were real. There were certain proposed components that drew fear of a future tyrannical government.
+            For example, "The Necessary and Proper Clause."
+            This clause allows Congress to make any laws "necessary and proper" to execute its powers, which can be seen as a
+            "blank check" for future people to grab power! This also includes fears of the centralized military as potentially oppressive,
+            and the control of taxation.
+        </p>
+        <p>
+            The Brutus Papers were in the end unsuccessful in blocking the Constitution. But they did introduce new ideas,
+            such as the <b>Bill of Rights</b>, which states explicitly the rights the government <b>cannot</b> take from
+            you. This is in contrast to the rights you are given. These are boundaries on what the laws cannot do to you.
+
+        </p>
+        <p>
+            Together, these papers were the back-and-forth discourse of the day as to whether or not we should ratify this
+            new document called the <b>Constitution</b>.
+        </p>
+        <h4>
+            Constitution
+        </h4>
+        <p>
+            The Constitution is the actual foundation of the union and is the physical, material example of the
+            social contract. We can see that from the get-go with the famous Preamble:
+
+        </p>
+        <p>
+            <i>
+                We the People of the United States, in Order to form a more perfect Union, establish Justice, insure domestic Tranquility, provide for the common defence, promote the general Welfare, and secure the Blessings of Liberty to ourselves and our Posterity, do ordain and establish this Constitution for the United States of America.
+            </i>
+        </p>
+        <p>
+            As mentioned, the Constitution remained a living document up to the point of ratification, as debates were made about what
+            should and should not be in the law. I will outline the key parts of the seven original articles of the
+            Constitution.
+        </p>
+        <p>
+            <b>Article 1 — Legislative (making laws):</b> This created <b>Congress</b>, split
+            into two sections: the <b>Senate (2 per state)</b> and the <b>House of Representatives (population dependent)</b>.
+            The goal was to balance <i>elite</i> democracy and <i>popular</i> democracy.
+        </p>
+        <p>
+            <b>Article 2 — Executive (running the country):</b> This created the <b>president</b>. It gave the president certain powers
+            with a vesting clause that gave power to a single person.
+        </p>
+        <p>
+            <b>Article 3 — Judicial (interpreting law):</b> This created the <b>Supreme Court</b> and authorized lower federal courts.
+            (Note: the explicit power of <i>judicial review</i>—to overturn unconstitutional laws—was established shortly after in the famous 1803 case <i>Marbury v. Madison</i>).
+        </p>
+        <p>
+            <b>Article 5 — Amendment (changing the Constitution):</b> This created the means to make change in the future. However, it is
+            made so it is very hard to actually achieve. It requires a two-thirds supermajority from each house, and three-quarters of states to agree. An
+            amendment can be proposed via either house, but can also be proposed by the states and bypass Congress.
+        </p>
+        <p>
+            <b>Article 6 — Debts, Supremacy, and Religion:</b> It honors the debts of the previous government. It includes the <b>Supremacy Clause</b> (federal law overrides state law).
+            Crucially, it also bans religious tests for holding public office, laying the early groundwork for the separation of church and state (which the First Amendment later solidified).
+        </p>
+        <p>
+            <b>Article 7 — Ratification:</b> to ratify means to accept, formally approve, or enact something into law.
+        </p>
+        <h4>
+            Bill of Rights
+        </h4>
+        <p>
+            The Bill of Rights is an addition to the Constitution (the first 10 amendments), proposed by the
+            anti-federalists to protect individual rights. It was also a compromise to get
+            several key states (like Massachusetts, Virginia, and New York) to agree to ratify the
+             Constitution on the strict condition that a list of fundamental rights be added immediately. It was to
+             prevent the government from being too powerful. It included:
+        </p>
+        <p>
+            <ol>
+                <li>
+                    <b>Amendments 1</b> — Freedom of expression
+                </li>
+                <li>
+                    <b>Amendments 2, 3, 4</b> — Security and property rights
+                </li>
+                <li>
+                    <b>Amendments 5, 6, 7, 8</b> — Ensures due process, a speedy public trial by jury,
+                    protection against self-incrimination
+                </li>
+                <li>
+                    <b>Amendments 9, 10</b> — Just because we did not list it does not mean it is not important, and anything
+                    not listed is delegated to the state level.
+                </li>
+            </ol>
+        </p>
+        <h1>
+            Branches of Government
+        </h1>
+        <p>
+            With that out of the way, this is functionally how the government actually works.
+        </p>
+        <h4>
+            Legislative (Congress)
+        </h4>
+        <p>
+            The legislative branch <b>creates the laws</b>. Congress is split into two halves: the <b>Senate</b>, which
+            holds two seats per state and is voted in (more powerful), and the <b>House of Representatives</b>, which varies per state
+            depending on population size. The two exist to balance elite vs. popular power.
+        </p>
+        <p>
+            House representatives are <i>re-elected every two years</i> and are thus always chasing what is popular!
+        </p>
+        <p>
+            Senators are <i>re-elected every six years</i> and thus can choose to break away from what is popular.
+        </p>
+        <p>
+            <b>How something becomes law:</b> Both the Senate and House can introduce a <b>bill</b>. The bill
+            is then passed to a committee. There are various different kinds of committees. For example, the
+            Ways and Means Committee takes care of how to tax (income), the Budget Committee (plan) determines
+            how much money there is, and the
+            Appropriations Committee decides how to spend.
+        </p>
+        <p>
+            Under the Constitution's Origination Clause, all bills for raising revenue (taxes) <i>must</i> start in the House.
+            Other legislation can start in either chamber. However, the Senate does have special, exclusive powers regarding foreign policy (such as ratifying treaties and confirming ambassadors).
+            Sending a general bill to the Senate is usually easier to get to the floor for a vote because their rules are looser, while in the House it is generally harder and more tightly controlled by leadership.
+        </p>
+        <p>
+            For any bill to pass, it needs to pass both the House and Senate.
+            Any bill passed can be vetoed by the president, unless it passes with a supermajority of two-thirds votes.
+            Finally, the president signs it into law.
+        </p>
+        <p>
+            Structurally, the House has more hierarchy while the Senate is flatter. House representatives typically fall in line
+            with the party since they cannot afford dissent in their next election campaign. Thus things in the House move faster.
+            The Senate has much more debate to cool things down so that new laws are not passed too fast
+            but can also be regulated.
+        </p>
+        <p>
+            The Senate takes time because there is the <b>filibuster</b>: they need 60 votes to decide whether they should vote on it, and
+            51 votes to actually win the vote on the floor. In the House it is much faster.
+        </p>
+        <p>
+            Congressional roles can fall under three types. Members can act as <b>delegates</b> (voting exactly as their constituents wish), <b>trustees</b> (using their own informed judgment for the greater good, even if unpopular), and
+            <b>politicos</b> (balancing the two depending on the political stakes of the issue).
+        </p>
+        <p>
+            There are different strategies in deciding where to put in the bill. Go to the House for speed and political signaling, while
+            go through the Senate if you want things to cool down before voting, since it takes longer.
+        </p>
+        <p>
+            Also, if the House majority forces its most vulnerable members (those representing closely divided "swing" districts) to take a difficult, controversial vote on a bill, those members risk losing their next election. If that bill then goes to the Senate and is immediately killed by a filibuster, the House members took a politically damaging vote for absolutely nothing.
+
+To avoid this, House leadership will often refuse to vote on a controversial issue until the Senate passes it first.
+They want a guarantee that the bill can survive the 60-vote threshold before they make their own members walk the political plank.
+        </p>
+        <h4>
+            Executive (President)
+        </h4>
+        <p>
+            The executive branch is built around <b>running the government</b>, carrying out its everyday duties
+            under the vesting clause from the Constitution. The president leads this branch.
+        </p>
+        <p>
+            <b>Executive orders:</b> directives that have the force of law. Unlike statutes, they can be unilaterally revoked by a future president,
+            so incoming administrations routinely reverse their predecessors' orders. They remain in effect until revoked, superseded, or struck down by the courts.
+        </p>
+        <p>
+            The president has <b>formal powers</b> like the military, executive departments, judicial appointments, nominating
+            officials, and presidential pardons.
+            The president also has <b>informal powers</b>: persuading people in Congress to toe the party line,
+            and forming agreements with other governments through treaties and international ties. Originally the links between
+            presidents and Congress were informal, but now they are deeply connected.
+        </p>
+        <p>
+            The reason a president needed to be one single person was to maintain quickness and agility in actions like war and foreign decisions.
+        </p>
+        <p>
+            That being said, the executive branch is by far the largest federal entity of the three branches, with
+            nearly 2.5 million people working for it. This includes the many departments that are under executive control.
+        </p>
+        <h4>
+            Judicial (Federal Courts)
+        </h4>
+        <p>
+            The judicial branch consists of the <b>Supreme Court</b> and lower federal courts. The Supreme Court is currently made up of nine justices, each of whom is appointed
+            for life (technically "during good behavior"). When deciding on new cases, courts almost always look for past cases that set precedent. Thus,
+            whenever something is done for the first time, it gets scrutinized heavily.
+        </p>
+        <p>
+            Courts are used to enforce the law and interpret it, and thus have lots of power. Checks and balances do exist,
+            but make it hard, since judges usually have political affiliations tied to those who appointed them—
+            a right vs. left situation. However, <i>judges are least bound by the people!</i> Although the Senate can reject an
+            appointment, judges are not voted in by the public in any regard.
+        </p>
+        <h1>
+            The Iron Triangle
+        </h1>
+        <p>
+            It is the mutual relationship between a congressional committee,
+            an executive branch agency (the bureaucracy), and a special interest group. It turns out
+            when these three align, they can completely shut out the president and the people from policy decisions.
+        </p>
+        <p>
+            Why? Because they have each other's mutual needs. Take, for example, this:
+        </p>
+        <p>
+            <ol>
+                <li>
+                    The Defense Contractor (Interest Group) gives a massive campaign donation to the Chairman of the Armed Services Committee.
+                </li>
+                <li>
+                    The Chairman (Congress) uses their legislative power to pass a massive budget increase for a new fighter jet program run by the Department of Defense.
+                </li>
+                <li>
+                    The Department of Defense (Agency) uses that new budget to award the manufacturing contract directly to the Defense Contractor.
+                </li>
+            </ol>
+        </p>
+        <p>
+            So how does this work? <b>Congress</b> approves bills because they need money for campaigns.
+
+            <b>Agencies</b> give government contracts to special groups/companies, but they need Congress to provide the money from the bills.
+            <b>Companies/special interest groups</b> give money to campaigns, but they need the lucrative payments from contracts.
+        </p>
+
+
+        <!-- <h1>
+            Checks and Balances
+        </h1> -->
+        <!-- <h1>
+            Policy Process
+        </h1> -->
+        <h1>
+            Other Countries
+        </h1>
+        <p>
+            Do we see similar systems in other places around the world? Yes!
+        </p>
+        <p>
+            We see the system adopted in <b>Latin America</b>, for example Brazil, Mexico, Argentina, Chile, and Colombia.
+            When these countries fought for independence from Spain and Portugal in the early 19th century, they looked directly to the United States as the most successful example of a newly independent republic.
+            However, many Latin American presidents historically held much more concentrated constitutional power than the US president (often through emergency decree powers), which is one reason the region has historically struggled more with democratic instability and military coups.
+        </p>
+        <p>
+            We see the system adopted in <b>Africa</b>: Nigeria (which modeled its system very closely on the US, complete with a federal structure to manage its diverse population), Kenya, and Ghana.
+        </p>
+        <p>
+            We also see it in Asia, such as the Philippines, Indonesia, and South Korea.
+        </p>
+
+        <p>
+            Unfortunately, among political scientists, there is a famous concept known as the
+            "perils of presidentialism," first coined by scholar Juan Linz in 1990. It
+            argues that the presidential system is inherently unstable and prone to failure. This is because of
+            "dual democratic legitimacy," where Congress and the president can fight due to deadlock, and
+            often the only way people release pressure is via violence or revolution.
+            Furthermore, impeachment is hard, and there is no easy, routine way to remove a president before
+            the next election. There is also a winner-takes-all mindset.
+            The presidency is a zero-sum game: you either win the whole executive branch, or you get nothing. In deeply divided societies, a president who wins with just 51% of the vote can entirely shut out the other 49%. This raises the stakes of elections to dangerous levels,
+             often radicalizing the losing side because they have no share of executive power for several years.
+        </p>
+        
+    </div>
+
+</body>
+
+</html>
