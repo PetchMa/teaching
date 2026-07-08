@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="shortcut icon" type="image/jpg" href="../img/favicon.ico"/>
+<title>Parliamentary System (UK Govt.) | Peter Ma</title>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-157223762-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-157223762-1');
+</script>
+
+<link rel="stylesheet" href="../css/style.css">
+<style>
+    .la-feedback-box {
+        margin: 1rem 0 1.35rem;
+        padding: 1rem 1.35rem 1.15rem;
+        background: #fff8f8;
+        border: 2px solid #b80707;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(184, 7, 7, 0.12);
+        max-width: 42rem;
+    }
+    .la-feedback-box .la-feedback-title {
+        display: block;
+        font-size: 1.08rem;
+        color: #b80707;
+        margin-bottom: 0.45rem;
+        letter-spacing: 0.02em;
+    }
+    .la-feedback-box p {
+        margin: 0;
+        line-height: 1.5;
+    }
+    .la-worksheet-box {
+        margin: 1rem 0 1.35rem;
+        padding: 1rem 1.35rem 1.15rem;
+        background: #f5f9ff;
+        border: 2px solid #1565c0;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(21, 101, 192, 0.12);
+        max-width: 42rem;
+    }
+    .la-worksheet-box .la-worksheet-title {
+        display: block;
+        font-size: 1.08rem;
+        color: #0d47a1;
+        margin-bottom: 0.45rem;
+        letter-spacing: 0.02em;
+    }
+    .la-worksheet-box p {
+        margin: 0;
+        line-height: 1.5;
+        color: #1565c0;
+    }
+    .la-worksheet-box a {
+        font-weight: 600;
+        color: #0d47a1;
+    }
+    .la-next-chapter-box {
+        margin: 2rem 0 1.5rem;
+        padding: 1.15rem 1.35rem 1.25rem;
+        background: #f3faf4;
+        border: 2px solid #2e7d32;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(46, 125, 50, 0.12);
+        max-width: 42rem;
+    }
+    .la-next-chapter-box .la-next-chapter-title {
+        display: block;
+        font-size: 1.08rem;
+        color: #1b5e20;
+        margin-bottom: 0.45rem;
+        letter-spacing: 0.02em;
+    }
+    .la-next-chapter-box p {
+        margin: 0 0 0.85rem;
+        line-height: 1.5;
+        color: #2e7d32;
+    }
+    .la-next-chapter-btn {
+        display: inline-block;
+        padding: 0.55rem 1rem;
+        background: #2e7d32;
+        border: 2px solid #1b5e20;
+        border-radius: 6px;
+        color: #fff !important;
+        font-weight: 600;
+        text-decoration: none;
+    }
+    .la-next-chapter-btn:hover,
+    .la-next-chapter-btn:focus {
+        background: #1b5e20;
+        border-color: #104315;
+        color: #fff !important;
+        text-decoration: none;
+    }
+    .la-ai-prompt {
+        margin: 1rem auto 1.25rem;
+        padding: 0.75rem 1.1rem 0.85rem;
+        background: #f5f9ff;
+        border: 2px solid #1565c0;
+        border-radius: 8px;
+        border-left: 5px solid #1565c0;
+        box-shadow: 0 2px 8px rgba(21, 101, 192, 0.1);
+        max-width: 42rem;
+        line-height: 1.5;
+        color: #0d47a1;
+        text-align: center;
+    }
+    .la-ai-prompt .la-ai-prompt-label {
+        display: block;
+        margin: 0 auto 0.45rem;
+        width: fit-content;
+        padding: 0.12rem 0.45rem;
+        background: #1565c0;
+        color: #fff;
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        border-radius: 4px;
+    }
+    /* Feedback + worksheet: side by side on desktop, stacked on narrow screens */
+    .la-callouts-row {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem 1.25rem;
+        align-items: stretch;
+        width: 100%;
+        max-width: 100%;
+        margin: 1rem 0 1.35rem;
+    }
+    .la-callouts-row--end {
+        margin-top: 2.5rem;
+        margin-bottom: 0;
+    }
+    .la-callouts-row .la-feedback-box,
+    .la-callouts-row .la-worksheet-box {
+        flex: 1 1 auto;
+        min-width: 0;
+        margin: 0;
+        max-width: none;
+        width: 100%;
+    }
+    @media (min-width: 768px) {
+        .la-callouts-row {
+            flex-direction: row;
+            flex-wrap: nowrap;
+        }
+        .la-callouts-row .la-feedback-box,
+        .la-callouts-row .la-worksheet-box {
+            flex: 1 1 0;
+            width: auto;
+        }
+    }
+</style>
+<script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<!-- <script src="https://cdn.plot.ly/plotly-1.42.5.min.js"></script> -->
+<script src='js/d3.min.js'> </script>
+<script src="https://d3js.org/d3.v4.js"></script>
+<!-- <script src="js/plotly-latest.min.js"></script> -->
+<!-- Latest compiled and minified plotly.js JavaScript -->
+<script src="https://cdn.plot.ly/plotly-latest.min.js" charset="utf-8"></script>
+
+<!-- OR use a specific plotly.js release (e.g. version 1.52.3) -->
+<script src="https://cdn.plot.ly/plotly-1.52.3.min.js" charset="utf-8"></script>
+
+<!-- OR an un-minified version is also available -->
+
+
+<script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
+
+<!-- for testing with local version of cytoscape.js -->
+<!--<script src="../cytoscape.js/build/cytoscape.js"></script>-->
+
+<script src="https://unpkg.com/webcola/WebCola/cola.min.js"></script>
+
+</head>
+<body>
+<nav class="lecture-nav" aria-label="Jump to section">
+    <div class="lecture-nav-block">
+        <a class="lecture-nav-video" href="https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab" target="_blank" rel="noopener noreferrer">Essence of linear algebra</a>
+    </div>
+    <div class="lecture-nav-block"><a href="#la-why">Why</a></div>
+    <div class="lecture-nav-block"><a href="#la-notation">Notation</a></div>
+    <div class="lecture-nav-block"><a href="#la-intro">Introduction</a></div>
+    <div class="lecture-nav-block"><a href="#la-vectors">Vectors</a></div>
+    <div class="lecture-nav-block"><a href="#dot-product-norm">Dot product</a></div>
+    <div class="lecture-nav-block"><a href="#la-linear-combination-span">Span</a></div>
+    <div class="lecture-nav-block"><a href="#la-linear-maps">Linear maps</a></div>
+    <div class="lecture-nav-block"><a href="#la-matrix-mult-why">Matrix mult</a></div>
+    <div class="lecture-nav-block"><a href="#la-null-image">Null / image</a></div>
+    <div class="lecture-nav-block"><a href="#la-eigenvalues">Eigenvalues</a></div>
+    <div class="lecture-nav-block"><a href="#la-diagonalization">Diagonalization</a></div>
+    <div class="lecture-nav-block"><a href="#la-svd">SVD</a></div>
+    <div class="lecture-nav-block"><a href="#la-qr">QR</a></div>
+    <div class="lecture-nav-block"><a href="#la-lu">LU</a></div>
+    <div class="lecture-nav-block"><a href="#la-cholesky">Cholesky</a></div>
+    <div class="lecture-nav-block"><a href="#la-factorization-comparison">Factorizations</a></div>
+</nav>
+<div style="transform: scale(0.9); transform-origin: 50% 0%;">
+<div class="page_setup">
+<div class="container">
+    <div class="row "  style="padding-top:2%!important ; padding-left: 10%; padding-right: 5%;">
+        <span class="peterma" style="color: #b80707; font-size: 300%;">
+            The Parliamentary System (UK Government)
+        </span>
+        <h4>
+            Peter Ma | July 4th 2026
+        </h4>
+        <p>
+        <a href="../index.html"><< Back</a>
+        </p>
+        
+        <h1 id="la-why">
+            Why do we care?
+        </h1>
+        <p>
+            The parliamentary system is perhaps one of the most popular forms of democracy in the world. 
+            Nearly 3-4 BILLION people live under this kind of system. 
+            Nearly half of planet Earth participates in this system, either actively or passively. 
+            It is thus important to understand how it works. 
+        </p>
+        
+        <h1>
+           Introduction
+        </h1>
+        <p>
+            Specific to the UK parliamentary system (unlike some other parliamentary-style governments), it has no 
+            codified constitution. It's not like, say, the US, where people sat down and wrote a single document and called 
+            it the constitution. The UK had a long history of slowly relinquishing power from the monarch to the parliament. 
+
+        </p>
+        <p>
+            It first started with King John and the Barons. Back in the day, 
+            the monarch decided to outsource military power and control 
+            down to smaller representatives called Barons. These Barons, however, began to rebel, because the King 
+            started to try to levy large taxes on the Barons. So the Barons made the King sign an agreement not to 
+            tax without the approval of a council of Barons. However, most importantly, it stated that the 
+            King is NOT above the law! This was called the <b>Magna Carta</b> document.  
+        </p>
+        <p>
+           This baronial council was an early ancestor of the idea of Parliament — though the modern Parliament developed much later, especially under later kings like Edward I.
+        </p>
+        <p>
+            Then King Henry III later decided to stupidly commit to buying Sicily for his brother, which helped bankrupt England 
+            and forced him to raise taxes. He decided to raise taxes 
+            from the Barons, but they flatly refused, so he resorted to financial extortion. 
+            He aggressively fined people for minor offences, 
+            exploited the royal forests for cash, and squeezed the Jewish population for money. The Barons 
+            didn't like that and made him accept the <b>Provisions of Oxford</b> (1258), which put power in a baronial council 
+            and required Parliament to meet at fixed times (about three times a year). 
+            This pushed forward the idea of a real <b>legislative body</b> that could check the King. 
+        </p>
+        <p>
+            However, these Barons were not "common" folk. When did that change? It changed when King Edward realised that 
+            much of the wealth could be collected from the merchants and the knights, since there were more of them. 
+            However, it's hard to do that without giving them some kind of representation in decisions, so he invited them to
+            sit in parliament to voice their concerns. 
+        </p>
+        <p>
+            <b>The Great Split: </b> however, it quickly became apparent that seating knights, burgesses (town representatives), and the ultra-wealthy 
+            barons and bishops together made it hard to debate as separate groups. Over time Parliament split into a <b>House of Commons</b> (knights and burgesses — the "commons") and a 
+            <b>House of Lords</b> (bishops and nobles). This gave the tax-paying classes a chamber where they could negotiate with the Crown.
+        </p>
+        <p>
+            But what became apparent was that the common folk bore a much larger portion of the taxation, and thus 
+            could in theory hold the King hostage to their demands, or else he wouldn't receive funding for his wars!
+            This made the house of commons more powerful. 
+        </p>
+        <p>
+            Around the same time, in 1430, Parliament passed a law to standardize who could vote in the rural counties 
+            (the Shires). They established the "Forty-Shilling Freeholder" rule. 
+            To vote, a man had to own property that generated at least 40 shillings (£2) of income a year. As inflation made money worth less, the threshold 
+            became easier to meet. This rule lasted until the <b>Reform Act of 1832</b>.
+        </p>
+        <p>
+            However, in the 1600s, King Charles I tried to raise more money to fund wars and exert power over Parliament, which angered people and led to the 
+            <b>Petition of Right</b> in 1628. However, the King basically didn't honour it at all.
+            This reached a breaking point when he angered the Scots over religious policy; they rebelled, and he had to ask Parliament 
+            for money again. Tensions kept rising until 1642, when he tried to arrest five MPs in the Commons — that was the breaking point that triggered the 
+            <b>English Civil War</b> (1642–1651). Charles was eventually executed in 1649, and England briefly became a republic before the monarchy was restored in 1660.
+        </p>
+        <p>
+            Parliamentary supremacy was not fully locked in until later. After the <b>Glorious Revolution</b> of 1688 (when Parliament invited William and Mary to replace James II), Parliament passed the 
+            English <b>Bill of Rights</b> in 1689, which firmly established that Parliament, not the King, was the supreme power: <b>Parliamentary Sovereignty</b>.
+        </p>
+        <p>
+            The Parliament then sought to unite the neighboring countries (mainly Scotland, and later Ireland) through what were called the <b>Acts of Union</b>. 
+            The deal with Scotland: England wanted political and military security (no hostile neighbor to the north), while Scotland needed money and access to England's lucrative global trading empire. England essentially agreed to
+             pay Scotland a compensation payment (<b>The Equivalent</b>) and give them free trade access in exchange for a unified government. (More on this later.)
+        </p>
+        <P>
+            Now, in the modern era, the <b>Parliament Acts</b> (1911 and 1949) sharply reduced the power of the unelected Lords — especially their ability to block money bills and permanently veto Commons legislation — completing another big step in the transition 
+            from monarchy to political representation from the people.
+        </P>
+       <p>
+        The common trend over the nearly 1000 years has been the slow relinquishment of power from
+         the Monarch to the 
+        People.
+       </p>
+       <p>
+        What is interesting is that most of this power transition came in the form of economic forces! 
+        The reason the US revolted and formed its own country was taxation, and a large part of how the 
+        UK formed its government was also through taxation!
+       </p>
+        <h1>
+            Founding Documents
+        </h1>
+        <p>
+            The founding documents make <i>material</i> what was once only in theory. 
+        </p>
+        <h4>
+            Magna Carta
+        </h4>
+        <p>
+            The Magna Carta is perhaps one of the most important single documents worldwide. It is the root of the 
+            beginnings of democracy in the modern age. It gave people the idea that everyday citizens have <b>rights</b>. 
+        </p>
+        <p>
+            It included important ideas for the first time: 
+            <ol>
+                <li>
+                    <b>Right to due process: </b> the right to a trial and a jury trial to prevent the King from just jailing 
+                    whomever he wanted. 
+                </li>
+                <li>
+                    <b>Impartial Justice:</b> blocks bribery and makes it unlawful.
+                </li>
+                <li>
+                    <b>Taxation by Consent: </b> the main point of contention, as the Barons didn't want the King to just subject 
+                    them to random increases in taxes.
+                </li>
+                <li>
+                    <b>Enforcement: Council of 25 Barons</b> — a baronial council could enforce the charter against the King if he broke it. (This is an early ancestor of the idea of checks on royal power, not the modern Parliament itself.)
+                </li>
+            </ol>
+            
+        </p>
+        <p>
+            Historically, this was the starting point for things like human rights. It broke new ground by saying that the King 
+            was NOT above the law. 
+        </p>
+        <h4>
+            Oxford Provision
+        </h4>
+        <p>
+            The <b>Provisions of Oxford</b> (1258) were the document that really reined in the King, as Henry III tried to subvert the Magna Carta. 
+            The new provisions said that 
+            <ol>
+                <li>
+                    <b>The Council of Fifteen:</b> nearly all major decisions needed to pass through a baronial council.
+                </li>
+                <li>
+                    <b>Mandatory meetings:</b> Parliament had to meet at fixed times, about three times a year, so the King could not just ignore it.
+                </li>
+                <li>
+                    <b>Prevention of corrupt offices: </b> limits on the King appointing loyal but corrupt officials to key posts. 
+
+                </li>
+               
+            </ol>
+        </p>
+        <p>
+            It was an oligarchy, not a democracy: the Provisions didn't give power to the people;
+            they transferred absolute power from one man (the King) to fifteen men (the richest barons).
+        </p>
+        <h4>
+            Bill of Rights
+        </h4>
+        <p>
+            This document decisively established the King in a secondary role, with the supreme power coming from 
+            the parliament. This took many civil wars to achieve. Lives were lost to make this possible. There were 
+            other details as well: 
+            <ol>
+                <li>
+                    <b>End of Divine Kings: </b> a complete power reversal. 
+                </li>
+                <li>
+                    <b>No standing army: </b> the King could not keep a standing army in peacetime without Parliament's consent.
+                </li>
+                <li>
+                    <b>Taxes: </b> closed basically all the loopholes that let the King levy taxes on people without 
+                    cause.
+                </li>
+                <li>
+                    <b>Parliamentary privileges: </b> MPs could speak freely in debates without fear of prosecution for what they said in Parliament.
+                </li>
+            </ol>
+        </p>
+        <p>
+            The Bill of Rights finalized the transition of power. 
+            England went from a state ruled by the arbitrary will of a monarch to a constitutional monarchy.
+        </p>
+        <h4>
+            Acts of Union
+        </h4>
+        <p>
+            The Acts of Union are not a single event, they are a couple of separate deals that stitched the 
+            island (and later Ireland) together into one country under one parliament. It helps to split them up. 
+        </p>
+        <p>
+            <b>Wales (1535 &amp; 1542): </b> quick note first, Wales technically got absorbed way earlier under Henry VIII 
+            through the <b>Laws in Wales Acts</b>. So by the time the "big" union happened, Wales was already legally part of 
+            the Kingdom of England. So even though we lump Wales in, it wasn't part of the 1707 deal.
+        </p>
+        <p>
+            <b>Scotland (1707): </b> this is the big one. England and Scotland had actually shared the same king since 1603 
+            (when James VI of Scotland also became James I of England), BUT they were still two separate kingdoms with two 
+            separate parliaments. So they had one guy wearing two crowns, which is a recipe for problems. 
+        </p>
+        <p>
+            The reason it finally happened comes back to money and security (like everything else in this story). 
+            Scotland had just bankrupted itself on the <b>Darien Scheme</b>, a disastrous attempt to set up a colony in 
+            Panama that failed horribly and wiped out a huge chunk of Scottish wealth. On the other side, England was 
+            paranoid about succession, they wanted to lock in the Protestant Hanoverian line, and were terrified Scotland 
+            would pick a different (possibly pro-French) king and become a hostile back door for invasion. England even 
+            passed the <b>Alien Act</b> basically threatening to cut off trade and treat Scots as foreigners unless they 
+            came to the table. 
+        </p>
+        <p>
+            So the deal got done. England paid Scotland a lump sum (called <b>"The Equivalent"</b>) to help cover 
+            Scotland's share of the national debt and compensate the Darien losers, and gave them free trade access to the 
+            English empire. In exchange, Scotland dissolved its parliament and merged into a single <b>Kingdom of Great 
+            Britain</b> with one parliament at Westminster. Scotland got 45 MPs in the Commons and 16 peers in the Lords. 
+            Importantly, Scotland kept its <b>own legal system</b>, its <b>own church</b> (Presbyterian), and its own 
+            education system, which is why Scots law is still different today. It was NOT popular with regular Scots though, 
+            there were riots, and people accused the Scottish negotiators of basically being bribed.
+        </p>
+        <p>
+            <b>Ireland (1801): </b> almost a century later, after the Irish Rebellion of 1798, the same move happened with 
+            Ireland. The Irish parliament was dissolved and folded into Westminster, creating the <b>United Kingdom of Great 
+            Britain and Ireland</b>. (Most of Ireland later leaves in the 1920s, which is why today it's the "United Kingdom 
+            of Great Britain and Northern Ireland.")
+        </p>
+        <p>
+            The pattern is the same as everything else on this page: unification driven mostly by <b>money and security</b>, 
+            not some grand idealistic vision.
+        </p>
+        <h4>
+            Parliament Act
+        </h4>
+        <p>
+            The <b>Parliament Acts of 1911 and 1949</b> sharply limited the House of Lords. The Lords can still delay and amend most bills, but they can no longer permanently block laws passed by the elected Commons (with some exceptions, like bills that extend a parliament's term). The logic is that the Lords are not elected, while the Commons are — so on a final clash, the elected chamber should win.
+        </p>
+        <h4>
+            Nature of the UK "Constitution"
+        </h4>
+        <p>
+            Together, these documents encode, in effect, the UK constitution. The UK constitution has certain properties 
+            that make it different from other nation-building documents.
+        </p>
+        <p>
+            <b>Unentrenched: </b> it can be easily changed in comparison to the US constitution.
+        </p>
+        <p>
+            <b>Uncodified: </b> not a single document.
+        </p>
+        <p>
+            <b>Unitary: </b> all power is in parliament and there is no equivalent to "state powers", as all power 
+            is concentrated in Westminster. However, there are <b>devolutions</b> where certain day-to-day powers 
+            are handed to each country's parliament, like the Scottish parliament. (England has no parliament of its own.)
+        </p>
+        <p>
+            <b>Parliamentary Sovereignty: </b> it is the supreme power in the land. 
+        </p>
+        <h1>
+           Structure of Laws
+        </h1>
+        <p>
+            <b>Statute Law: </b> direct legislation made by Parliament. It is the highest written source of law in the UK system. (Because the UK has no single codified constitution, important statutes effectively function like constitutional law.)
+        </p>
+        <p>
+            <b>Common Law: </b> when judges in England made rulings on cases, 
+            those rulings became precedents that future courts had to follow. (can be legally enforceable)
+        </p>
+        <p>
+            <b>Conventions</b> are basically UNWRITTEN rules and traditions.  (not legally enforceable)
+        </p>
+        <p>
+            <b>Authoritative Works</b> — when things get messy, they basically turn to old books...  (not legally enforceable)
+        </p>
+        <p>
+            <b>Treaties</b> are rules and regulations agreed between nations on the international stage.
+        </p>
+        <p>
+            Together, these laws effectively form the Constitution. There is indeed a pecking order. 
+            If a new Statute Law conflicts with a Common Law ruling, an unwritten Convention, or an Authoritative Work, the Statute Law automatically wins. Even international 
+            Treaties don't override domestic law unless Parliament explicitly passes a new statute to enforce them.
+        </p>
+
+        <h1>
+            Branches of Government
+        </h1>
+        <h4>
+            Legislative (The House)
+        </h4>
+        <p>
+            <b>Lower House (House of Commons): </b> this contains <b>Members of Parliament (MPs)</b> 
+            who are elected for each constituency they represent. There are currently 650 MPs. 
+            These members come from different parties, and the party that can command a majority (usually the largest party) forms a government, with the leader of that 
+            party being the <b>Prime Minister</b>. The prime minister picks <b>cabinet ministers</b>, who represent the 
+            executive branch and sit on the front benches, while MPs who are not ministers are called <b>backbenchers</b> — including both government and opposition MPs who sit behind the front bench. Together, they vote, debate, and propose 
+            <b>bills</b>, which can eventually become <b>laws</b>.  
+        </p>
+        <p>
+            <b>Upper House (House of Lords): </b> this contains <b>life peers</b>, a small number of remaining <b>hereditary peers</b>, and senior <b>bishops</b> of the Church of England. 
+            Most are appointed by the prime minister (on the advice of the House of Lords Appointments Commission), though hereditary peers still elect a few of their own number to stay in the chamber. 
+            They review, amend, and debate legislation — especially on technical or specialist grounds. Since the Parliament Acts, they cannot permanently veto bills passed by the Commons. The Lords can still delay and suggest changes, but the elected Commons ultimately wins on major clashes.
+        </p>
+       
+        <h4>
+            Executive (The Prime Minister and Cabinet)
+        </h4>
+        <p>
+            The executive branch contains a Prime Minister and their appointed cabinet members.
+             These form a government, and together they run the country. The <b>Prime Minister</b> is responsible for 
+             foreign policy, setting the policy agenda, deciding priorities, creating new departments, responding to 
+             emergencies, managing the media, and appointing people. But the PM is also constrained: cabinet ministers are supposed to be <b>primus inter pares</b> (first among equals), and without cabinet and party support the PM can be forced out. The PM is also grilled during <b>Prime Minister's Questions</b> in the Commons.
+        </p>
+        <p>
+            The Cabinet's role is to help limit the power of the PM. They also coordinate in introducing bills, 
+            help respond to emergencies like COVID, and are the primary policy deciders. 
+        </p>
+        <p>
+            Together, the PM and Cabinet run the government via a two-tier system: elected politicians (ministers) set policy, while 
+            <b>civil servants</b> (permanent, non-political officials) run the day-to-day work of departments. Civil servants brief ministers on what is feasible, what the law allows, and what implementation would actually cost.
+        </p>
+        <h4>
+            Judicial (Supreme Courts)
+        </h4>
+        <p>
+            The Supreme Court is primarily a court of appeal. It hears cases that lower courts cannot resolve or that raise major legal questions.  
+            There are up to 12 justices, who must retire at 75. The court can review whether government actions are lawful and can issue a <b>declaration of incompatibility</b> if a law conflicts with the Human Rights Act — but unlike the US Supreme Court, it generally cannot strike down Acts of Parliament outright, because of parliamentary sovereignty.
+        </p>
+        <p>
+            The judiciary also checks the executive through <b>judicial review</b> — for example, ruling that a minister acted <b>ultra vires</b> (beyond their legal authority).
+        </p>
+        <h1>
+            Branches and Their Relationships
+        </h1>
+        <h4>
+            Presidential or Cabinet Prime Minister
+        </h4>
+        <p>
+            There is a relationship between the prime minister and the cabinet. If the prime minister doesn't rely on 
+            the cabinet as much as on special advisors, then they are more of a presidential style, while the opposite is true for a cabinet government. 
+            The relationship is indeed hierarchical. It goes from PM to cabinet to junior ministers and then to the actual government departments. 
+        </p>
+        <h4>
+            Vote of No Confidence
+        </h4>
+        <p>
+            Unlike some other countries, like the US, removing the head of government midway through their term is relatively straightforward. 
+            If MPs lose confidence in the government, they can pass a <b>vote of no confidence</b>. If the government loses, it must resign or call an election. This is separate from <b>collective responsibility</b>, which is the rule that cabinet ministers publicly support government decisions (or resign if they cannot).
+        </p>
+        <h4>
+            Shadow Government 
+        </h4>
+        <p>
+            The shadow government is formed by the second-ranked party, and they form a shadow cabinet to mirror that 
+            of the leading cabinet in power. This is so the opposition can question and grill the ruling 
+            party and hold them accountable for their actions on the parliament floor (usually through ministerial questioning).
+        </p>
+        <h4>
+            Party Whips
+        </h4>
+        <p>
+            A party with a majority can typically get bills passed without too much conflict. Sometimes, if 
+            MPs try to vote against the bills formed by their majority party, they can be kicked out, or threatened with being
+            kicked out of their party and becoming independent. This threat is usually enforced by the party whips and is the primary reason 
+            the ruling party usually gets its way without deadlock, unlike the US government. 
+        </p>
+        <h4>
+            How Laws are Passed
+        </h4>
+        <p>
+            Laws are passed in a multi-stage process. Most government bills start in the Commons, but bills can technically begin in either house. 
+            <ol>
+                <li>
+                    <b>First reading</b> — the bill is introduced, with little or no debate.
+                </li>
+                <li>
+                    <b>Second reading</b> — MPs debate the general principles and vote on whether to proceed.
+                </li>
+                <li>
+                    <b>Committee stage</b> — detailed line-by-line scrutiny; amendments are proposed and voted on.
+                </li>
+                <li>
+                    <b>Report stage</b> — the whole house considers further amendments after committee.
+                </li>
+                <li>
+                    <b>Third reading</b> — final debate and vote in that house.
+                </li>
+                <li>
+                    The bill then goes to the other house, which repeats the process. If the two houses disagree, there is a <b>ping-pong</b> of amendments until they align (or the Commons can invoke the Parliament Acts in some cases).
+                </li>
+                <li> 
+                    <b>Royal Assent</b> — the monarch formally approves the bill, and it becomes an Act of Parliament. (Today this is ceremonial.)
+                </li>
+            </ol>
+        </p>
+        <h1>
+            Other Countries
+        </h1>
+        <h4>
+            Canada
+        </h4>
+        <p>
+            Canada has a similar Westminster-style government, as it was a former British colony. But it is <b>federal, not unitary</b>: provinces have their own governments and powers under the constitution. It has a codified constitution (with the Constitution Act, 1982), and instead of a House of Lords 
+            it has a Senate appointed by the Governor General on the prime minister's advice. Senators must retire at 75 (they are no longer appointed for life). Royal Assent is given by the Governor General, who represents the Crown in Canada.
+        </p>
+        <h4>
+            India
+        </h4>
+        <p>
+            India is a hybrid: a parliamentary democracy inside a federal republic. 
+            Its head of state is the president, who is indirectly elected by national and state lawmakers. The president is mostly ceremonial; real executive power sits with the prime minister and cabinet. India has a single written 
+            constitution (the longest in the world), and that constitution holds supremacy — unlike the UK, where Parliament is supreme. That means the Supreme Court can strike down laws deemed unconstitutional. In some cases, it has even reviewed constitutional amendments under the <b>basic structure doctrine</b>. The upper house is the <b>Rajya Sabha</b> (Council of States): its members are elected by state legislatures, not appointed like the UK Lords and not directly elected nationwide like the US Senate.
+        </p>
+        
+    </div>
+
+</body>
+
+</html>
