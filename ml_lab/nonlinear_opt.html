@@ -273,21 +273,20 @@
         </h1>
          <p>
             When you first open a deep learning codebase, a huge fraction of what the machine is actually doing hides behind one word: <b>optimize</b>.
-            The loss function, the learning rate, Adam vs. SGD, weight decay, constrained fine-tuning—these are all nonlinear optimization ideas wearing different hats.
-            I wrote this primer because I kept seeing the same gap: people who are comfortable with "take the derivative and set it to zero" from calculus,
-            but unsure what changes when the problem has a million variables, no clean formula for the minimum, or hard constraints on what parameters are allowed.
+            The loss function, the learning rate, Adam vs. SGD, weight decay, constrained fine-tuning: these are all nonlinear optimization ideas are all the SAME THING.
+   
          </p>
          <p>
-            Here is the practical version of why this field matters. <b>Learning is optimization.</b>
-            Training a model means searching over parameters—sometimes billions of them—for settings that make a loss small.
+            Here is why this matters. <b>Learning is optimization.</b>
+            Training a model means searching over parameters, sometimes billions of them, for settings that make a loss small.
             Designing a rocket trajectory, pricing a portfolio under risk limits, fitting a physical law to noisy data, or compressing an image:
             same core question, posed in different language.
             <i>What choice of inputs gives the best outcome, subject to the rules of the problem?</i>
             Nonlinear optimization is the shared mathematical language behind all of it, from engineering and finance to physics and machine learning.
          </p>
          <p>
-            Calculus gives you the one-dimensional picture, and it is a good one.
-            But the moment you leave that comfort zone—multiple variables, saddle points, boundaries you cannot cross, objectives that are not smooth everywhere—the naive recipe breaks.
+            Calculus gives you the one-dimensional picture, and it is an ok one.
+            But the real world has multiple variables, saddle points, boundaries you cannot cross, objectives that are not smooth everywhere and the simple recipe breaks.
             That is not a failure of calculus; it is the sign you have moved into the regime where essentially all of modern ML lives.
             The rest of this page builds the vocabulary for that regime: gradients and Hessians, Lagrange multipliers, convexity, and the optimizer algorithms
             (SGD, momentum, Adam) you will see in every framework.
@@ -305,7 +304,7 @@
             \[\frac{d^2}{dx^2} f(x) > 0 \Rightarrow \text{min}\]
             \[\frac{d^2}{dx^2} f(x) < 0 \Rightarrow \text{max}\]
             \[\frac{d^2}{dx^2} f(x) = 0 \Rightarrow \text{none (saddle point)}\]
-            Okay, great—simple! What makes this so hard, anyway?
+            Okay, great: simple! What makes this so hard, anyway?
         </p>
         <p>
             Well, life is not so simple. Here are some of the problems:
@@ -379,6 +378,13 @@
             \[\boxed{\nabla f \text{ is the steepest ascent}}\]
             This is absolutely critical and is at the heart of what allows us to make machines <b>learn</b>. Deeply understand this.
         </p>
+        <div class="la-video-box" role="complementary" aria-label="Recommended video on why the gradient is the steepest ascent">
+            <strong class="la-video-title">Recommended video: why the gradient is the steepest ascent</strong>
+            <p>A visual explanation of why the gradient points in the direction of greatest increase.</p>
+            <div class="la-video-links">
+                <a class="la-video-btn" href="https://www.youtube.com/watch?v=TEB2z7ZlRAw" target="_blank" rel="noopener noreferrer">Watch on YouTube &rarr;</a>
+            </div>
+        </div>
         <h1 id="no-unconstrained">
             Unconstrained Optimization
         </h1> 
@@ -409,13 +415,13 @@
             \(v\) yields this difference:
             \[\lim_{h \to 0} \frac{f(x+hv) - f(x)}{h} =  \nabla f(x) \cdot v \] 
             If \(\lim_{h \to 0} \frac{f(x+hv) - f(x)}{h} \geq 0\) always, that means in any direction you go,
-            \(f(x+hv)\) will always be larger than where you are—so you are in a minimum well. This is how we
+            \(f(x+hv)\) will always be larger than where you are, so you are in a minimum well. This is how we
             got
             \[\lim_{h \to 0} \frac{f(x+hv) - f(x)}{h} \geq 0 \Rightarrow \nabla f(x) \cdot v \geq 0\]
         </p>
         
          <p>
-            Hold on a second—this all sounds strange, doesn't it? I bet you were expecting \(\nabla f(x^*) = 0\), weren't you?
+            Hold on a second: this all sounds strange, doesn't it? I bet you were expecting \(\nabla f(x^*) = 0\), weren't you?
             Turns out they mean the same thing (when \(x\) is not on the boundary of the set)!
             Except this definition is far more generalizable, because it allows us to
             also define <b>constrained optimization</b> later on when we restrict \(v\)
@@ -442,6 +448,13 @@
             It means that the matrix needs to be <b>positive semi-definite</b>. All this is saying is that the matrix needs
             to have all eigenvalues \(\lambda\) greater than or equal to \(0\).
         </p>
+        <div class="la-video-box" role="complementary" aria-label="Recommended video on unconstrained optimization">
+            <strong class="la-video-title">Recommended video: unconstrained optimization</strong>
+            <p>A walkthrough of the first- and second-order optimality conditions in action.</p>
+            <div class="la-video-links">
+                <a class="la-video-btn" href="https://www.youtube.com/watch?v=pxcsXQuaXQ8" target="_blank" rel="noopener noreferrer">Watch on YouTube &rarr;</a>
+            </div>
+        </div>
         
         <h1 id="no-constrained">
             Constrained Optimization
@@ -464,7 +477,7 @@
         </p>
         <p>
             However, you can clearly see that this is painful. Why? You have to evaluate boundary points, think about feasible directions, and handle all that
-            extra work. Life was so much better when you could just take a derivative, set it equal to zero, and solve—boom, you're done. Formulaic,
+            extra work. Life was so much better when you could just take a derivative, set it equal to zero, and solve... boom, you're done. Formulaic,
             easy, and straightforward.
         </p>
         <p>
@@ -485,7 +498,7 @@
             Example: Consider the volume of a cube \(f(x,y,z) = xyz\). How can we find the side lengths \(x,y,z\) such
             that it has the maximum possible volume if its surface area \(h(x,y,z)\) needs to equal \(A\)?
             \[f(x,y,z) = xyz,\quad h(x,y,z) = 2xy+2xz+2yz = A \]
-            Given the formula from above, it is equivalent to minimizing (notice the negative sign—now we are minimizing!)
+            Given the formula from above, it is equivalent to minimizing (notice the negative sign: now we are minimizing!)
             \[\nabla -f(x, y) + \lambda \nabla h(x,y) = 0\] 
             \[\begin{bmatrix}-yz \\ -xz \\ -yx \end{bmatrix}+ \lambda \begin{bmatrix}2z+2y \\ 2x+2z\\2x+2y\end{bmatrix} = 0\]
             We now need to solve for this Lagrange multiplier \(\lambda\). But how? We see we have 4 unknowns but only 3 equations?
@@ -497,6 +510,13 @@
             smallest surface area is indeed a cube.
             
         </p>
+        <div class="la-video-box" role="complementary" aria-label="Recommended video on Lagrange multipliers">
+            <strong class="la-video-title">Recommended video: Lagrange multipliers</strong>
+            <p>A worked example of solving a constrained problem with Lagrange multipliers.</p>
+            <div class="la-video-links">
+                <a class="la-video-btn" href="https://www.youtube.com/watch?v=8mjcnxGMwFo" target="_blank" rel="noopener noreferrer">Watch on YouTube &rarr;</a>
+            </div>
+        </div>
         <h4>
             How Lagrange Multipliers Work (extra)
         </h4>
@@ -623,6 +643,12 @@
             (give you a good deal) that it makes no sense to study on your own, and you will pay them instead. The tutor's variables
             are the prices they charge.
         </p>
+        <p>
+            Why do we care? It turns out sometimes solving the <b>dual problem</b> is much easier than 
+            solving the <b>primal problem</b> computationally speaking. This creates some cool tricks 
+            that one can do to make optimization problems solvable! We won't go more indepth but just 
+            so you know what duality means. 
+        </p>
         <h1 id="no-convexity">
             Convexity 
         </h1>
@@ -658,7 +684,7 @@
             That means this function is convex. 
         </p>
         <p>
-            Hold on—you are probably thinking that this seems like a glorified definition for a function that opens
+            Hold on: you are probably thinking that this seems like a glorified definition for a function that opens
             upward like a quadratic. Why is this definition needed? 
         </p>
         <p>
@@ -670,6 +696,14 @@
             Even for problems that are non-convex, like many machine learning problems, they can typically be broken down into
             locally convex problems for us to deal with. This is what allows us to study different optimizer strategies.
         </p>
+        <div class="la-video-box" role="complementary" aria-label="Recommended videos on convexity">
+            <strong class="la-video-title">Recommended videos: convexity</strong>
+            <p>Start with convex sets, then watch the follow-up on convex functions.</p>
+            <div class="la-video-links">
+                <a class="la-video-btn" href="https://www.youtube.com/watch?v=oX_WK5co4HY&t=214s" target="_blank" rel="noopener noreferrer">Convex sets &rarr;</a>
+                <a class="la-video-btn" href="https://www.youtube.com/watch?v=nOFXLCCvtm0" target="_blank" rel="noopener noreferrer">Convex functions &rarr;</a>
+            </div>
+        </div>
         <h1 id="no-nondiff">
             Non-differentiable Optimization
         </h1>
@@ -703,6 +737,13 @@
             \(0 \in \partial f\). Only at the cusp where we have a local minimum do we actually obtain a zero vector as a subgradient
             within the subdifferential!
         </p>
+        <div class="la-video-box" role="complementary" aria-label="Recommended video on subgradients">
+            <strong class="la-video-title">Recommended video: subgradients</strong>
+            <p>A visual explanation of subdifferentials and optimizing non-differentiable functions.</p>
+            <div class="la-video-links">
+                <a class="la-video-btn" href="https://www.youtube.com/watch?v=o0rOaN5uo64" target="_blank" rel="noopener noreferrer">Watch on YouTube &rarr;</a>
+            </div>
+        </div>
         <h1 id="no-calc-var">
             Function Optimization - Calculus of Variations (Extra)
         </h1>
@@ -729,8 +770,8 @@
             A natural question becomes: what should \(u\) be when we want to minimize the distance \(\mathcal{D}\)?
         </p>
         <p>
-            This is exactly what the calculus of variations does. We extend the idea of the derivative—called the Euler-Lagrange
-            derivative—and set it equal to zero. 
+            This is exactly what the calculus of variations does. We extend the idea of the derivative (called the Euler-Lagrange
+            derivative) and set it equal to zero. 
         </p>
 
         <h4>
@@ -853,6 +894,15 @@
             \[(Q(x_k-b) = - \alpha_k Qg(x_k)) \ \]
 
         </p>
+        <div class="la-video-box" role="complementary" aria-label="Recommended videos on gradient descent">
+            <strong class="la-video-title">Recommended videos: gradient descent</strong>
+            <p>A few different takes on gradient descent, from intuition to the machine learning perspective.</p>
+            <div class="la-video-links">
+                <a class="la-video-btn" href="https://www.youtube.com/watch?v=qg4PchTECck" target="_blank" rel="noopener noreferrer">Video 1 &rarr;</a>
+                <a class="la-video-btn" href="https://www.youtube.com/watch?v=sDv4f4s2SB8" target="_blank" rel="noopener noreferrer">Video 2 &rarr;</a>
+                <a class="la-video-btn" href="https://www.youtube.com/watch?v=IHZwWFHWa-w" target="_blank" rel="noopener noreferrer">Video 3 &rarr;</a>
+            </div>
+        </div>
         <h4>
             Conjugate Gradient Method
         </h4>
@@ -862,12 +912,12 @@
         </p>
         <p>
             Let's think about it this way: if you live in a two-dimensional world, it should <i>really</i> take you only two steps to find
-            the most optimal location. However, the gradient descent algorithm can take many, many steps—especially
+            the most optimal location. However, the gradient descent algorithm can take many, many steps, especially
             when the problem is ill-conditioned (large, narrow valleys).
             This is because not all steps are actually independent from each other (fixed learning rate).
         </p>
         <p>
-            What we need to do is take orthogonal steps that are orthogonal to the <i>shape</i> of our loss landscape—not the traditional
+            What we need to do is take orthogonal steps that are orthogonal to the <i>shape</i> of our loss landscape, not the traditional
             orthogonal \(u\cdot v = 0\), but <b>conjugate</b> orthogonal.
         </p>
         <p>
@@ -885,7 +935,7 @@
         </p>
 
         <p>
-            Great—how do we do this iteratively?
+            Great: how do we do this iteratively?
             First, we need to measure how far off our current guess is from the true solution:
             \[r_k = b- A x_k\]
             Then remember we want to walk in "special" directions called \(p_k\), where the directions are
@@ -901,8 +951,15 @@
         </p>
         <p>
             By construction, iterating through a \(Q\)-orthogonal basis guarantees that this will converge in at most the number
-            of dimensions in the problem—much more efficient than gradient descent.
+            of dimensions in the problem, much more efficient than gradient descent.
         </p>
+        <div class="la-video-box" role="complementary" aria-label="Recommended video on the conjugate gradient method">
+            <strong class="la-video-title">Recommended video: conjugate gradient method</strong>
+            <p>A visual walkthrough of why conjugate directions converge so much faster.</p>
+            <div class="la-video-links">
+                <a class="la-video-btn" href="https://www.youtube.com/watch?v=6uWG137SRss" target="_blank" rel="noopener noreferrer">Watch on YouTube &rarr;</a>
+            </div>
+        </div>
         <h1 id="no-ml-algorithms">
             Machine Learning Optimization Algorithms
         </h1>
@@ -929,7 +986,7 @@
             \[w_k = w_{k-1} - \alpha \nabla Q_i(w_{k-1})\]
         </p>
         <p>
-            <b>Why?</b> Why would we do such a seemingly foolish thing—throwing away all that extra data?
+            <b>Why?</b> Why would we do such a seemingly foolish thing, throwing away all that extra data?
         </p>
         <p>
             <b>Pros:</b> it is more robust against local optima. It is much faster (fewer gradients) and has lower memory constraints. It prevents overfitting,
@@ -1001,7 +1058,7 @@
             <b>Pros:</b> we add the benefits of the past methods, and now we add momentum. Basically RMSProp, but with momentum.
         </p>
         <p>
-            <b>Cons:</b> this is very memory-intensive to keep track of all of these for every parameter—especially when training large models.
+            <b>Cons:</b> this is very memory-intensive to keep track of all of these for every parameter, especially when training large models.
             The coefficients need to be tracked effectively, tripling the total memory consumption. Also, regularization losses
             have a hard time being updated. Why? The moving average consumes the weight penalties.
             If a parameter has highly volatile gradients,
